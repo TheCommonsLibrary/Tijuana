@@ -1,0 +1,104 @@
+/* GetUp!  
+Source: assets/scss/screen.scss */
+// Minor changes and amends can go here for core Bootstrap (we are on version 2 of Bootstrap)
+// Major changes, call new file in our own subfolder, same naming convention.
+
+// GetUp Variables
+@import "public/variables"; // Modify this for custom colors, font-sizes, etc
+
+// Original Mixins
+@import "common/lib/bootstrap/mixins";
+
+// Additional Mixins
+@import "public/mixins"; 
+
+// CSS Reset
+@import "common/lib/bootstrap/reset";
+
+// Grid system and page structure
+@import "common/lib/bootstrap/scaffolding";
+@import "common/lib/bootstrap/grid";
+@import "common/lib/bootstrap/layouts";
+
+// Base CSS
+@import "public/type"; // Overridden, this is just default styles..
+@import "common/lib/bootstrap/code";
+@import "public/forms";
+@import "common/lib/bootstrap/tables";
+
+// Components: common
+@import "common/lib/font-awesome"; 
+@import "common/lib/bootstrap/dropdowns";
+@import "public/wells";
+@import "common/lib/bootstrap/component-animations";
+@import "common/lib/bootstrap/close";
+
+// Components: Buttons & Alerts 
+@import "public/buttons";
+@import "public/button-groups";
+@import "public/alerts"; // Note: alerts share common CSS with buttons and thus have styles in _buttons.scss
+
+// Components: Nav
+@import "public/navbar";
+@import "public/navs"; 
+@import "common/lib/bootstrap/breadcrumbs";
+@import "common/lib/bootstrap/pagination";
+@import "common/lib/bootstrap/pager";
+
+// Components: Popovers
+@import "common/lib/bootstrap/modals";
+@import "common/lib/bootstrap/tooltip";
+@import "common/lib/bootstrap/popovers";
+
+// Components: Misc
+@import "common/lib/bootstrap/thumbnails";
+@import "common/lib/bootstrap/labels-badges";
+@import "public/progress-bars"; 
+@import "common/lib/bootstrap/accordion";
+@import "common/lib/bootstrap/carousel";
+@import "common/lib/bootstrap/hero-unit";
+
+// Utility classes
+@import "common/lib/bootstrap/utilities"; // Has to be last to override when necessary
+
+// Our Master Styles File.
+@import "public/public";
+
+// Bootstrap Media Queries
+// ------------------
+@import "common/lib/bootstrap/responsive-utilities";
+
+@import "common/lib/bootstrap/responsive-1200px-min";
+@import "common/lib/bootstrap/responsive-979px-max";   
+@import "common/lib/bootstrap/responsive-768px-979px";
+@import "common/lib/bootstrap/responsive-767px-max";
+@import "public/responsive-navbar";
+
+// Additional Getup Media Queries
+// ------------------
+@import "public/responsive-utilities";
+@import "public/responsive-1200px-min";
+@import "public/responsive-979px-max"; 
+@import "public/responsive-768px-979px";
+@import "public/responsive-767px-max";
+
+// Extra stylesheets
+// ------------------
+@import "common/lib/jquery.gritter";
+@import "common/lib/font-awesome-ie7.min";
+@import "common/lib/opensans";
+
+// dashboard/update_card page
+@import "public/update_card";
+
+// modules
+@import "common/lib/jquery-ui";
+@import "public/address_lookup";
+@import "public/call_mp";
+@import "public/facebook_sign_petition";
+@import "public/donation_upgrade_module";
+
+@import "public/donation_buttons";
+@import "public/embed";
+@import "public/daisy_chain";
+@import "public/multistep_donation";

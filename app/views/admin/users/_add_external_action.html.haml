@@ -1,0 +1,53 @@
+#add-actions.section{style: "display: none;"}
+  %h4 RECORD ACTIONS BY USERS IN THIS LIST AGAINST A PAGE
+  %p
+    Use for import of field actions, survey results, etc. Limited to #{Admin::UsersController::MAX_EXTERNAL_ACTION_IMPORT_SIZE} members. Action against a page will only be recorded once per user.
+
+  .success-message
+  #tabs
+    %ul
+      %li
+        = link_to 'Existing Page', '#page-id-tab'
+      %li
+        = link_to 'Create New Page', '#new-page-tab'
+
+    #page-id-tab
+      %p
+        Protip: if the page's sequence has 'Quarantine new members' set, this will bulk quarantine existing members.
+
+      = form_tag(add_external_actions_admin_users_path, :method => :post, :remote => true, :class => 'external-action-form') do
+        = label_tag :external_action_page_id, "Page ID", :class => "req"
+        = text_field_tag :external_action_page_id, "", :placeholder => "Page ID",
+          :class => "required"
+
+        .buttonbar
+          = submit_tag "Add Actions", :disable_with => "Saving…"
+          = link_to "Cancel", admin_users_path
+
+    #new-page-tab
+      = form_tag(create_page_add_external_actions_admin_users_path, :method => :post, :remote => true, :class => 'external-action-form') do
+        = label_tag :page_name, "Page Name", :class => "req"
+        = text_field_tag :page_name, "", :placeholder => "Page Name", :class => "required"
+
+        = label_tag :campaign_id, "Campaign", :class => "req"
+        = select_tag :campaign_id, options_for_select(Campaign.select_options.sort), {:class => "required campaign-select"}
+
+        = label_tag :page_sequence_name, "Page Sequence", :class => "req"
+        = text_field_tag :page_sequence_name, 'External Action', :class => "required"
+
+        .member-value
+          = label_tag :member_value_type, "Ask Category", :class => "req"
+          = select_tag :member_value_type, options_for_select(options_for_member_value(true)), {style: 'width: auto'}
+
+        .buttonbar
+          = submit_tag "Add Actions", :disable_with => "Saving…", :name => :actions_on_new_page
+          = link_to "Cancel", admin_users_path
+
+  .buttonbar.submit-success
+    = link_to 'Back to Users Index', admin_users_path
+
+:javascript
+  $(function(){
+    $( "#tabs" ).tabs();
+    handleExternalActions($('.external-action-form'), $('#tabs'), $('.submit-success'), $('.success-message'), '#{image_path('common/lib/gritter/success.png')}', '#{image_path('common/lib/gritter/error.png')}');
+  });

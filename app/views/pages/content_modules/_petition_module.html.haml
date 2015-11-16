@@ -1,0 +1,54 @@
+- petition = content_module
+.well
+  .petition-content
+    %h2
+      = petition.title.upcase
+    %p
+      =raw render_html(petition.content)
+    %p
+      =raw render_html(petition.petition_statement)
+  %hr
+  = render :layout => "pages/form_with_user_lookup", :locals => {:content_module => content_module, :auto_submittable => true} do
+    - if petition.has_custom? :form_fields
+      = fields_for petition.petition_signature do |f|
+        .custom-fields-errors
+          = form_errors petition.petition_signature
+        .custom-fields
+          = render_custom_form_fields f, petition.custom(:form_fields), petition
+    .clearfix
+    = button_tag petition.button_text, :class => "btn btn-primary btn-large btn-full ask-submit-button button-with-facebook-sign", :disable_with => 'Please Wait...'
+  %hr
+  - if petition.display_sign_with_facebook? && ab_test(:sign_with_fb) == :experiment
+    %div#sign-with-facebook
+      .fb-button-table
+        .fb-button-cell
+          %button.fb-button.btn-large.btn-full{'data-loading-text' => 'Please Wait...'}
+            %i.icon-facebook-sign
+            %span
+              Sign with Facebook
+        .fb-loader
+      .fb-error
+    %hr
+  - if petition.signatures >= petition.thermometer_threshold.to_i
+    %h3
+      = number_with_delimiter(petition.signatures)
+      signatures
+    - if petition.signatures_target.to_i - petition.signatures > 0
+      .progress
+        .bar{:style => "width: #{petition.percentage_complete}%;"}
+      %p.pull-right
+        We need
+        = number_with_delimiter(petition.signatures_target.to_i - petition.signatures)
+        more
+    .clearfix
+    %hr
+  .fb-like-above
+#fb-root
+- if !Rails.env.test? && petition.display_sign_with_facebook? && ab_test(:sign_with_fb) == :experiment
+  = content_for(:extra_js) do
+    %script{:src => '//connect.facebook.com/en_US/sdk.js'}
+    = javascript_include_tag 'facebook_sign_petition'
+
+  -#Button should be functional ASAP without waiting for DOC READY (especially openletter site).
+  :javascript
+    signWithFacebook("#{content_module.fb_app_id}", $('div#sign-with-facebook'), "/api/take_action_with_fb", #{@page.id}, #{content_module.id});

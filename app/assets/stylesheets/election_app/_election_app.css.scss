@@ -1,0 +1,167 @@
+@import "variables";
+
+.callout{
+  position: relative;
+}
+.htv-frame{
+  text-align:center;
+}
+.senate-htv-text{
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+html {
+  height: 100%;
+  body {
+    font-family: "Lato", sans-serif;
+    font-weight: 500;
+    height: 100%;
+    section {
+      padding: 0;
+      height: 100%;
+    }
+    footer {
+      font-size: 17px;
+      .nav, .navbar-fixed-bottom {
+        min-height: 0;
+        padding: 0;
+      }
+      .nav-pills {
+        li {
+          float: left;
+          width: 50%;
+          margin-left: 0px;
+          text-align: center;
+          a {
+            border-radius: 0px;
+            color: $getup_orange;
+          }
+          &.active {
+            a {
+              color: white;
+              background-color: $getup_orange;
+              &:hover, &:focus {
+                background-color: $getup_orange;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#scrollspy-example {
+  position: relative;
+  // overflow: auto; 
+  margin-top: 50px;
+}
+
+.navbar.navbar-orange {
+  background-color: $getup_orange;
+  border-color: $getup_orange;
+  color: white;
+  .active {
+    a {
+      background-color: $getup_orange_light;
+    }
+  }
+  li {
+    a {
+      color: white;
+    }
+  }
+  a {
+    color: white;
+  }
+  .navbar-toggle {
+    border-color: white;
+  }
+  .icon-bar {
+    background-color: white;
+  }
+}
+
+.navbar-fixed-bottom {
+  border-width: 0px;
+}
+
+.navbar {
+  border: 0px;
+}
+
+.no-connection {
+  position: fixed;
+  bottom: 44px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  z-index: 1000;
+
+  &.alert {
+    border: 0;
+    border-radius: 0;
+  }
+
+  &.alert-warning {
+    background-color: black;
+  }
+}
+
+.loading-image {
+  position:absolute;
+  margin-left:50%;
+  margin-right:50%;
+  top: 50%;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+
+/* Removes the HTML5 number input’s spin box in Webkit browsers.
+   See: http://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-inputs-spin-box 
+*/
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+
+
+.ie8 {
+  .visible-xs {
+    display: block !important; 
+    width: 150px !important;
+  }
+
+  .hidden-xs {
+    display: none !important;
+  }
+}
+
+// .intrinsic-container {
+//   position: relative;
+//   height: 0;
+//   overflow: hidden;
+//   padding-bottom: 155%;
+// }
+// .intrinsic-container iframe {
+//   border: none;
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100% !important;
+//   height: 100%  !important;
+// }
+iframe {
+  border: none;
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  width: 100%;
+  // height: 100%  !important;
+}

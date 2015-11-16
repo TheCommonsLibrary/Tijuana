@@ -1,0 +1,156 @@
+#action {
+  input {
+    box-sizing: border-box;
+    border: #ccc 1px solid;
+    border-radius: 5px;
+    height: 33px;
+    font-family: "raleway", san-serif;
+  }
+  input[type="checkbox"] {
+    margin-top: 0px;
+    height: 24px;
+  }
+  form {
+    width: inherit;
+  }
+
+  .payment-details-form {
+    margin-bottom: 10px;
+  }
+}
+
+label, .user-lookup-message {
+  color: $maroon;
+}
+
+.well {
+  border-top: 0px;
+  background-color: $bg-white;
+  color: $maroon;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  margin-bottom: 0px;
+  hr {
+    display: none;
+  }
+  form {
+    margin-bottom: 0px;
+  }
+}
+
+.btn-primary {
+  background-color: $maroon;
+  background-image: none;
+  font-family: 'Oswald', sans-serif;
+  font-weight: normal;
+}
+.btn-primary:hover {
+  background-color: $maroon-light;
+  box-shadow: 0 0 20px $maroon-light;
+}
+
+.alert-block.alert-error {
+  background-color: $maroon-error;
+  line-height: 2em;
+}
+.alert-danger, .alert-error {
+  background-color: $maroon-error;
+  color: $white;
+  box-sizing: border-box;
+  width: 98%;
+  border-radius: 5px;
+}
+
+.show {
+  #action {
+    .petition-content {
+      padding: 0 20px 20px 20px;
+    }
+    h2 {
+      font-style: inherit;
+      background-color: $nbia-grey;
+      color: $white;
+      font-weight: normal;
+    }
+    label {
+      font-weight: bold;
+    }
+    .well {
+      padding: 0px;
+
+      .top-section .intro {
+        color: $white;
+      }
+    }
+  }
+  .well {
+    background-color: $maroon;
+    color: $white;
+
+    h2 {
+      padding: 12px 20px;
+      margin: 0 -20px;
+      text-transform: capitalize;
+    }
+    form {
+      padding: 20px;
+      background-color: $nbia-grey;
+    }
+  }
+
+  .well h1, h1 {
+    padding: 0 0 20px 0;
+    margin: 0 0 20px 0;
+    font-style: normal;
+  }
+
+  .well h3, h3 {
+    font-style: normal;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+  }
+
+  .well p, p {
+    margin: 0 0 20px 0;
+  }
+
+  h2 {
+    padding: 0 0 20px 0;
+    margin: 0 0 20px 0;
+    font-style: normal;
+  }
+
+  .page-content {
+    background-color: $maroon;
+    padding: 20px;
+    color: $white;
+  }
+}
+
+#email {
+  h2 {
+    margin-bottom: 20px;
+  }
+  #action .well {
+    padding: 0 20px;
+  }
+  .well {
+    form {
+      margin: 20px -20px 0 -20px;
+    }
+  }
+  .help-block {
+    color: $maroon !important;
+  }
+}
+
+.progress {
+  background-color: $maroon;
+  background-image:none;
+  border-radius: 5px;
+  padding: 3px;
+  .bar {
+    background-color: $bg-white;
+    border-radius: 2px;
+  }
+}

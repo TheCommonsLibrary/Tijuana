@@ -1,0 +1,26 @@
+- unless Rails.env == "test"
+  .addthis_toolbox{"addthis:url" => "#{share_link}"}
+    %a.ask-button.addthis_button_facebook
+      %button.btn.btn-social.btn-primary
+        %span.icon
+          %i.icon-facebook
+        %span.text
+          Share
+    %a.ask-button.addthis_button_twitter{"addthis:title" => tweet_text}
+      %button.btn.btn-social.btn-primary
+        %span.icon
+          %i.icon-twitter
+        %span.text
+          Tweet
+    %a.ask-button.addthis_button_email
+      %button.btn.btn-social.btn-primary
+        %span.icon
+          %i.icon-envelope-alt
+        %span.text
+          Email
+    %a.ask-button.addthis_button_google_plusone_share
+      %button.btn.btn-social.btn-primary
+        %span.icon
+          %i.icon-google-plus
+        %span.text
+          Add

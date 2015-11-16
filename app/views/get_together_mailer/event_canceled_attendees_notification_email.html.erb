@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+<body>
+  Dear Friend,
+  <br><br>
+  The event <strong><i>"<%= @event.name %>"</i></strong> you had registered to go to has been <strong>cancelled</strong> by its host.
+  <br><br>
+  We don't want you to miss out on the fantastic opportunity to meet other GetUp! members and share your vision.
+  Please <%= link_to "find an event near you", get_together_url(@event.get_together.friendly_id) %> to attend a new event.
+  <br><br><br>
+  Thanks for all you do,<br>
+  The GetUp! team
+</body>
+</html>

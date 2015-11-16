@@ -1,0 +1,6 @@
+%hr
+%h2
+  = content_module.title
+= raw render_html(content_module.content)
+
+= render( :partial => 'pages/transparency_stats', :locals => {:transparency_stats => Stats::TransparencyStats.new.load})

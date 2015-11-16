@@ -1,0 +1,12 @@
+<% events = GetTogether.find(23).events.with_number_of_attendees.joins(:slugs).having('events.capacity > number_of_attendees').within(15,:origin=>user.postcode).limit(3) %>
+<% if events.length > 0 %>
+<p>Here are your closest polling booths that still need volunteers:</p>
+<ul>
+  <% events.each do |event| %>
+    <li><a href="http://www.getup.org.au/events/<%= event.slug.name %>"><%= event.name %></a> Join <%= event.host.first_name %>'s team - <%= event.name %>, <%= event.street %> (<a href="http://www.getup.org.au/events/<%= event.slug.name %>">click here to volunteer</a>)</li>
+  <% end %>
+</ul>
+<% else %>
+  <p>Search for your nearest team that still needs volunteers.</p>
+  <p><a href="http://www.getup.org.au/volunteer">www.getup.org.au/volunteer</a></p>
+<% end %>

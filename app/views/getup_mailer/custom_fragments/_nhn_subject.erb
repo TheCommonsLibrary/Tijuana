@@ -1,0 +1,6 @@
+<% event = GetTogether.find(1).events.closest(:origin => user.postcode).first
+if user.postcode %>
+<%= event.suburb %> store
+<% else %>
+shops
+<% end %>

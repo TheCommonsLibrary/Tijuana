@@ -1,0 +1,38 @@
+- track_analytics_dimension 'Donation Mode', 5, 'Upgrade'
+
+.donate-well.well.clearfix.donation-upgrade-module
+  .top-section
+    %h2
+      = content_module.title.upcase
+      %hr
+
+    - if content_module.content.present?
+      .intro= raw render_html(content_module.content)
+
+    %label.credit-secure-icon
+      %i.icon-lock
+      SECURE
+
+  = form_tag(take_action_path(@campaign, @page_sequence, @page), id: 'action-form', class: 'auto-submittable', validate: true) do |f|
+    = form_errors(content_module.donation_upgrade) if content_module.donation_upgrade
+    = hidden_field_tag :http_referrer, @http_referrer
+    = hidden_field_tag :module_id, content_module.id
+    = email_tracking_field
+    = secure_token_field
+
+    .screens
+      .screen-wrap
+        .screen-content
+          .screen.amount-screen.active#step-1-amount
+            - if (donation = content_module.donation_to_upgrade)
+              = render "pages/content_modules/donation_upgrade/donation", donation: donation
+            - else
+              - content_module.alert_tech_that_the_secure_token_failed
+              = render "pages/content_modules/donation_upgrade/error"
+
+  .bottom-section
+    %p.electoral-act
+      Donations of #{AppConstants.legal_disclosure_amount} or more (indexed annually) may be subject to disclosure to the Australian Electoral Commission under the Commonwealth Electoral Act 1918.
+      %br
+      %br
+      If we raise more than the cost of this campaign, your donation will be used to help cover the cost of ongoing GetUp campaigns that have the same purpose.

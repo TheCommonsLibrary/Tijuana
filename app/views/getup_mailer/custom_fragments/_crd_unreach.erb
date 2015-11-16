@@ -1,0 +1,3 @@
+<% d = user.donations.where("frequency != 'one_off' AND active = FALSE").joins(:page => { :page_sequence => :campaign}).where(:campaigns => {:id => 5}).order("last_donated_at DESC").limit(1) %>
+<% if d.length > 0 %><%= '$%.2f' % (d.first.amount_in_cents/100.0) %>  <%= d.first.frequency %><% end %>
+<% d = nil %>

@@ -1,0 +1,86 @@
+@import "../public";
+@import "nbia/variables";
+@import "nbia/header";
+@import "nbia/header_desktop";
+@import "nbia/footer";
+@import "nbia/footer_desktop";
+@import "nbia/action_page";
+@import "nbia/action_page_desktop";
+@import "nbia/home_page";
+@import "nbia/home_page_desktop";
+@import "nbia/accordion_module";
+@import "nbia/donation_module";
+
+body {
+  font-family: "raleway", san-serif;
+  background-color: $background;
+}
+
+.container {
+  width: inherit;
+}
+
+.content-wrap a {
+  color: $white;
+  text-decoration: underline;
+}
+
+.getup-logo {
+  position: absolute;
+  width: 80px;
+  top: 0px;
+  left: 5px;
+}
+
+.top-block {
+  position: relative;
+
+  .header-container::before {
+    content: image-url('themes/nbia/getup_logo_white.svg');
+    position: absolute;
+    width: 75px;
+    top: 5px;
+    left: 10px;
+  }
+}
+
+.alert {
+  text-shadow: none;
+}
+
+//
+// Responsive: Tablet to desktop
+// --------------------------------------------------
+@media (min-width: 768px) {
+  body { letter-spacing: 0.1em; }
+
+  .container.top-block {
+    max-width: 979px;
+  }
+  .top-block .header-container::before {
+    width: 100px;
+    top: 10px;
+    left: 40px;
+  }
+  .getup-logo {
+    top: 10px;
+    left: 65px;
+  }
+  .alert-danger, .alert-error {
+    width: 100%;
+  }
+
+  section { margin-left: 0px; }
+}
+
+
+@media (min-width: 768px) and (max-width: 979px) {
+  section { margin-left: 0px; }
+}
+
+//
+// Responsive: desktop and up
+// --------------------------------------------------
+@media (min-width: 980px) {
+  section { margin-left: 0px; }
+}

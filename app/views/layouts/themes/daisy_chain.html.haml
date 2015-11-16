@@ -1,0 +1,20 @@
+- display_modal = @page.sidebar_content_modules.any? && !@page.tag_list.include?("disable-sidebar-modal")
+- if display_modal
+  - content_for :extra_css do
+    = stylesheet_link_tag 'themes/screen-daisy_chain'
+= render :partial => "layouts/head"
+%body{:id => body_id, :class => body_class, 'data-environment' => Rails.env}
+  - if display_modal
+    .modal-backdrop.initial
+  #skip-to-main-content
+    %a{href:"#content"}Skip to main content
+  = render :partial => "layouts/header"
+  #content
+  = yield
+  - if display_modal
+    = render 'modal_ask'
+  = render :partial => "layouts/footer"
+  .device-phone.visible-phone
+  .device-tablet.visible-tablet
+  .device-desktop.visible-desktop
+  = render :partial => "layouts/footer_js"

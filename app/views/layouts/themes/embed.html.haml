@@ -1,0 +1,10 @@
+- content_for :extra_js do
+  = javascript_include_tag 'https://d68ej2dhhub09.cloudfront.net/scripts/iframeResizer.contentWindow.min.js'
+  = javascript_include_tag 'embedded'
+= render :partial => "layouts/head"
+= render :partial => "common/flash_notifications"
+= render :partial => "common/no_script"
+
+%body{:id => body_id, :class => body_class(['embed'])}
+  = yield
+  = render :partial => "layouts/footer_js"

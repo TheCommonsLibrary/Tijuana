@@ -1,0 +1,55 @@
+- call_mp_module = content_module
+:css
+  .info {
+    font-size: 0.8em !important;
+    margin-top: 5px;
+  }
+
+.well.contact-mp-module
+  %h2
+    = call_mp_module.title.upcase
+  %p.caption
+    = raw render_html(call_mp_module.content)
+
+  = render :layout => "pages/form_with_user_lookup", :locals => {:content_module => content_module} do
+    - if call_mp_module.arbitrary_target
+      = render :partial => 'mps/schedule_call_field', :locals => { :call_mp_module => content_module, :targets => nil }
+    - else
+      - if !call_mp_module.show_steps?
+        %p.find-mp
+          %strong
+            Enter your postcode to find
+            %u your
+            = content_module.target
+      - if call_mp_module.show_steps?
+        %label{class: mp_steps_class(call_mp_module)}
+          %span.badge.step-number-label
+            Step 2
+          Enter your postcode to find your #{content_module.target}
+      - else
+        %label{for: 'mp_postcode'}= "Postcode"
+      = fields_for :mp do |f|
+        = f.text_field :postcode, :placeholder => "eg. 2010"
+        #mps-lookup
+        #fallback-lookup
+        #select-senator
+        .clearfix
+    - if call_mp_module.has_custom? :form_fields
+      .custom-fields.custom-fields-above
+        = fields_for call_mp_module.user_call do |f|
+          = render_custom_form_fields f, call_mp_module.custom(:form_fields), call_mp_module
+      .clearfix
+    %hr
+    = form_errors(call_mp_module.user_call)
+    = button_tag call_mp_module.button_text.upcase, :class => "btn btn-primary btn-large btn-full ask-submit-button fb-like-above", :disable_with => 'Please Wait...'
+  %hr
+
+:javascript
+  $(function() {
+    lookupMP("#{lookup_mps_path}", "#{ensure_in_target_party_mps_path}", "#{select_senator_mps_path}", "#{call_mp_module.id}", #{call_mp_module.show_steps?});
+    scheduleCall($('.contact-mp-module #action-form'));
+  });
+
+- if call_mp_module.show_steps?
+  :javascript
+    $(function(){ validateMPLookup('#action-form') });

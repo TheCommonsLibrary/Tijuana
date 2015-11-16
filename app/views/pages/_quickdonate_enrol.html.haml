@@ -1,0 +1,37 @@
+- dm = @page.previous.get_donation_module
+.quick-donate.modal.daisy-chain.hide
+  .modal-header
+    %button.close.dismiss Skip
+
+  .modal-body
+    .content#action
+      .clearfix.donate-well.well.modal-well(style="display: block;")
+        .top-section
+          %h2
+            One More Step
+            %hr
+          .intro
+            = raw render_html(dm.quick_donate_text)
+            .content-end
+          %label.credit-secure-icon
+            %i.icon-lock
+            SECURE
+        .confirmation-btn
+          = button_tag dm.quick_donate_button_text, class: 'btn btn-primary btn-large btn-full'
+
+  .modal-footer
+    %button.close.dismiss Skip
+
+:javascript
+  $(function(){
+    postDonateModal(
+      $('.quick-donate.modal'),
+      $('.quick-donate.modal .btn-primary'),
+      $('.quick-donate.modal .dismiss'),
+      '#{setup_quickdonate_users_path}',
+      '#{image_path('common/lib/gritter/success.png')}',
+      '#{image_path('common/lib/gritter/error.png')}',
+      'Your payment information has been saved.',
+      'Oops!! Something went wrong while trying to save your payment details.'
+    )
+  });

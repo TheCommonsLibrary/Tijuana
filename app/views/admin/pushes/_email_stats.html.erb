@@ -1,0 +1,15 @@
+<table class="email-statistics">
+  <tr>
+    <% EmailStatsTable.columns.each do |column| %>
+      <th class="<%= column.downcase.gsub(/[^a-zA-Z%()]+/, '-').gsub('-%', ' percentage').gsub(/\(.*\)/, '').gsub('percentage-', 'percentage') %>"><%= column %></th>
+    <% end %>
+  </tr>
+  <% stats_table.rows.each do |row| %>
+    <tr>
+      <% row.each_with_index do |value, index| %>
+        <td class="<%= EmailStatsTable.columns[index].downcase.gsub(/[^a-zA-Z]+/,
+      '-') .gsub('-percentage', ' percentage') %>"><%= value %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

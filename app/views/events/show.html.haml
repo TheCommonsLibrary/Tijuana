@@ -1,0 +1,118 @@
+%article
+  .container
+    %section
+      %article
+        #content-modules.without-ask
+          .inner
+            #main-content-modules.left
+              .inner
+                #main-content-header
+                  .header
+                    != @event.get_together.event_header_html
+                  %h1
+                    .left
+                      = @event.name
+                      .pull-right
+                        #action
+                          .fb-like-above
+                  %p#event-breadcrumb
+                    - crumb_gt = @event.get_together.community_get_together.present? ? @event.get_together.community_get_together : @event.get_together
+                    = link_to(crumb_gt.name, get_together_url(crumb_gt.friendly_id)) + " > " + @event.name
+                  %hr
+
+                  - if @event.confirmed?
+                    .event-content
+                      != @event.get_together.event_content_html
+                  - if @event.has_host?(current_user) && can_be_changed?(@event)
+                    %span.is-host You are hosting this event
+                - if @event.has_attendee?(current_user) && !@event.has_host?(current_user)
+                  #attendee-status
+                    = form_tag(cancel_attendance_event_path(@event), :method => :post, :id => "cancel-attendance-form", :style => "display:none;") do
+                      = text_field_tag "user[email]", current_user.try(:email), :class => current_user.blank? ? "required email" : "required email hidden", :size => 50
+                      = text_area_tag "user[reason]", nil, :rows => 3, :cols => 25
+                    %span
+                      Attending: ✓ Yes
+                      %a#cancel-attendance-link{:href => "#"} No
+                - if !@event.confirmed?
+                  .event-unconfirmed
+                    != @event.get_together.event_thank_you_html
+                - elsif !@event.canceled?
+                  .details-group
+                    .column.details.left
+                      %h2 Details
+                      %ul.bold
+                        %li= @event.date.strftime("%A")
+                        %li= @event.date.strftime("#{@event.date.day.ordinalize} %B %Y")
+                        %li= pretty_time(@event.time, @event.date)
+                        - if @event.has_attendee?(current_user) || @event.has_host?(current_user)
+                          %li= @event.phone
+                        %li
+                          %span.orange
+                            = @event.status
+                            event
+                            - if @event.capacity.present?
+                              \- capacity of #{pluralize(@event.capacity, 'guest')}.
+                    .column.location.right
+                      %h2 Location
+                      %ul.bold
+                        %li= @event.address
+                    - unless @event.host_notes.blank?
+                      .host-notes
+                        %h2 From the host
+                        = raw sanitize(simple_format(@event.host_notes), :tags => %w(br p) )
+                  .create-edit-event
+                    - if can?(:manage, @event) && !['canceled', 'ended'].include?(@event.status)
+                      = link_to "* Edit Event", edit_event_path(@event), :class => 'create btn btn-primary btn-large'
+
+                    - if can?(:manage, @event) && !['canceled', 'ended'].include?(@event.status) && !@event.confirmed?
+                      = form_tag(confirm_event_path(@event), :method => :post) do
+                        = hidden_field_tag 'cd', @event.confirmation_code
+                        = submit_tag 'Confirm Event', :class => 'create pointer'
+                  %button#event-get-directions.btn.btn-primary.btn-large
+                    Directions
+                    %i.icon-random
+                  .clear
+                  #event-location-map
+                  = render :partial => "common/add_this", :locals => { :tweet_text => @event.get_together.tweet_text, :share_link => event_url(@event) }
+                - else
+                  %p This event has been cancelled
+
+      #action
+        .well
+          .sidebar
+            = render :partial => "actions"
+      .clearfix
+      - if @event.confirmed?
+        %article.article
+          %hr
+          = render :partial => 'comments', :locals => {:comments => @event.root_comments}
+= include_facebook_like_from_theme(@event.get_together.theme, 'light', 'button_count')
+- unless Rails.env == "test"
+  - event_address = @event.street.blank? ? @event.suburb : "#{@event.street}, #{@event.suburb}"
+  - email_body = "Event Details:\nDate: #{@event.date.strftime("%A")} #{@event.date.strftime("#{@event.date.day.ordinalize} %B %Y")}\n"
+  - email_body << "Time: #{pretty_time(@event.time, @event.date)}\nLocation: #{event_address}\n"
+  - email_body << "Status: #{@event.status} event - capacity of #{pluralize(@event.capacity, 'guest') }\n"
+  - email_body << "From the host: #{@event.host_notes}" unless @event.host_notes.blank?
+  :javascript
+    $(function() {
+      getup.geo.doWithCurrentPosition(function(position) {
+        $('#event-get-directions').show().click(function() {
+          getup.geo.showDirections(position , { latitude: #{@event.address_latitude}, longitude: #{@event.address_longitude} });
+        });
+      });
+    });
+
+:javascript
+  $(function() {
+    $('#cancel-attendance-link').click(function(){
+      $('#cancel-attendance-form').submit();
+      return false;
+    });
+  });
+
+  $(function() {
+    configureEmailShare("Checkout this event: '#{@event.name}'", "#{raw escape_javascript(email_body)}");
+  });
+
+= render :partial => "/common/location_map", :locals => { :map_selector => "#event-location-map", :get_together => @event.get_together, :bind_selector => "#event-location", :variant => "event_viewer" }
+= render :partial => "common/events_assets", locals: {get_together: @event.get_together}

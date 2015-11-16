@@ -1,0 +1,18 @@
+<% unless Rails.env.test? %>
+  <%= javascript_tag do %>
+    var addthis_config = {
+      data_track_clickback: false,
+      data_track_addressbar: false,
+      ui_use_css: true,
+      ui_header_color: "#FFFFFF",
+      ui_header_background: "#000000",
+      ui_cobrand: "GetUp!"    
+    };
+
+    var addthis_share = {
+      templates: {
+        twitter: '{{title}} {{url}} via @GetUp'
+      }
+    };
+  <% end %>
+<% end %>

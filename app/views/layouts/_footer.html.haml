@@ -1,0 +1,64 @@
+%footer
+  .container
+    %section
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header
+            = link_to("DONATE", "/donate", :title => "Make a donation")
+          %span.verbose
+            %li
+              = link_to("Make a donation", "/donate", :title => "Make a donation")
+            %li
+              = link_to("Donations disclosure", "/about/disclosure", :title => "GetUp! donations disclosure")
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header
+            = link_to("CAMPAIGNS", "/campaigns", :title => "Campaigns")
+          %span.verbose
+            %li
+              = link_to("Current campaigns", "/campaigns", :title => "Current campaigns")
+            %li
+              = link_to("Suggest a campaign", "/community/campaign-suggestions", :title => "Suggest a campaign")
+            %li
+              %a{:href => "http://www.communityrun.org", :title => "Start a campaign on CommunityRun"} Start a CommunityRun campaign
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header
+            = link_to("COMMUNITYRUN", "http://www.communityrun.org", :title => "CommunityRun")
+          %span.verbose
+            %li
+              %a{:href => "http://www.communityrun.org", :title => "CommunityRun"} CommunityRun.org
+            %li
+              %a{:href => "http://www.communityrun.org/categories", :title => "Current CommunityRun campaigns"} Current campaigns
+            %li
+              %a{:href => "http://www.communityrun.org/petition/new?source=header", :title => "Start a campaign on CommunityRun"} Start a campaign
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header
+            = link_to("ABOUT GETUP!", "/about", :title => "About GetUp!")
+          %span.verbose
+            %li
+              = link_to("About", "/about", :title => "About GetUp!")
+            %li
+              = link_to("FAQ", "/about/faq", :title => "FAQ")
+            %li
+              = link_to("Contact us", "/about/contact-us", :title => "Contact Us")
+            %li
+              = link_to("Volunteer!", "http://action.getup.org.au", :title => "Opportunities at GetUp!")
+            %li
+              = link_to("Work at GetUp!", "/getup-is-hiring", :title => "Opportunities at GetUp!")
+            %li
+              = link_to("Privacy", "/about/privacy", :title => "Privacy")
+            %li
+              = link_to("The Board", "/getup-board", :title => "The GetUp Board")
+            %li
+              = link_to("Unsubscribe", "/unsubscribe", :title => "Unsubscribe")
+    %section
+      .acknowledgement-of-country
+        Our team acknowledges that we meet and work on the land of the Gadigal people of the Eora Nation. We wish to pay respect to their Elders &mdash; past, present and future &mdash; and acknowledge the important role all Aboriginal and Torres Strait Islander people continue to play within Australia and the GetUp community.
+        %br
+        %strong WARNING: Aboriginal and Torres Strait Islander people are warned that this website may contain images or names of deceased persons.
+      .copyright
+        &copy;
+        = Date.today.year
+        GetUp! All rights reserved. Authorised by #{AppConstants.authorised_by}, #{AppConstants.office_address}.

@@ -1,0 +1,23 @@
+%h4
+  ="#{link_to event.name, event_path(event.friendly_id), target: '_blank'} for #{link_to event.get_together.name, get_together_path(event.get_together.friendly_id), target: '_blank'}".html_safe
+  - if !event.in_future?
+    (in the past)
+  - elsif event.canceled?
+    (cancelled)
+  - else
+    (upcoming)
+
+%p
+  %strong="Where: "
+  = event.address
+%p
+  %strong="When: "
+  ="#{pretty_date(event.date)} #{pretty_time(event.time, event.date)}"
+- unless event.host_notes.blank?
+  %p
+    %strong="Host Notes:"
+    = event.host_notes
+%p
+  ="#{pluralize(event.attendees.count, 'person')} attending"
+  =event.capacity.present? ? " / #{event.capacity} person capacity." : ''
+

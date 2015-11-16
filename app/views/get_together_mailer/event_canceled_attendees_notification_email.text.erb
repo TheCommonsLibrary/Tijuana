@@ -1,0 +1,10 @@
+Dear Friend,
+
+
+The event "<%= @event.name %>" you had registered to go to has been cancelled by its host.
+
+We don't want you to miss out on the fantastic opportunity to meet other GetUp! members and share your vision.
+Please go to the following link to find an event near you: <%= get_together_url(@event.get_together.friendly_id) %>
+
+Thanks for all you do,
+The GetUp! team

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= page_title %></title>
+
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <meta name="keywords" content="getup, action, australia, australian, politics, political, progressive, movement, participation, community, campaigns"/>
+  <meta name="description" content="<%= open_graph_description %>"/>
+  <!--Facebook Open Graph meta tags-->
+  <meta property="og:title" content="<%= open_graph_title %>"/>
+  <meta property="og:description" content="<%= open_graph_description %>"/>
+  <meta property="og:image" content="<%= open_graph_share_image_path %>"/>
+  <meta property="og:type" content="non_profit"/>
+  <meta property="og:site_name" content="GetUp! Action for Australia"/>
+  <meta property="fb:admins" content="<%= AppConstants.facebook_admin_id %>"/>
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+
+  <!-- END OF Facebook Open Graph meta tags-->
+  <script type="text/javascript">
+      var myfont_webfont_test = false;
+      var woffEnabled = true;
+      var customPath = "/fonts";
+  </script>
+  <%= stylesheet_link_tag 'common/legacy-screen', 'themes/screen-pokies' %>
+
+  <%= yield :extra_css %>
+
+  <!--[if gt IE 6]>
+  <%= stylesheet_link_tag 'common/ie-screen' %>
+  <![endif]-->  
+
+  <!--[if gt IE 8]>
+  <%= stylesheet_link_tag 'common/ie9-screen' %>
+  <![endif]-->
+
+  <%= include_jquery %>
+  <%= javascript_include_tag 'public/lib/jquery.jcarousel' %>
+
+  <%= csrf_meta_tag %>
+  <!--
+  /*
+   * MyFonts Webfont Build ID 741383, 2011-04-04T00:56:43-0400
+   *
+   * The fonts listed in this notice are subject to the End User License
+   * Agreement(s) entered into by the website owner. All other parties are
+   * explicitly restricted from using the Licensed Webfonts(s).
+   *
+   * You may obtain a valid license at the URLs below.
+
+   * Webfont: Swiss 721 Bold Condensed
+   * URL: http://new.myfonts.com/fonts/bitstream/swiss-721/bold-condensed/
+   * Foundry: Bitstream
+   * Copyright: Copyright 1990-2003 Bitstream Inc. All rights reserved.
+   * License: http://www.myfonts.com/viewlicense?1056
+   * Licensed pageviews: 1,000,000/month
+   * CSS font-family: Swiss721BT-BoldCondensed
+   * CSS font-weight: normal
+   */
+  -->
+  
+  <script type="text/javascript">
+    WebFontConfig = {
+      google: { families: [ 'Lora:400italic:latin', 'Open+Sans+Condensed:300:latin', 'Passion+One:700:latin', 'Open+Sans:400,700:latin' ] }
+    };
+    (function() {
+      var wf = document.createElement('script');
+      wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+        '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+      wf.type = 'text/javascript';
+      wf.async = 'true';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(wf, s);
+    })();
+  </script>
+
+</head>
+
+<body class="<%= body_class %>" id="pokies">
+<div id="header_container"></div>
+<%= render :partial => "common/no_script" %>
+<%= yield :before_main %>
+<div id="main">
+  <% if params[:controller].include? 'devise/' %>
+      <div class="devise-content">
+        <div class="inner">
+          <%= yield %>
+        </div>
+      </div>
+  <% else %>
+      <%= yield %>
+  <% end %>
+  <div class="content-end"></div>
+</div>
+<div id="footer-lifeline">
+  <p class="lifeline">If gambling is a problem for you, call <a href="http://www.lifeline.org.au">Lifeline</a> on 13 11 14</p>
+</div>
+<div id="footer-container-top">
+  <%= render :partial => "layouts/legacy/footer_top" %>
+</div>
+<div id="footer-container-bottom">
+  <%= render :partial => "layouts/legacy/footer_bottom" %>
+</div>
+<%= javascript_tag do %>
+    var ajaxWaitImagePath = '<%= image_path("common/throbber.gif") %>';
+<% end %>
+<%= render :partial => "layouts/add_this_config" %>
+<%= render :partial => 'common/analytics' %>
+
+<%= include_addthis %>
+<%= javascript_include_tag 'public' %>
+<script type="text/javascript">
+    $.datepicker.setDefaults({dateFormat:'dd-mm-yy'});
+</script>
+</body>
+</html>

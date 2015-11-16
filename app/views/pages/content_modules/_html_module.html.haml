@@ -1,0 +1,6 @@
+- if section == :sidebar
+  .sidebar
+    = raw render_html(content_module.content)
+- else
+  .content-module.html-module.main-content
+    = raw render_html(content_module.content)

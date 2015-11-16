@@ -1,0 +1,8 @@
+<p>
+  <% if VisionSurveyResult.find_by_user_id(user) %>
+      <% key = UserIdEncoder.encode(user) %>
+      <a href="https://getup.org.au/vision2014?key=<%= key %>&t=<%= URI.encode_www_form_component(set_token(user, email, recipients_for_test)) %>">Vision Survey 2014</a>
+  <% else %>
+      <a href="https://getup.org.au/vision2014?t=<%= URI.encode_www_form_component(set_token(user, email, recipients_for_test)) %>">Vision Survey 2014</a>
+  <% end %>
+</p>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8 no-js" lang="en"> <![endif]-->
+<!--[if (gte IE 9)]><html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if !(IE)]><!--><html  class="no-js" lang="en"> <!--<![endif]-->
+
+%head
+  %meta{charset: "utf-8"}
+  %title
+    = @page.name
+
+  %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}
+  %meta{"http-equiv" => "content-type", content: "text/html; charset=utf-8"}
+  %meta{name: "keywords", content: "no business in abuse, asylum seeker, refugee, company, divest"}
+  %meta{name: "description", content: open_graph_description}
+  %meta{name: "robots", content: "noodp"}
+
+  %meta{property: "og:title", content: open_graph_title}
+  %meta{property: "og:description", content: open_graph_description}
+  %meta{property: "og:image", content: open_graph_share_image_path}
+  %meta{property: "og:site_name", content: "No Business In Abuse"}
+  %meta{property: "fb:admins", content: AppConstants.facebook_admin_id}
+  %meta{property: "og:url", content: request.original_url}
+  %meta{property: "og:type", content: "article"}
+  %meta{property: "article:publisher", content: AppConstants.facebook_page_link}
+
+  %link{rel: "apple-touch-icon-precomposed", sizes: "144x144", href: image_path("themes/nbia/favicons/apple-touch-icon-144x144.png")}
+  %link{rel: "apple-touch-icon-precomposed", sizes: "152x152", href: image_path("themes/nbia/favicons/apple-touch-icon-152x152.png")}
+  %link{rel: "icon", type: "image/png", href: image_path("themes/nbia/favicons/favicon-32x32.png"), sizes: "32x32"}
+  %link{rel: "icon", type: "image/png", href: image_path("themes/nbia/favicons/favicon-16x16.png"), sizes: "16x16"}
+  %meta{name: "application-name", content: "No Business In Abuse"}
+  %meta{name: "msapplication-TileColor", content: "#FFFFFF"}
+  %meta{name: "msapplication-TileImage", content: image_path("themes/nbia/favicons/mstile-144x144.png")}
+
+  = yield :extra_css
+  = stylesheet_link_tag 'themes/screen-nbia'
+
+  = csrf_meta_tag
+
+  /[if lt IE 9]
+    = javascript_include_tag 'common/lib/html5'
+
+  %link{href: "//fonts.googleapis.com/css?family=Oswald:300,700|Raleway:300,700", rel: "stylesheet", type: "text/css"}
+  = javascript_include_tag 'common/lib/jquery.min'
+  = yield :extra_js
+
+  %script{type: "text/javascript"}
+    document.documentElement.className = document.documentElement.className.replace("no-js","js");

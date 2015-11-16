@@ -1,0 +1,68 @@
+<% if result = VisionSurveyResult.find_by_user_id(user) %>
+    <div>
+      <p>
+        <strong>These results are for the email:</strong><br/>
+        <%= user.email %>
+      </p>
+
+      <% if result.q4_priority_issue %>
+          <p>
+            <strong>Your top issue is:</strong><br/>
+            <%= VisionSurveyQ3PriorityIssue.get_full_issue_name(result.q4_priority_issue) %>
+          </p>
+      <% end %>
+
+      <% if result.vision_survey_q3_priority_issues.size > 0 %>
+          <div>
+            <p><strong>The issues that you ranked as top priority (1, 2 or 3) are:</strong></p>
+            <ul>
+              <% result.vision_survey_q3_priority_issues.each do |issue| %>
+                  <li><%= issue.full_issue_name %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+      <% if result.vision_survey_q6_skills.size > 0 %>
+          <div>
+            <p><strong>
+              The GetUp movement encourages democratic participation in ways that suit you. You generously volunteered
+              for the following:
+            </strong></p>
+            <ul>
+              <% result.vision_survey_q6_skills.each do |skill| %>
+                  <li><%= skill.name %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+      <p><strong>
+        Thank you for your continued support and generosity, we're really excited to have you on board. Someone will be
+        in touch again soon about next steps.
+      </strong></p>
+
+      <% if result.has_social_media? %>
+          <div>
+            <p><strong>
+              To better understand our online habits, you also told us that you use the following social media apps:
+            </strong></p>
+
+            <ul>
+              <% result.social_media.each do |social| %>
+                  <li><%= social %></li>
+              <% end %>
+            </ul>
+
+            <p><strong>
+              This will help us understand the types of content you like and the channels we should be using to reach
+              you.
+            </strong></p>
+          </div>
+      <% end %>
+
+      <% if result.new_details_supplied %>
+          <p><strong>We've also updated your contact information - thanks for updating your details!</strong></p>
+      <% end %>
+    </div>
+<% end %>

@@ -1,0 +1,37 @@
+<div id="radio-lookup-message">
+  <%= raw @msg %>
+</div>
+
+<%= render :partial => "target_field" %>
+
+
+<% unless @shows_now.empty? %>
+    <% @shows_now.each do |show| %>
+        <%= render :partial => "radio_shows", :locals => {:show => show} %>
+    <% end %>
+<% end %>
+
+<div id="more-anchor">
+  <a href="#" class="radio-anchor">more...</a>
+</div>
+
+<div id="other-shows">
+  <% unless @shows_not_now.empty? %>
+      <% @shows_not_now.each do |show| %>
+          <%= render :partial => "radio_shows", :locals => {:show => show} %>
+      <% end %>
+  <% end %>
+</div>
+
+<div id="less-anchor">
+  <a href="#" class="radio-anchor">less...</a>
+</div>
+
+
+<script>
+    $(function () {
+        initialiseRadioList(<%= !@shows_now.empty? %>, <%= !@shows_not_now.empty? %>);
+    });
+
+</script>
+

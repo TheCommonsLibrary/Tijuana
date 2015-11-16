@@ -1,0 +1,46 @@
+%div(style='margin-top:20px;margin-bottom:10px;font-size:1.1em;font-weight:bold;')
+  Member Statistics
+%table
+  %tr
+    %th(style='width:150px;padding-right:10px;')
+    %th(style='padding-right:10px;')
+      1 Week
+    %th
+      Qty/Sends
+    %th
+      26 Week Average
+    %th
+      Qty/Sends
+  %tr
+    %td(style='width:150px;')
+      New
+    %td(style='text-align:center;')
+      =number_with_precision(user_stat.one_week_object.new_members, precision: 0, delimiter: ',')
+    %td(style='text-align:center;')
+      = divide_and_return_as_percentage(user_stat.one_week_object.new_members, push_stat.one_week_object.group_stats[:average_sends])
+    %td(style='text-align:center;')
+      =number_with_precision(user_stat.six_month_object.new_members, precision: 0, delimiter: ',')
+    %td(style='text-align:center;')
+      = divide_and_return_as_percentage(user_stat.six_month_object.new_members, push_stat.six_month_object.group_stats[:average_sends])
+  %tr
+    %td(style='width:150px;')
+      Unsubscribed
+    %td(style='text-align:center;')
+      =number_with_precision(user_stat.one_week_object.unsubscribed_members, precision: 0, delimiter: ',')
+    %td(style='text-align:center;')
+      = divide_and_return_as_percentage(user_stat.one_week_object.unsubscribed_members, push_stat.one_week_object.group_stats[:average_sends])
+    %td(style='text-align:center;')
+      =number_with_precision(user_stat.six_month_object.unsubscribed_members, precision: 0, delimiter: ',')
+    %td(style='text-align:center;')
+      = divide_and_return_as_percentage(user_stat.six_month_object.unsubscribed_members, push_stat.six_month_object.group_stats[:average_sends])
+  %tr
+    %td(style='width:150px;')
+      Hard Bounces/Spam/Invalid
+    %td(style='text-align:center;')
+      =number_with_precision(user_stat.one_week_object.dropped_members, precision: 0, delimiter: ',')
+    %td(style='text-align:center;')
+      = divide_and_return_as_percentage(user_stat.one_week_object.dropped_members, push_stat.one_week_object.group_stats[:average_sends])
+    %td(style='text-align:center;')
+      =number_with_precision(user_stat.six_month_object.dropped_members, precision: 0, delimiter: ',')
+    %td(style='text-align:center;')
+      = divide_and_return_as_percentage(user_stat.six_month_object.dropped_members, push_stat.six_month_object.group_stats[:average_sends])

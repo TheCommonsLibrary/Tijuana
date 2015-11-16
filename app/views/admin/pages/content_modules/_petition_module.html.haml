@@ -1,0 +1,63 @@
+%p#value_type_controls_error.error.hidden Please choose a Value type for this module
+%label.req Value type
+#value_type_controls.radio-horizontal
+  .radio-option
+    %label
+      %input{:name => "dummy_member_value_type", :type => "radio", :value => "voice"}
+      Voice (e.g. petition)
+  .radio-option
+    %label
+      %input{:name => "dummy_member_value_type", :type => "radio", :value => "time"}
+      Time (e.g. event RSVP)
+.info
+  The type of member value that this module records.  Petition is a common example of the "voice" type, while "time" is usually associated with events.  NB: this is for internal use only.
+= f.label :title, 'Title', :class => "req"
+= f.text_field :title
+= f.label :content, 'Explanatory text'
+= f.text_area :content, :rows => 4
+= f.label :petition_statement, 'Petition statement', :class => "req"
+= f.text_area :petition_statement, :rows => 4
+= f.label :signatures_target, 'Target number', :class => "req"
+= f.text_field :signatures_target
+= f.label :thermometer_threshold, 'Show progress at', :class => "req"
+= f.text_field :thermometer_threshold
+= render :partial => "admin/pages/content_modules/activity_stream_templates", :locals => {:f => f}
+= f.label :button_text, 'Button text', :class => "req"
+= f.text_field :button_text
+= f.label :sign_with_facebook, 'Sign with Facebook'
+= f.check_box :sign_with_facebook
+= f.label :facebook_app_id, 'Facebook App ID'
+= f.text_field :facebook_app_id
+.info
+  If empty, will use the default GetUp! App ID: #{AppConstants.facebook_sign_petition_module_app_id}
+= render partial: "admin/pages/content_modules/custom_fields_edit", locals: {f: f}
+:javascript
+  $(function() {
+    toggle_edit_custom_fields();
+
+    var valueTypeSelect = $('#page_member_value_type'),
+      valueTypeControls = $('#value_type_controls');
+    
+    function setSelectValue(e) {
+      var value = $(e.target).find('input').val() || $(e.target).val();
+      valueTypeSelect.val(value);
+      $('#value_type_controls_error').addClass('hidden');
+    }
+    valueTypeControls.click(setSelectValue);
+    
+    // set existing value on page load
+    valueTypeControls
+      .find('input[value="'+ valueTypeSelect.val() +'"]:radio')
+      .prop("checked", true);
+    
+    // hide the select so we don't confuse people
+    valueTypeSelect.closest('div').css('visibility', 'hidden');
+    
+    // show the select when the petition module is removed
+    valueTypeControls
+      .closest('li.petition_module')
+      .find('a[id^="remove-module-"]')
+      .click(function() {
+    valueTypeSelect.closest('div').css('visibility', 'visible');
+    });
+  });

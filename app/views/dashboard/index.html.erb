@@ -1,0 +1,36 @@
+<% tabs = [:personal_details, :donations, :donation_history, :events] %>
+
+<div class="newlook">
+  <!--Main-->
+  <div id="main">
+    <div class="content-holder" id="tabs">
+      <!--Sub Nav-->
+      <ul>
+        <% tabs.reverse.each do |tab| # floated right so reversed %>
+          <li><a href="#<%= tab %>"><%= tab.to_s.humanize.upcase %></a></li>
+        <% end %>
+
+      </ul>
+
+      <div class="main-block">
+        <% tabs.each do |tab| %>
+         <div id="<%= tab %>" >
+             <%= render :partial => tab.to_s %>
+         </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $(function () {
+      $("#tabs").tabs({selected: <%= tabs.length-1 %>}); 
+      if (window.location.hash) {
+        var tab_to_flick_to = window.location.hash.substring(1);
+        $( "#tabs" ).tabs({selected: tab_to_flick_to});
+      } else {
+        $("#tabs").tabs({selected: <%= tabs.length-1 %>}); 
+      }
+      $('.stripe-me tr:even td').addClass('alt');
+    });
+</script>

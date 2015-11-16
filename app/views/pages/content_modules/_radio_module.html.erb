@@ -1,0 +1,32 @@
+<% radio_module = content_module %>
+<div class="ask-module">
+  <div class="module-split">
+    <div class="corner"></div>
+    <h3><%= radio_module.title.upcase %></h3>
+
+    <p class="ask-module-content"><%= raw render_html(radio_module.content) %></p>
+    <%= render :layout => "pages/form_with_user_lookup", :locals => {:content_module => content_module} do %>
+        <div>
+          <h6 class="enter-postcode">ENTER YOUR POSTCODE TO FIND <span class="highlighted">RADIO</span> STATIONS</h6>
+          <%= fields_for :radio do |f| %>
+              <%= f.text_field :postcode, :placeholder => "eg. 2010" %>
+          <% end %>
+          <noscript>
+            <div id="nojavascript">
+              Your browser does not support JavaScript, unfortunately you will not be able to take this action.
+            </div>
+          </noscript>
+          <div id="radio-lookup"></div>
+
+          <%= submit_tag radio_module.button_text.upcase, :class => "ask-submit-button", :disable_with => "Please Wait…" %>
+        </div>
+    <% end %>
+  </div>
+  <!-- // .module-split -->
+</div><!-- // .ask-module -->
+
+<script>
+    $(function () {
+        lookupRadio('<%= lookup_radios_path %>', <%= radio_module.id %>);
+    });
+</script>

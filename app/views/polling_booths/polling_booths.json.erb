@@ -1,0 +1,34 @@
+{
+  "all": [
+  <% @polling_booths.each_with_index do |event, i| %> 
+    {
+      <% if (event.has_attribute?(:distance)) %>"order": <%= (i + 1).to_s %>,<% end %>
+      "id": <%= raw(event.id.to_json) %>,
+      "name": <%= raw(event.premises_name.to_json) %>,
+      "street": <%= raw(event.premises_name.to_json) %>,
+          "geo": {
+            "lat": <%= event.latitude %>,
+            "lng": <%= event.longitude %>
+          },
+      "address": <%= raw(event.address.to_json) %>,
+      "suburb": <%= raw(event.suburb.to_json) %>,
+      "electorate": <%= raw((event.electorates.map(&:name).first).to_json) %>,
+      "electorates": <%= raw((event.electorates.map(&:name) || []).to_json) %>,
+      "electorates_with_htv": <%= raw(Hash[event.electorates.select(&:issue).map{|e| [e.name, true]}].to_json) %>,
+      "booth_location": <%= raw(event.booth_location.to_json) %>,
+      "booth_gate": <%= raw(event.booth_gate.to_json) %>,
+      "booth_entrance": <%= raw(event.booth_entrance.to_json) %>,
+      "wheelchair": <%= raw(event.wheelchair.to_json) %>,
+      "postcode": <%= raw(event.postcode.number.to_json) %>,
+      "state": <%= raw(event.postcode.state.to_json) %>,
+      "hours": <%= raw(event.hours.to_json) %>,
+      "category": <%= raw((event.is_a?(PrePollingBooth) ? 'pre-polling' : 'polling').to_json) %>,
+      <% if (event.has_attribute?(:distance)) %>"distance": "<%= pretty_distance event.distance %>",<% end %>
+      "path": "<%= polling_booth_path(event) %>"
+    }
+    <% if event != @polling_booths.last %>
+    ,
+    <% end %>
+  <% end %>
+  ]
+}

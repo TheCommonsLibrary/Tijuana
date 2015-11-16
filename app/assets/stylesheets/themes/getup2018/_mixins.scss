@@ -1,0 +1,204 @@
+//
+// Additional Mixins
+// --------------------------------------------------
+// default: landscape retina, ipad 2, ipad air
+
+// normal desktop: @media (min-width: $break-xl-min)
+$break-xl-min: 1200px;
+// portrait retina, ipad 2, ipad air: @media (min-width: $break-md-min) and (max-width: $break-md-max)
+$break-md-max: 979px;
+$break-md-min: 768px;
+// landscape iphone 6+, 6, 5s, 5: @media (min-width: $break-sm-min) and (max-width: $break-sm-max)
+$break-sm-max: 767px;
+$break-sm-min: 481px;
+// portrait iphone 6+, 6, 5s, 5, 4s, landscape 4s: @media (max-width: $break-xs-max)
+$break-xs-max: 480px;
+
+// use these to help with understanding responsive breakpoints
+
+// landscape retina, ipad 2, ipad air
+//body {
+//  background-color: red;
+//}
+//
+//// normal desktop
+//@media (min-width: $break-xl-min) {
+//  body {
+//    background-color: blue;
+//  }
+//}
+//
+//// portrait retina, ipad 2, ipad air
+//@media (min-width: $break-md-min) and (max-width: $break-md-max) {
+//  body {
+//    background-color: green;
+//  }
+//}
+//
+//// landscape iphone 6+, 6, 5s, 5
+//@media (min-width: $break-sm-min) and (max-width: $break-sm-max) {
+//  body {
+//    background-color: yellow;
+//  }
+//}
+//
+//// portrait iphone 6+, 6, 5s, 5, 4s, landscape 4s
+//@media (max-width: $break-xs-max) {
+//  body {
+//    background-color: black;
+//  }
+//}
+
+
+// Responsive Mixins
+@mixin makeResponsiveRow() {
+  margin-left: $gridGutterWidth * -1;
+  @include clearfix();
+  // XL
+  @media (min-width: $break-xl-min) {
+    margin-left:$gridGutterWidth1200 * -1;
+  }
+  // M
+  @media (min-width: $break-md-min) and (max-width: $break-md-max) {
+    margin-left: $gridGutterWidth768 * -1;
+  }
+  // S
+  @media (max-width: $break-sm-max) {
+    margin-left:0;
+  }
+}
+
+@mixin makeResponsiveColumn($columns: 1, $offset: 0) {
+  float: left;
+
+  // Standard Width
+  margin-left: ($gridColumnWidth * $offset) + ($gridGutterWidth * ($offset - 1)) + ($gridGutterWidth * 2);
+  width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
+
+  // XL
+  @media (min-width: $break-xl-min) {
+    margin-left: ($gridColumnWidth1200 * $offset) + ($gridGutterWidth1200 * ($offset - 1)) + ($gridGutterWidth1200 * 2);
+    width: ($gridColumnWidth1200 * $columns) + ($gridGutterWidth1200 * ($columns - 1));
+  }
+
+  // M
+  @media (min-width: $break-md-min) and (max-width: $break-md-max) {
+    margin-left: ($gridColumnWidth768 * $offset) + ($gridGutterWidth768 * ($offset - 1)) + ($gridGutterWidth768 * 2);
+    width: ($gridColumnWidth768 * $columns) + ($gridGutterWidth768 * ($columns - 1));
+  }
+
+  // S
+  @media (max-width: $break-sm-max) {
+    float: none;
+    display: block;
+    margin-left: 0;
+    width:auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    @include box-sizing(border-box);
+  }
+
+  // XS
+  @media (max-width: $break-xs-max) {
+
+
+  }
+}
+
+// Responsive Box
+
+@mixin makeResponsiveBox($columns:1,$ratio:1) {
+    width:($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
+    height:$ratio * (($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1)));
+    display:block;
+  @include clearfix();
+  // XL
+  @media (min-width: $break-xl-min) {
+    width:($gridColumnWidth1200 * $columns) + ($gridGutterWidth1200 * ($columns - 1));
+    height:$ratio * (($gridColumnWidth1200 * $columns) + ($gridGutterWidth1200 * ($columns - 1)));
+  }
+  // M
+  @media (min-width: $break-md-min) and (max-width: $break-md-max) {
+    width:($gridColumnWidth768 * $columns) + ($gridGutterWidth768 * ($columns - 1));
+    height:$ratio1 * (($gridColumnWidth768 * $columns) + ($gridGutterWidth768 * ($columns - 1)));
+  }
+  // S
+  @media (max-width: $break-sm-max) {
+    width:480px;
+    height:480px * $ratio;
+    margin:0 auto;
+  }
+
+  // XS
+  @media (max-width: $break-xs-max) {
+    width:320px;
+    max-width:100%;
+    height:320px * $ratio;
+  }
+}
+
+// Video Frame (formatted for 16:9)
+
+@mixin highDefinition($columns:1) {
+    width:($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
+    height:0.561 * (($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1)));
+    display:block;
+  @include clearfix();
+  // XL
+  @media (min-width: $break-xl-min) {
+    width:($gridColumnWidth1200 * $columns) + ($gridGutterWidth1200 * ($columns - 1));
+    height:0.561 * (($gridColumnWidth1200 * $columns) + ($gridGutterWidth1200 * ($columns - 1)));
+  }
+  // M
+  @media (min-width: $break-md-min) and (max-width: $break-md-max) {
+    width:($gridColumnWidth768 * $columns) + ($gridGutterWidth768 * ($columns - 1));
+    max-width:100%;
+    height:0.561 * (($gridColumnWidth768 * $columns) + ($gridGutterWidth768 * ($columns - 1)));
+  }
+  // S
+  @media (max-width: $break-sm-max) {
+    width:480px;
+    height:270px;
+    margin:0 auto;
+  }
+
+  // XS
+  @media (max-width: $break-xs-max) {
+    width:320px;
+    max-width:100%;
+    height:180px
+  }
+}
+
+// Tall Frame
+
+@mixin makeResponsiveDocumentFrame($columns:1) {
+  width:($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1));
+  height:1.285 * (($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns - 1)));
+  display:block;
+  @include clearfix();
+  // XL
+  @media (min-width: $break-xl-min) {
+    width:($gridColumnWidth1200 * $columns) + ($gridGutterWidth1200 * ($columns - 1));
+    height:1.285 * (($gridColumnWidth1200 * $columns) + ($gridGutterWidth1200 * ($columns - 1)));
+  }
+  // M
+  @media (min-width: $break-md-min) and (max-width: $break-md-max) {
+    width:($gridColumnWidth768 * $columns) + ($gridGutterWidth768 * ($columns - 1));
+    max-width:100%;
+    height:1.285 * (($gridColumnWidth768 * $columns) + ($gridGutterWidth768 * ($columns - 1)));
+  }
+  // S
+  @media (max-width: $break-sm-max) {
+    width:480px;
+    height:670px;
+    margin:0 auto;
+  }
+
+  // XS
+  @media (max-width: $break-xs-max) {
+    width:320px;
+    max-width:100%;
+    height:480px
+  }
+}

@@ -1,0 +1,77 @@
+<%= form_for([:admin, @page_sequence]) do |f| %>
+    <%= form_errors(@page_sequence) %>
+    <input type="hidden" name="campaign_id" value="<%= @campaign.id %>"/>
+
+    <%= f.label :name, :class => "req" %>
+    <%= f.text_field :name %>
+
+    <div class="info">
+      Name is used for the URL and will be visible to the public.
+    </div>
+
+    <%= f.label :theme_id, :class => "req" %>
+    <%= f.select :theme_id, options_for_select([["No Theme", nil]].concat(Theme.select_options), default_theme_chooser), {}, :style => "width: 100px;" %>
+
+    <div class="info">
+      The page sequence theme. Overrides the campaign theme. Use 'no theme' to inherit the campaign's theme.
+    </div>
+
+    <%= f.label :last_page_url%>
+    <%= f.text_field :last_page_url, placeholder: 'Last page URL (optional)' %>
+
+    <div class="clearfix admin_check_box_field welcome-email">
+    <%= f.label :welcome_email_disabled %>
+    <%= f.check_box :welcome_email_disabled %>
+    </div>
+
+    <div class="clearfix admin_check_box_field">
+    <%= f.label :quarantined, 'Quarantine new members' %>
+    <%= f.check_box :quarantined %>
+
+    <div class="info">
+      Quarantine new members so that they are excluded from emails not on this campaign.
+    </div>
+    </div>
+
+    <%= render :partial => "website_content", :locals => {:f => f} %>
+
+    <%= render :partial => "admin/common/social_meta_data", :locals => {:f => f} %>
+
+    <div class="buttonbar">
+      <%= f.submit @page_sequence.new_record? ? "Create page sequence" : "Save page sequence", :disable_with => "Saving…" %>
+      <%= link_to "Cancel", admin_campaign_path(@campaign) %>
+    </div>
+
+  <script>
+    $(function() {
+      function disableWelcome() {
+        $('.welcome-email').attr("style", "background-color: rgba(1,1,1,0.5);");
+        $('.welcome-email input').hide();
+      }
+
+      var quarantine = '#page_sequence_quarantined';
+
+      if ($(quarantine).is(':checked')) {
+        disableWelcome();
+      }
+
+      $(quarantine).change(function() {
+        if (this.checked) {
+          disableWelcome();
+        } else {
+          $('.welcome-email').attr("style", '');
+          $('.welcome-email input').show();
+        }
+      });
+
+      $('#page_sequence_expired').change(function() {
+        if (this.checked) {
+          $('#page_sequence_expires_at').attr("disabled", "disabled")
+        } else {
+          $('#page_sequence_expires_at').removeAttr("disabled")
+        }
+      });
+
+    });
+  </script>
+<% end %>

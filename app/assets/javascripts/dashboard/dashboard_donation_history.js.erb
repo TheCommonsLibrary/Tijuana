@@ -1,0 +1,20 @@
+function initDonationHistory(options){
+    var form = $(options.formSelector);
+    form.submit(function(e) { e.preventDefault(); return false;});
+    form.find("input[type=submit]").click(function(){
+        $(options.resultsContainer).html("<div class='loading'><img class='loading' src='<%= asset_path('common/lib/jquery-ui-newlook/loading.gif') %>' alt='loading'/><h3 class='processing'>Processing results...</h3></div>");
+        $.ajax({
+            url: options.url,
+            data: form.serialize(),
+            success: function(data){
+                $(options.resultsContainer).html(data);
+            },
+            error: function(data){
+                $(options.resultsContainer).html(data);
+                $.gritter.add({image:"<%= asset_path('common/lib/gritter/error.png') %>", sticky:true, title:'Error', text: data.getResponseHeader('content')});
+            },
+            dataType: "html"
+        });
+    });
+
+}

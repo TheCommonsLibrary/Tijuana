@@ -1,0 +1,11 @@
+<% event = user.events_attended.joins(:slugs).where(get_together_id: 23).first %>
+<% if !event.blank? && event.status == "open" %>
+  <p>Invite your friends, family and colleagues to join you at your booth on election day. They can sign up at <a href="<%= "http://www.getup.org.au/events/#{event.slug.name}" %>"><%= "http://www.getup.org.au/events/#{event.slug.name}" %></a></p>
+  <p>Or share your polling booth on Facebook now by clicking the button below.</p>
+  <div style="text-align:center;width:180px;min-height:30px;background-color:rgb(255,80,0);font-size:13px;color:white;line-height:30px;"><a href="http://www.facebook.com/sharer/sharer.php?u=<%= "http://www.getup.org.au/events/#{event.slug.name}" %>" style="color:white;text-decoration:none;text-transform:uppercase;font-weight:bold;" target="_blank">Share On Facebook</a></div>
+<% else %>
+  <p>Thanks for volunteering! Your polling booth now has enough volunteers to really make an impact on election day.</p>
+  <p>Now can you help double your impact?  SHARE this link on facebook and invite your friends family and colleagues to volunteer at nearby polling booths.</p>
+  <div style="text-align:center;width:180px;min-height:30px;background-color:rgb(255,80,0);font-size:13px;color:white;line-height:30px;"><a href="http://www.facebook.com/sharer/sharer.php?u=<%= "http://www.getup.org.au/get_togethers/23" %>" style="color:white;text-decoration:none;text-transform:uppercase;font-weight:bold;" target="_blank">Share On Facebook</a></div>
+  <p>Not on facebook? Forward this URL on to your friends so they can find their nearest polling booth sign up: <a href="https://www.getup.org.au/volunteer">https://www.getup.org.au/volunteer</a></p>
+<% end %>

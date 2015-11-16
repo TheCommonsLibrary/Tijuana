@@ -1,0 +1,65 @@
+<div id="email-mps-fields">
+<%# Explicit label text for helper options to avoid overriding index set by fields_for when using HTML attributes %>
+  <%= f.label :title, 'Title', :class => "req tooltip", 'data-tip' => "title-tip" %>
+  <%= f.text_field :title %>
+
+  <%= f.label :content, 'Blurb' %>
+  <%= f.text_area :content, :rows => 4 %>
+
+  <%= f.label :display_defaults, "Display defaults?" %>
+  <%= f.check_box :display_defaults %>
+  
+  <%= f.label :arbitrary_target %>
+  <%= f.check_box :arbitrary_target %>
+  <div class="info">
+    When Arbitary target is checked you need to provide the target name and phone number in the blurb or main text of the page.
+  </div>
+  
+  <%= f.label :contact_method, 'Contact Method', :class => "tooltip", 'data-tip' => "contact-method-tip" %>
+  <div class="radio-horizontal mp-phone">
+    <div class="radio-option">
+      <%= f.radio_button :contact_method, 'phone' %>
+      <%= f.label :contact_method, 'Phone', :value => 'phone' %>
+    </div>
+    <div class="radio-option">
+      <%= f.radio_button :contact_method, 'visit' %>
+      <%= f.label :contact_method, 'Visit office', :value => 'visit' %>
+    </div>
+    <div class="radio-option">
+      <%= f.radio_button :contact_method, 'mail' %>
+      <%= f.label :contact_method, 'DIY letter to office', :value => 'mail' %>
+    </div>
+  </div>
+
+  <%= f.label :target_phone, 'Target Phone', :class => "tooltip", 'data-tip' => "target-phone-tip" %>
+  <div class="radio-horizontal mp-phone">
+    <div class="radio-option">
+      <%= f.radio_button :target_phone, 'parliament' %>
+      <%= f.label :target_phone, 'Parliament', :value => 'parliament' %>
+    </div>
+    <div class="radio-option">
+      <%= f.radio_button :target_phone, 'office' %>
+      <%= f.label :target_phone, 'Electorate', :value => 'office' %>
+    </div>
+  </div>
+
+  <%= render :partial => "admin/pages/content_modules/mps_module_target_parties", :locals => {:f => f, :content_module => content_module} %>
+  
+  <%= render :partial => "admin/pages/content_modules/mps_module_schedule_calls", :locals => {:f => f, :content_module => content_module} %>
+
+  <%= render :partial => "admin/pages/content_modules/activity_stream_templates", :locals => {:f => f} %>
+
+  <%= f.label :button_text, 'Button text', :class => "req" %>
+  <%= f.text_field :button_text %>
+
+  <%= f.label :show_steps, 'Show steps' %>
+  <%= f.check_box :show_steps %>
+
+  <%= render partial: 'admin/pages/content_modules/custom_fields_edit', locals: {f: f} %>
+
+  <%= render :partial => "admin/pages/content_modules/tooltips_call_mp" %>
+</div>
+
+<script type="text/javascript">
+  toggle_edit_custom_fields();
+</script>

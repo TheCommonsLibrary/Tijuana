@@ -1,0 +1,24 @@
+- title "Config"
+- content_for :sub_nav do
+  = render "admin/shared/nav_header"
+
+.section
+  %h3 ControlShift Petition Slugs to be be quarantined
+  = form_tag(update_cr_slugs_admin_quarantines_path, method: :put) do
+    = label_tag('cr_slugs', 'ControlShift Slugs:', {:class => 'tooltip', 'data-tip' => 'cr-slug-tip'})
+    = text_area_tag 'cr_slugs', Setting.quarantined_controlshift_slugs.join("\n")
+    #cr-slug-submit.clear= submit_tag 'submit'
+    #cr-slug-tip{:style => "display:none"}
+      %p Separate slugs by commas, spaces or putting each on a separate line e.g. stop-the-wa-government-culling-sharks,save-our-cultural-heritage-from-adani
+
+.section
+  %h3 List of quarantined page sequences (i.e. new members are set to unsubscribed and have a quarantined event)
+  %ul.quarantined_page_sequences
+    - PageSequence.where(quarantined: true).each do |sequence|
+      %li=link_to_quarantined_sequence(sequence)
+
+.section
+  %h3 List of page sequences that do not send a welcome email
+  %ul.quarantined_page_sequences
+    - PageSequence.where(welcome_email_disabled: true).each do |sequence|
+      %li=link_to_quarantined_sequence(sequence)

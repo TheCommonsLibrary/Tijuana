@@ -1,0 +1,41 @@
+.well
+  .petition-content
+    %h2
+      = content_module.title.upcase
+    %p
+      =raw render_html(content_module.content)
+  %hr
+  #comment-on-latest-facebook-post
+    .fb-button-table
+      .fb-button-cell
+        %button#comment-on-latest-post.fb-button.btn-large.btn-full{disabled: "disabled"}
+          %i.icon-facebook-sign
+          %span Loading
+
+:javascript
+  $(function(){
+    var id = '#{content_module.target_facebook_id}';
+    var $button = $('#comment-on-latest-post');
+    var url = 'https://facebook.com/' + id;
+              
+    function enableButton(){
+      $button.find('span').text('Write a comment!');
+      $button.click(function(e){
+        $button.find('span').text('Redirecting..');
+        window.location.href = url;
+      });
+      $button.removeAttr('disabled');
+    }
+                                                              
+    $.getJSON('https://7y5xfm1ajk.execute-api.us-east-1.amazonaws.com/prod?id='+id).then(
+      function(data){
+        if (data.id && data.id.match(/_/)){
+          url = 'https://facebook.com/' + data.id.replace(/_/, '/posts/');
+        }
+        enableButton();
+      },
+      function(){
+        enableButton();
+      }
+    );
+  });

@@ -1,0 +1,36 @@
+%article
+  .container
+    %section
+      %article
+        #content-modules.without-ask
+          .inner
+            #main-content-modules.left
+              .inner
+                #main-content-header
+                  %h1
+                    .left
+                      Edit ‘#{@event.get_together.name}’
+                    .right
+                    - if can?(:manage, @event)
+                      = link_to "- Cancel Event", cancel_event_path(@event), :method => :post, :data => { :confirm => "Are you sure you want to cancel this event?" }, :class => 'cancel btn btn-primary btn-med'
+                #creation-steps
+                  %ul.tab-headers
+                    %li.step-1-tab
+                      %a{:href => "#step-1-content"}
+                        %span.step-number 1
+                        %span.step-description Event Address
+                    %li.step-2-tab
+                      %a{:href => "#step-2-content"}
+                        %span.step-number 2
+                        %span.step-description Event Time/Date
+                    %li.step-3-tab
+                      %a{:href => "#step-3-content"}
+                        %span.step-number 3
+                        %span.step-description Confirm Details
+                  = render :partial => "form"
+      #action
+        .sidebar
+          #event-location-map
+= render :partial => "common/location_map", :locals => { :map_selector => "#event-location-map", :text_selector => "#event-location-text", :lookup_button_selector => "#lookup-button-location", :verify_button_selector => "#verify-button-location", :bind_selector => "#creation-steps", :get_together => @event.get_together, :variant => "event_builder" }
+
+= render :partial => "common/events_assets", locals: {get_together: @event.get_together}

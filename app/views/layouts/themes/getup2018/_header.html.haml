@@ -1,0 +1,23 @@
+%header#user.verbose
+  .container
+    %section
+      - if current_user.try(:is_admin?) && @page.page_sequence.theme_id == 2018
+        = render 'layouts/themes/getup2018/admin_edit_links'
+      - elsif render_nav_bar?(@page)
+        = render 'layouts/top_navbar'
+      %a#brand.verbose{:href => "/"}
+        = image_tag("public/getup_logo.svg", alt: "GetUp!")
+#brandbar.curt
+  .container
+    %section
+      %a#tinybrand{:href => "/"}
+        = image_tag("public/getup_logo_white.svg", alt: "GetUp!")
+- if @page.page_sequence.theme_id != 2018
+  %nav
+    .container
+      %section
+        - if render_nav_bar?(@page)
+          = render 'layouts/secondary_navbar'
+
+= render 'common/flash_notifications'
+= render 'common/no_script'

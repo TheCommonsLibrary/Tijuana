@@ -1,0 +1,487 @@
+//
+// Variables
+// --------------------------------------------------
+
+
+// Global values
+// --------------------------------------------------
+
+
+// Grays
+// -------------------------
+$black:                 #000 !default;
+$gray:                  #363636 !default;
+$grayDarker:            darken($gray, 20%) !default;
+$grayDark:              darken($gray, 10%) !default;
+$grayMid:               #707070;
+$grayLight:             #B4B4B4;
+$grayLighter:           #e5e5e5;
+$white:                 #fff !default;
+
+
+// Accent colors
+// -------------------------
+$blue:                  #2098F5 !default;
+$blueDark:              #0064cd !default;
+$green:                 #46a546 !default;
+$red:                   #9d261d !default;
+$yellow:                #ffc40d !default;
+// Getup Orange
+$orange:                #FA4B18 !default;
+$pink:                  #c3325f !default;
+$purple:                #7a43b6 !default;
+
+$takeover:              #336699;
+
+// Scaffolding
+// -------------------------
+$bodyBackground:        $white !default;
+$textColor:             $grayDark !default;
+
+
+// Links
+// -------------------------
+$linkColor:             $blue !default;
+$linkColorHover:        darken($linkColor, 15%) !default;
+
+
+// Typography
+// -------------------------
+$sansFontFamily:        "Open Sans", Helvetica, Arial, sans-serif !default;
+$serifFontFamily:       Georgia, "Times New Roman", Times, serif !default;
+$monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace !default;
+
+$baseFontSize:          15px !default;
+$baseFontFamily:        $sansFontFamily !default;
+$baseLineHeight:        20px !default;
+$altFontFamily:         $serifFontFamily !default;
+
+$headingsFontFamily:    inherit !default; // empty to use BS default, $baseFontFamily
+$headingsFontWeight:    300 !default;    // instead of browser default, bold
+$headingsColor:         inherit !default; // empty to use BS default, $textColor
+
+
+// Tables
+// -------------------------
+$tableBackground:                   transparent !default; // overall background-color
+$tableBackgroundAccent:             #f9f9f9 !default; // for striping
+$tableBackgroundHover:              #f5f5f5 !default; // for hover
+$tableBorder:                       #ddd !default; // table and cell border
+
+
+// Buttons
+// -------------------------
+$btnBackground:                     $grayLighter !default;
+$btnBackgroundHighlight:            darken($white, 10%) !default;
+$btnBorder:                         #bbb !default;
+
+$btnPrimaryBackground:              $linkColor !default;
+$btnPrimaryBackgroundHighlight:     adjust-hue($btnPrimaryBackground, 20%) !default;
+
+$btnInfoBackground:                 #5bc0de !default;
+$btnInfoBackgroundHighlight:        #2f96b4 !default;
+
+$btnSuccessBackground:              #62c462 !default;
+$btnSuccessBackgroundHighlight:     #51a351 !default;
+
+$btnWarningBackground:              lighten($orange, 15%) !default;
+$btnWarningBackgroundHighlight:     $orange !default;
+
+$btnDangerBackground:               #ee5f5b !default;
+$btnDangerBackgroundHighlight:      #bd362f !default;
+
+$btnInverseBackground:              #444 !default;
+$btnInverseBackgroundHighlight:     $grayDarker !default;
+
+
+// Forms
+// -------------------------
+$inputBackground:               $white !default;
+$inputBorder:                   #ccc !default;
+$inputBorderRadius:             3px !default;
+$inputDisabledBackground:       $grayLighter !default;
+$formActionsBackground:         #f5f5f5 !default;
+
+// Dropdowns
+// -------------------------
+$dropdownBackground:            $white !default;
+$dropdownBorder:                rgba(0,0,0,.2) !default;
+$dropdownDividerTop:            #e5e5e5 !default;
+$dropdownDividerBottom:         $white !default;
+
+$dropdownLinkColor:             $grayDark !default;
+
+$dropdownLinkColorActive:       $dropdownLinkColor !default;
+$dropdownLinkBackgroundActive:  $linkColor !default;
+
+$dropdownLinkColorHover:        $white !default;
+$dropdownLinkBackgroundHover:   $dropdownLinkBackgroundActive !default;
+
+
+
+// COMPONENT VARIABLES
+// --------------------------------------------------
+
+// Z-index master list
+// -------------------------
+// Used for a bird's eye view of components dependent on the z-axis
+// Try to avoid customizing these :)
+$zindexDropdown:          1000 !default;
+$zindexPopover:           1010 !default;
+$zindexTooltip:           1030 !default;
+$zindexFixedNavbar:       1030 !default;
+$zindexModalBackdrop:     1040 !default;
+$zindexModal:             1050 !default;
+
+
+// Sprite icons path
+// -------------------------
+$iconSpritePath:          asset-url("glyphicons-halflings.png", image) !default;
+$iconWhiteSpritePath:     asset-url("glyphicons-halflings-white.png", image) !default;
+
+
+// Input placeholder text color
+// -------------------------
+$placeholderText:         $grayLight !default;
+
+
+// Hr border color
+// -------------------------
+$hrBorder:                $grayLighter !default;
+
+
+// Wells
+// -------------------------
+$wellBackground:                  	$gray !default;
+$wellBorder:				$blue !default;
+
+
+// Navbar
+// -------------------------
+$navbarCollapseWidth:             979px !default;
+
+$navbarHeight:                    40px !default;
+$navbarBackgroundHighlight:       $grayLighter;
+$navbarBackground:                $grayLight;
+$navbarBorder:                    darken($navbarBackground, 12%) !default;
+
+$navbarText:                      $gray !default;
+$navbarLinkColor:                 lighten($grayLighter,10%) !default;
+$navbarLinkColorHover:            $white !default;
+$navbarLinkColorActive:           $white !default;
+$navbarLinkBackgroundHover:       darken($navbarBackground, 5%) !default;
+$navbarLinkBackgroundActive:      darken($navbarBackground, 5%) !default;
+
+$navbarBrandColor:                $navbarLinkColor !default;
+
+// Inverted navbar
+$navbarInverseBackground:                $orange;
+$navbarInverseBackgroundHighlight:       $orange;
+$navbarInverseBorder:                    #252525 !default;
+
+$navbarInverseText:                      $grayLight !default;
+$navbarInverseLinkColor:                 $grayLight !default;
+$navbarInverseLinkColorHover:            $white !default;
+$navbarInverseLinkColorActive:           $navbarInverseLinkColorHover !default;
+$navbarInverseLinkBackgroundHover:       transparent !default;
+$navbarInverseLinkBackgroundActive:      $navbarInverseBackground !default;
+
+$navbarInverseSearchBackground:          lighten($navbarInverseBackground, 25%) !default;
+$navbarInverseSearchBackgroundFocus:     $white !default;
+$navbarInverseSearchBorder:              $navbarInverseBackground !default;
+$navbarInverseSearchPlaceholderColor:    #ccc !default;
+
+$navbarInverseBrandColor:                $navbarInverseLinkColor !default;
+
+
+// Pagination
+// -------------------------
+$paginationBackground:                #fff !default;
+$paginationBorder:                    #ddd !default;
+$paginationActiveBackground:          #f5f5f5 !default;
+
+
+// Hero unit
+// -------------------------
+$heroUnitBackground:              $grayLighter !default;
+$heroUnitHeadingColor:            inherit !default;
+$heroUnitLeadColor:               inherit !default;
+
+
+// Form states and alerts
+// -------------------------
+$warningText:             $orange !default;
+$warningBackground:       lighten($warningText,40%) !default;
+$warningBorder:           darken(adjust-hue($warningBackground, -10), 3%) !default;
+
+$errorText:               $warningText;
+$errorBackground:         $warningBackground;
+$errorBorder:             $warningBorder;
+
+$successText:             #468847 !default;
+$successBackground:       #dff0d8 !default;
+$successBorder:           darken(adjust-hue($successBackground, -10), 5%) !default;
+
+$infoText:                #3a87ad !default;
+$infoBackground:          #d9edf7 !default;
+$infoBorder:              darken(adjust-hue($infoBackground, -10), 7%) !default;
+
+
+// Tooltips and popovers
+// -------------------------
+$tooltipColor:            #fff !default;
+$tooltipBackground:       #000 !default;
+$tooltipArrowWidth:       5px !default;
+$tooltipArrowColor:       $tooltipBackground !default;
+
+$popoverBackground:       #fff !default;
+$popoverArrowWidth:       10px !default;
+$popoverArrowColor:       #fff !default;
+$popoverTitleBackground:  darken($popoverBackground, 3%) !default;
+
+// Special enhancement for popovers
+$popoverArrowOuterWidth:  $popoverArrowWidth + 1 !default;
+$popoverArrowOuterColor:  rgba(0,0,0,.25) !default;
+
+
+
+// GRID
+// --------------------------------------------------
+
+
+// Default 940px grid
+// -------------------------
+$gridColumns:             12 !default;
+$gridColumnWidth:         60px !default;
+$gridGutterWidth:         20px !default;
+$gridRowWidth:            ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 1)) !default;
+
+$getup_orange: #FE3C1F;
+$getup_orange_light: #FF6F52;
+$getup_orange_lighter: #FFECE9;
+$getup_orange_pale: #f06822;
+$getup_dark_grey: #363636;
+$getup_light_grey: #b4b4b4;
+$getup_blue: #2098f5;
+
+
+.indent {
+  padding-left: 10px;
+}
+
+hr {
+  border-top: 1px solid $getup_orange_light
+}
+
+.booth-info {
+  line-height: 23px;
+  color: #777;
+}
+
+.details-group {
+  margin-bottom: 30px;
+}
+
+.row-callout {
+  position: relative;
+  padding: 45px 15px 15px;
+  margin: 0 -15px -1px;
+  background-color: #fafafa;
+  box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
+  border-color: #e5e5e5 #eee #eee;
+  border-style: solid;
+  border-width: 1px 0;
+}
+
+.callout {
+  color: white;
+  background: $getup_dark_grey;
+  border-left: 10px solid $getup_blue;
+  margin-right: -15px;
+  padding: 15px 30px 15px 15px;
+}
+
+.btn-orange {
+  color: #fff;
+  background-color: $getup_orange;
+  border-color: $getup_orange;
+  border-radius: 0px;
+}
+
+.btn-blue {
+  color: #fff;
+  background-color: $getup_blue;
+  border-color: $getup_blue;
+  border-radius: 0px;
+}
+
+
+#search {
+  position: absolute;
+  right: 15px;
+  top: 67px;
+  z-index: 1;
+  background: #FFFFFF;
+  padding: 5px;
+  box-shadow: 1px 1px 4px #888888;
+
+  form {
+    margin: 0;
+    input {
+      font-size: 15px;
+      padding: 2px;
+      width: 80px;
+      height: 36px;
+      border-radius: 0px;
+      border: 0px solid #FFF;
+      box-shadow:none;
+      vertical-align: top;
+      line-height: 1.0;
+    }
+
+    .btn {
+      vertical-align: top;
+    }
+    .glyphicon-search, .glyphicon-screenshot {
+      font-size: 14px;
+      background-color: white;
+      color: gray;
+      border: none;
+      padding: 10px
+    }
+    button {
+      border-radius: 0px;
+    }
+  }
+}
+
+section {
+  #event-locations {
+    height: 100%;
+    #event-location-map-container {
+      height: 100%;
+      #event-location-map {
+        height: 100%;
+      }
+    }
+  }
+}
+
+section#detail {
+  height: 100%;
+  #detail-map {
+    margin-left: 15px;
+  }
+}
+
+.full-height {
+  height: 100%;
+}
+
+#polling-booths-info-box {
+  margin-top: 10px;
+  font-size: 11px;
+  max-width: 250px;
+
+  a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    .name {
+      font-size: 14px;
+      text-transform: uppercase;
+      color: $getup_orange_light;
+      font-size: bold;
+    }
+
+    p {
+      margin: 0 0 5px 0;
+    }
+  }
+}
+
+/* style jQuery dialogs */
+.ui-dialog .ui-dialog-titlebar {
+  display: none;
+}
+
+.ui-button-text-only .ui-button-text {
+  color: white;
+}
+
+#polling-booths {
+  .ui-state-active,
+  .ui-widget-content .ui-state-active,
+  .ui-state-default,
+  .ui-widget-content .ui-state-default,
+  .ui-widget-header .ui-state-default {
+    border: 1px solid #cccccc;
+    background: $getup_orange;
+    color: #ccc;
+  }
+
+  .navbar-fixed-bottom {
+    z-index: 10;
+  }
+}
+
+.details-page-header {
+  margin-bottom: 50px;
+}
+
+#details-back-button{
+  font-size: 16px;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+}
+
+.ozvote-details .callout {
+  padding-right: 14px;
+}
+
+#scorecard-button {
+  margin-right: 3px;
+  margin-bottom: 10px;
+  display: inline-block;
+
+  .btn-large {
+    padding: 6px 10px;
+    font-size: 16px;
+  }
+}
+
+.navbar {
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: white;
+}
+
+#get-directions {
+  display: inline-block;
+  margin-bottom: 10px;
+
+  i {
+    vertical-align: middle;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  #details-back-button{
+    position: relative;
+    margin-left: 20px;
+    margin-top: -15px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .container.ozvote-details {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+}

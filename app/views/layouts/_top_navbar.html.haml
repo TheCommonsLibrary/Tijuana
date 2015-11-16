@@ -1,0 +1,28 @@
+.navbar
+  .navbar-inner.navbar-inverse
+    .container
+      .usernavbg
+        - if current_user
+          %ul.nav
+            %li.verbose.username
+              %span
+                Logged in
+                - if !current_user.first_name.blank?
+                  as
+                  %em
+                    %strong
+                      =current_user.first_name
+            %li
+              =link_to("My GetUp!", dashboard_path)
+            - if current_user.is_admin? || current_user.is_volunteer?
+              %li
+                =link_to("Admin", admin_root_path)
+            %li
+              =link_to("Log Out", destroy_user_session_path)
+        - else
+          %ul.nav
+            %li.verbose.username
+              %span
+                Login to edit your personal information &#9658;
+            %li
+              =link_to("My GetUp!", dashboard_path)

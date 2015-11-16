@@ -1,0 +1,22 @@
+- content_for :head do
+  - if Rails.env.production? || Rails.env.showcase?
+    %meta{name: 'fb:app_id', content: AppConstants.facebook_sign_petition_module_app_id}
+
+.content
+  = raw render_html(content_module.content)
+
+= javascript_include_tag 'testimonial_module'
+
+#fb-root
+:javascript
+  $(function() {
+    configureTestimonialModule(
+      #{content_module.id}, 
+      '#{ TrackingTokenLookup.new(@token).valid? ? @token : nil }', 
+      #{AppConstants.facebook_sign_petition_module_app_id}, 
+      #{@page.id}
+    );
+  });
+.fb-comments{:"data-href" => content_module.url, :"data-width" => "100%", :"data-numposts" => content_module.number_of_comments, :"data-order-by" => content_module.comments_order}
+
+.content-end

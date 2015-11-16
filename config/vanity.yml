@@ -1,0 +1,11 @@
+common: &common
+  adapter: active_record
+
+development:
+  <<: *common
+test:
+  <<: *common
+showcase:
+  <<: *common
+production:
+  <<: *common

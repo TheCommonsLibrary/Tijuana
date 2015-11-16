@@ -1,0 +1,22 @@
+#brandbar
+  .container
+    %section
+      %a#tinybrand{href: "/"}
+        = image_tag "themes/nbia/header_logo.svg", alt: "No business in abuse"
+        No Business In Abuse
+
+.nav
+  .nav-item
+    = link_to "About", "https://www.nobusinessinabuse.org/site/about"
+  .divider
+  .nav-item
+    = link_to "Info", "https://www.nobusinessinabuse.org/site/info"
+  .divider
+  .nav-item
+    = link_to "Take Action", "https://www.nobusinessinabuse.org/site/take-action"
+  .divider
+  .nav-item
+    = link_to "Donate", "https://www.nobusinessinabuse.org/site/donate"
+
+= render "common/flash_notifications"
+= render "common/no_script"

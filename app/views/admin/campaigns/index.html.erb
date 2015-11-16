@@ -1,0 +1,25 @@
+<% title "Campaigns" %>
+
+<div class="searchbar">
+  <%= form_tag(admin_campaigns_path, :method => :get) do %>
+    <%= text_field_tag :query, params[:query], :placeholder => 'Search by campaign name only (ie. "climate" or "health")',:class => "query" %>
+    <%= submit_tag "Search" %>
+  <% end %>
+</div>
+    
+<div id="campaigns-list">
+  <% @campaigns.each do |campaign| %>
+    <div class="campaign big-link" id="campaign_<%= campaign.id %>">
+      <%= link_to campaign.name, admin_campaign_path(campaign) %>
+      <div class="actions">
+        <%= link_to "Manage Campaign", admin_campaign_path(campaign) %>
+      </div>
+      <div class="description"><%= campaign.description %></div>
+    </div>
+  <% end %>
+  <div class="button-links">
+    <%= link_to("Create new campaign", new_admin_campaign_path, :class => 'new-campaign') %>
+  </div>
+  <%= will_paginate @campaigns %>
+  <%= page_entries_info @campaigns %>
+</div>

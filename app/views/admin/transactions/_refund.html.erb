@@ -1,0 +1,19 @@
+<% if can? :refund, @transaction %>
+  <%= form_tag(refund_admin_transaction_path(@transaction.id), :method => :put, :id => "refund-form") do %>
+    <%= label_tag :amount_in_dollars, "Refund amount ($)" %>
+    <%= text_field_tag :amount_in_dollars, params[:amount_in_dollars] || @transaction.amount_in_dollars %>
+    <%= submit_tag "Refund this transaction", :disable_with => "Saving…" %>
+    <% if flash[:error] %>
+      <span class="error"><%= flash[:error] %></span>
+    <% end %>
+  <% end %>
+  <%= javascript_tag do %>
+    $(function() {
+      $('form#refund-form').submit(function() {
+        return confirm('Are you sure you want to refund $' + $('#amount_in_dollars').val() + '?\nThis cannot be undone!');
+      });
+    });
+  <% end %>
+<% else %>
+  Only admins can refund transactions.
+<% end %>

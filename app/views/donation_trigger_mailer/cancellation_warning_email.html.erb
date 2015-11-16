@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>Hi <%= @greeting %>,</p>
+
+    <p>Thanks for your ongoing support of GetUp.</p>
+
+    <p>We're contacting you again because your <%= @donation.frequency %> GetUp Crew donation of <%= number_to_currency(@donation.amount_in_dollars) %> has been unsuccessful for three months.</p>
+
+    <p>If your current credit card has expired or you've changed the number please update the details securely at <%= link_to "secure link", dashboard_update_card_url(@donation.id)%>.</p>
+
+    <p>Or if you would prefer to talk to us please call <%= AppConstants.financial_contact_number %> or reply to this email and request a call back.</p>
+
+    <p>If you no longer wish to donate, please let us know and we will cancel any further debit attempts.</p>
+
+    <p>Thank you for powering the GetUp movement and helping build a fair, flourishing and just Australia.</p>
+
+    <br/>Thanks,
+    <br/><%= AppConstants.financial_contact_name %> for the GetUp Strategy Team 
+    <br/>National Director
+  </body>
+</html>

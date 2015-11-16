@@ -1,0 +1,8 @@
+<% if user.fragment.length > 0  %>
+&nbsp Here's what you wrote:
+<p>
+<i>
+<%= user.fragment %><% if user.fragment.length == 255 %>...<% end %>
+</i>
+</p>
+<% end %>

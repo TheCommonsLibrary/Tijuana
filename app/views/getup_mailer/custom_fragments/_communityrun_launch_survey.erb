@@ -1,0 +1,7 @@
+<% if user.fragment.length > 0  %>
+ Here's what you wrote:
+<br><br>
+<i>
+<%= user.fragment %><% if user.fragment.length == 255 %>...*<% else %>.<% end %>
+</i>
+<% end %>

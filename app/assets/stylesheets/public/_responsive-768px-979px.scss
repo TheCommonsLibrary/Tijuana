@@ -1,0 +1,68 @@
+//
+// Responsive: Tablet to desktop
+// --------------------------------------------------
+
+
+@media (min-width: 768px) and (max-width: 979px) {
+
+  #home {
+    #getinvolved {
+      form {
+        width:320px;
+        margin-left:20px;
+        .email {
+          width:120px;
+        }
+      }
+    }
+
+    #actions .activity-stream {
+      max-height: 180px;
+      overflow:hidden;
+    }
+  }
+
+  #brand img {
+    width:180px;
+    height:auto;
+  }
+
+  .nav .hidden_on_mobile {
+    display: none; 
+  }
+
+  #donation .well {
+    .span1 {
+      width:80px;
+    }
+  }
+
+  #email article #action form .narrow-details {
+    width: 319px;
+  }
+
+// Carousel image
+  #myCarousel {
+    .item {
+      min-width: 476px;
+    }
+    a img{
+      height: 274px;
+    }
+  }
+
+// login - session
+  .login-block {
+    .seperator{
+      margin-right: 30px;
+    }
+  }
+
+  article #content-modules-section {
+    display: block;
+  }
+
+  article #standfirst-section {
+    display: none;
+  }
+}

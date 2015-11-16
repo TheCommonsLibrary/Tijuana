@@ -1,0 +1,43 @@
+<% htvs = SenateHtvs.for_electorate(electorate) %>
+<div class="parties htvs-<%=htvs.count%>">
+
+    <% htvs.each_with_index do |htv, index| %>
+    <% party = htv[:party].try(:upcase) %>
+    <div class="party-col senate-col" id="col-<%= index %>">
+
+      <% if party %>
+        <div class="<%= party %> logo-box">
+           <img style="width: 100px;height:auto;" class="<%= party %> logo" src="/images/htv/<%= party %>.jpg"/>
+        </div>
+      <% end %>
+
+        <div class="senate">
+          <img src="http://htv-pdfs.s3-website-ap-southeast-2.amazonaws.com/senate/<%=[htv[:state], htv[:issue], htv[:party]].compact.join('_')%>.png">
+        </div>
+    </div>
+    <% if index < htvs.length-1 %><img class="circle" src="/images/htv/or.svg"/><% end %>
+    <% end %>
+
+</div>
+<ul class="tabbed htvs-<%=htvs.count%>-tabbed">
+    <% htvs.each_with_index do |htv, index| %>
+    <% party = htv[:party].try(:upcase) %>
+    <li class="<%= party %> party-col senate-col">
+        <% if htvs.count > 1 %>
+        <input type="radio" name="tabs" id="tab-<%= index %>">
+        <label for="tab-<%= index %>">
+            <% if party %>
+                <img style="width: 100px;height:auto;" class="<%= party %> logo" src="/images/htv/<%= party %>.jpg"/>
+            <% end %>
+        </label>
+        <% end %>
+        <article class="content">
+            <div class="inner">
+                <div class="senate">
+                  <img src="http://htv-pdfs.s3-website-ap-southeast-2.amazonaws.com/senate/<%=[htv[:state], htv[:issue], htv[:party]].compact.join('_')%>.png">
+                </div>
+            </div>
+        </article>
+    </li>
+    <% end %>
+</ul>

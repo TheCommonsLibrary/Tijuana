@@ -1,0 +1,67 @@
+%article{:class => ('admin-get-together' if @get_together.is_admin_managed?) }
+  .container
+    %section
+      %article
+        #content-modules.without-ask
+          .inner
+            #main-content-modules.left
+              .inner
+                #main-content-header
+                  .header
+                    != @get_together.header_html
+                  %h1
+                    .left
+                      = @get_together.name
+                  .expired
+                    - unless @get_together.in_future?
+                      %h3 This get together has expired.
+                .content
+                  = raw render_html(@get_together.content_module.content)
+                #event-locations
+                  #events-map
+                    %form#search-in-events
+                      = text_field_tag "origin-postcode", nil, :placeholder => "Postcode"
+                      = select_tag("search-radius", search_radius_options_for_select(@get_together.search_radius))
+                      %input#find-by-postcode-submit{:type => "submit", :value => "Search", :class => "btn"}/
+                  #event-location-map-container
+                    .loading.loading-image
+                    #event-location-map
+                  .map-key
+                    .key-available
+                      %span Available
+                      %img{src: '/images/map-markers/open/blank.png'}
+                    .key-full
+                      %span Full
+                      %img{src: '/images/map-markers/full/blank.png'}
+                  .clearfix
+                  .map-footer
+                    != @get_together.map_footer_html
+
+                  .create-event-button
+                    - if @get_together.in_future? && !@get_together.is_admin_managed?
+                      = link_to "Create Event", new_event_path(:get_together_id => @get_together.id, :t => params[:t]), :class => "events-button btn btn-primary#{@get_together.managed_get_together_id.present? ? ' hidden' : ''}", :id => 'create-event'
+
+      #action
+        .sidebar
+          .get-together-sidebar-content.verbose
+            =raw @get_together.sidebar_content
+          - if @get_together.is_admin_managed?
+            #local-search-results
+              %h3 Select your electorate
+              .too-many-results(style="display_none")
+                %strong Note:
+                There are too many results to display on the map, only the most relevant results in your chosen search radius are displayed
+                %hr
+              %ul
+          - else
+            #local-search-results
+              %h3 Your local events
+              .too-many-results(style="display_none")
+                %strong Note:
+                There are too many results to display on the map, only the closest results are shown.
+                %hr
+              %ul
+
+= render :partial => "common/location_map", :locals => { :map_selector => "#event-location-map", :get_together => @get_together, :bind_selector => "#event-locations", :variant => "event_viewer" }
+
+= render :partial => "common/events_assets", locals: {get_together: @get_together}

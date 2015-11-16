@@ -1,0 +1,88 @@
+.home {
+  select {
+    width: 100%;
+  }
+
+  h1 {
+    padding: 0 0 20px 0;
+    margin: 0 0 20px 0;
+    font-style: normal;
+  }
+
+  .main-img {
+    width: 100%;
+  }
+  .header-container {
+    position: relative;
+  }
+  .strap {
+    position: absolute;
+    bottom: 25px;
+    background-color: rgba(102, 12, 46, 0.6);
+    color: $white;
+    padding: 10px;
+  }
+  .petition-content {
+    display: none;
+  }
+
+  #our-pledge {
+    background-color: $maroon;
+    background-image: image-url('themes/nbia/texture.png');
+    color: $white;
+  }
+  .pledge-title {
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+    font-size: 2.1em;
+    text-align: center;
+    margin: 27px 0;
+  }
+
+  .pledge-container {
+    padding-bottom: 10px;
+    position: relative;
+    min-height: 120px;
+    &.odd {
+      background-color: $nbia-grey;
+      color: $maroon;
+    }
+    & .html-module::before {
+      content: " ";
+      display: inline-block;
+      height: 100%;
+      width: 1%;
+      vertical-align: middle;
+    }
+  }
+  .pledge-img {
+    &.equality {
+      padding-top: 10px;
+    }
+    width: 40%;
+    max-height: 231px;
+  }
+  .pledge-abstract {
+    display: inline-block;
+    width: 50%;
+    vertical-align: middle;
+    margin-top: 15px;
+    &.pledge-abstract {
+      vertical-align: top;
+      padding-top: 5px;
+    }
+  }
+
+  aside {
+    margin: 30px 20px;
+    strong {
+      font-size: 1.2em;
+    }
+  }
+}
+
+.icon-large {
+  color: $maroon;
+  font-size: 1em;
+}

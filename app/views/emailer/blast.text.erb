@@ -1,0 +1,6 @@
+<%= raw @body_text[:text] %>
+
+<% unless @footer == "none" || @disable_text_footer %>
+  <%= render "blast_#{@footer}_footer" %>
+<% end %>
+

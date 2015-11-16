@@ -1,0 +1,149 @@
+<div id="donations-details">
+    <div>
+        <p>This donation was made to blah</p>
+        <div>
+            <form accept-charset="UTF-8" action="/donations/1" class="edit_donation" id="update-donation-form-1"
+              method="post">
+            <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;"/><input
+                    name="_method" type="hidden" value="put"/><input name="authenticity_token" type="hidden"
+                                                                     value="wOQEhRBRPgPU3ElH+qtPx+qswtrshPQ346LuD2i6BS4="/>
+            </div>
+            <p>
+                Your credit card number: <input class="required" id="donation-1-card-number-helper"
+                                                name="donation-1-card-number-helper" type="text"
+                                                value="XXXXXXXXXXXX1111"/> <input class="creditcard"
+                                                                                  id="donation_1_card_number"
+                                                                                  name="donation[1][card_number]"
+                                                                                  type="hidden"/><br>
+                cvv: <input class="required" id="donation_1_card_cvv" name="donation[1][card_cvv]" size="30" type="text"
+                            value="XXX"/><br>
+                Type: <select id="donation_1_card_type" name="donation[1][card_type]">
+                <option value="visa">Visa</option>
+                <option value="mastercard" selected="selected">Mastercard</option>
+                <option value="american_express">American express</option>
+            </select><br>
+
+                Expiration date <select id="donation_1_card_expiry_month" name="donation[1][card_expiry_month]">
+                <option value="1">Jan</option>
+                <option value="2">Feb</option>
+                <option value="3" selected="selected">Mar</option>
+                <option value="4">Apr</option>
+                <option value="5">May</option>
+                <option value="6">Jun</option>
+                <option value="7">Jul</option>
+                <option value="8">Aug</option>
+                <option value="9">Sep</option>
+                <option value="10">Oct</option>
+                <option value="11">Nov</option>
+                <option value="12">Dec</option>
+            </select> / <select id="donation_1_card_expiry_year" name="donation[1][card_expiry_year]">
+                <option value="2012" selected="selected">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+            </select>
+            </p>
+            <p>You are currently donating $<input class="required number" id="donation_1_amount_in_dollars"
+                                                  name="donation[1][amount_in_dollars]" size="30" type="text"
+                                                  value="27.0"/> on a
+                <select id="donation_1_frequency" name="donation[1][frequency]">
+                    <option value="weekly" selected="selected">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="annual">Yearly</option>
+                </select> basis.
+
+
+                <input id="update-donation-1-submit-button" name="commit" type="submit" value="Save"/>
+        </form>
+        </div>
+        <div>
+            <form accept-charset="UTF-8" action="/donations/1/disable" class="edit_donation" id="cancel-donation-1-form"
+              method="post">
+            <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;"/><input
+                    name="_method" type="hidden" value="put"/><input name="authenticity_token" type="hidden"
+                                                                     value="wOQEhRBRPgPU3ElH+qtPx+qswtrshPQ346LuD2i6BS4="/>
+            </div>
+            <input id="cancel-donation-1-submit-button" name="commit" type="submit" value="Cancel Donation"/>
+
+        </form>
+        </div>
+    </div>
+
+    <div>
+        <p>This donation was made to blah</p>
+
+        <div>
+            <form accept-charset="UTF-8" action="/donations/2" class="edit_donation" id="update-donation-form-2"
+              method="post">
+            <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;"/><input
+                    name="_method" type="hidden" value="put"/><input name="authenticity_token" type="hidden"
+                                                                     value="wOQEhRBRPgPU3ElH+qtPx+qswtrshPQ346LuD2i6BS4="/>
+            </div>
+            <p>
+                Your credit card number: <input class="required" id="donation-2-card-number-helper"
+                                                name="donation-2-card-number-helper" type="text"
+                                                value="XXXXXXXXXXXXXXX1"/> <input class="creditcard"
+                                                                                  id="donation_2_card_number"
+                                                                                  name="donation[2][card_number]"
+                                                                                  type="hidden"/><br>
+                cvv: <input class="required" id="donation_2_card_cvv" name="donation[2][card_cvv]" size="30" type="text"
+                            value="XXX"/><br>
+                Type: <select id="donation_2_card_type" name="donation[2][card_type]">
+                <option value="visa" selected="selected">Visa</option>
+                <option value="mastercard">Mastercard</option>
+                <option value="american_express">American express</option>
+            </select><br>
+
+                Expiration date <select id="donation_2_card_expiry_month" name="donation[2][card_expiry_month]">
+                <option value="1">Jan</option>
+                <option value="2">Feb</option>
+                <option value="3">Mar</option>
+                <option value="4">Apr</option>
+                <option value="5">May</option>
+                <option value="6">Jun</option>
+                <option value="7">Jul</option>
+                <option value="8">Aug</option>
+                <option value="9">Sep</option>
+                <option value="10">Oct</option>
+                <option value="11">Nov</option>
+                <option value="12" selected="selected">Dec</option>
+            </select> / <select id="donation_2_card_expiry_year" name="donation[2][card_expiry_year]">
+                <option value="2012" selected="selected">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+            </select>
+            </p>
+            <p>You are currently donating $<input class="required number" id="donation_2_amount_in_dollars"
+                                                  name="donation[2][amount_in_dollars]" size="30" type="text"
+                                                  value="57.6"/> on a
+                <select id="donation_2_frequency" name="donation[2][frequency]">
+                    <option value="weekly" selected="selected">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="annual">Yearly</option>
+                </select> basis.
+
+
+                <input id="update-donation-2-submit-button" name="commit" type="submit" value="Save"/>
+        </form>
+        </div>
+        <div>
+            <form accept-charset="UTF-8" action="/donations/2/disable" class="edit_donation" id="cancel-donation-2-form"
+              method="post">
+            <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;"/><input
+                    name="_method" type="hidden" value="put"/><input name="authenticity_token" type="hidden"
+                                                                     value="wOQEhRBRPgPU3ElH+qtPx+qswtrshPQ346LuD2i6BS4="/>
+            </div>
+            <input id="cancel-donation-2-submit-button" name="commit" type="submit" value="Cancel Donation"/>
+
+        </form>
+        </div>
+    </div>
+
+</div>

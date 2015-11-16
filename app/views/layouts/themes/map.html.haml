@@ -1,0 +1,21 @@
+= render :partial => "layouts/themes/map_head"
+= render :partial => "common/no_script"
+%header#user.verbose
+  .container
+    %section
+      - if render_nav_bar?(@page)
+        =render :partial => "layouts/top_navbar"
+      %a#brand.verbose{:href => "/"}
+        =image_tag('public/getup_logo.svg', :alt => "GetUp!")
+#brandbar.curt
+  .container
+    %section
+      %a#tinybrand{:href => "/"}
+        =image_tag('public/getup_logo_white.svg', :alt => "GetUp!")
+%nav
+  .container
+    %section
+      =render :partial => 'layouts/secondary_navbar'
+%body{:id => body_id, :class => "#{body_class} map-full"}
+  = yield
+  = render :partial => "layouts/footer_js"

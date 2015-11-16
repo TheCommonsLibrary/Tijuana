@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<p>Hello <%= @resource.email %>!</p>
+
+<p>Your secure code is <%= @resource.otp_code %> </p>
+<p>
+  Please use this secure code to login to your account.
+  It will expire in <%= Devise.allowed_otp_drift_seconds / 60 %> minutes.
+  Once it expires you will have to login again to receive a new code.
+</p>
+<p>Thanks</p>
+
+</body>
+</html>

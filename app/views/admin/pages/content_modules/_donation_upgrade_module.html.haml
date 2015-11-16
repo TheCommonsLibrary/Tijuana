@@ -1,0 +1,7 @@
+= f.label :title, 'Title', :class => "req"
+= f.text_field :title
+.code-mirror-plugin
+  = f.label :content, 'Blurb'
+  = f.text_area :content, :rows => 4
+
+= render :partial => "admin/pages/content_modules/activity_stream_templates", :locals => {:f => f}

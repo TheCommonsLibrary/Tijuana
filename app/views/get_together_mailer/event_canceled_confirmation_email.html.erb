@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+  Dear <%= @event.host.first_name ? @event.host.first_name : "Friend" %>,
+  <br><br>
+  Your event <i>"<%= @event.name %>"</i> is now canceled.
+
+  <% if @event.attendees.count >0 %>
+  <br>
+  Your attendees have been notified by email.
+  <% end %>
+  <br><br>
+  Whatever your reasons for cancelling your event, you can still <strong><%= link_to "create a new one here", get_together_url(@event.get_together.friendly_id) %></strong>
+  <br><br><br>
+  Thanks for all you do,<br>
+  The GetUp! team
+  </body>
+</html>

@@ -1,0 +1,9 @@
+%article
+  .container
+    %section
+      %article
+        .login#create-password.span7
+          %h2
+            = "#{I18n.t("devise.two_factor_authentication.max_login_attempts_reached")} = #{@limit}"
+          %p
+            = I18n.t("devise.two_factor_authentication.contact_administrator")

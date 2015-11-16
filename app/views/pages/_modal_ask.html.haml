@@ -1,0 +1,40 @@
+.modal.daisy-chain.hide
+  .modal-header
+    %button(class="close dismiss") Skip
+  .modal-body
+    .content#action
+  .modal-footer
+    %button(class="close dismiss") Skip
+
+:javascript
+  $(function(){
+    var moduleSelector = '.container #action .well';
+    var modal = $('.modal');
+    var content = $('.modal-body .content');
+    var dismissButtons = $('button.close.dismiss');
+
+    // hide all modules
+    $(moduleSelector).hide();
+    // ensure modal resizes
+    modal.on('show.bs.modal', function(){
+      $(this).find('.modal-body').css('max-height', '100%');
+    });
+
+    content.html($(moduleSelector).first().show());
+    modal.modal('show');
+    // change button text after sharing
+    modal.one('click', function() { dismissButtons.text('Next'); });
+
+    $('.modal-backdrop.initial').remove();
+    // prevent backdrop clicks from dismissing the modal
+    $('.modal-backdrop').off();
+
+    // when skip is clicked, show next module
+    $('.modal .dismiss').click(function(e){
+      e.stopPropagation();
+      if (!$(moduleSelector).length) return modal.modal('hide');
+      content.html($(moduleSelector).first().show());
+      dismissButtons.text('Skip');
+      modal.one('click', function() { dismissButtons.text('Next'); });
+    });
+  });

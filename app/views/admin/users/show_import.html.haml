@@ -1,0 +1,96 @@
+- title 'Import CSV file'
+#csv-importer-container
+  #csv-import-info.alert.alert-info
+    %p
+      Import will add or update the users in the database and output another CSV file with the results in the last column.
+    %p
+      If a field is left blank, the field will not be changed.
+    %p
+      When preview is selected, the database will not be updated.
+  #csv-importer-form
+    %p
+      = link_to 'Download list of country ISO codes', download_country_iso_file_admin_users_url
+    %p
+      = link_to 'Download template file', download_template_file_admin_users_url
+    %form{:action => 'import', :method => 'post', :enctype => 'multipart/form-data'}
+      %input{:type => 'hidden', :name => 'authenticity_token', :value => form_authenticity_token.to_s}
+      %div
+        %label{:for => 'identifier'}
+          %span{:class => 'tooltip', 'data-tip' => 'identifier-tip'}
+            Identifier
+        %select{:name => 'identifier'}
+          %option{:value => 'email'}= 'email'
+          %option{:value => 'id'}= 'id'
+          %option{:value => 'token'}= 'token'
+      %div.welcome-email
+        %label{:for => 'welcome_email'}
+          %span{:class => 'tooltip', 'data-tip' => 'welcome-tip'}
+            Send welcome email to new members?
+        %input{:type => 'checkbox', :name => 'welcome_email', :checked => 1}
+      %div
+        %label{:for => 'csv'}
+          %span{:class => 'tooltip', 'data-tip' => 'file-tip'}
+            File
+        %input{:type => 'file', :name => 'csv'}
+      %div
+        %label{:for => 'preview'}
+          %span{:class => 'tooltip', 'data-tip' => 'preview-tip'}
+            Preview only?
+        %input{:type => 'checkbox', :name => 'preview', :checked => 1}
+      %div
+        %label{:for => 'quarantine'}
+          %span{:class => 'tooltip', 'data-tip' => 'quarantine_tip'}
+            Quarantine?
+        %input{:type => 'checkbox', :name => 'quarantine'}
+      %div
+        %label{:for => 'tags'}
+          %span{:class => 'tooltip', 'data-tip' => 'tag_tip'}
+            Tags?
+        %input{:type => 'text', :name => 'tags'}
+      %div
+        %label{:class => 'tooltip', 'data-tip' => 'import-tip'}
+        %input{:type => 'submit', :value => 'Import'}
+      %div{:id => 'identifier-tip'}
+        %ul
+          %li
+            %strong
+              Email:
+            Imports or updates existing users by email address.
+          %li
+            %strong
+              ID:
+            Updates users by their id column.
+          %li
+            %strong
+              Token:
+            Updates users by their token.
+      %div{:id => 'file-tip'}
+        %p
+          The CSV file must have the same format as the template file.
+      %div{:id => 'preview-tip'}
+        %p
+          If this option is selected the database will not be updated, instead a CSV file will be exported with the expected results of an actual import.
+      %div{:id => 'welcome-tip'}
+        %p If this option is selected, all new users imported will get sent the standard Welcome to GetUp email. If you un-tick this option, we recommend you list cut to these users and send them a tailored welcome email.
+      %div{:id => 'quarantine_tip'}
+        %p If this option is selected, each new user or resubscribed will be unsubcribed and have a <em>quarantined</em> user activity event created.
+      %div{:id => 'tag_tip'}
+        %p Each tag will be added to all new users or existing users in the csv file.
+
+:javascript
+  $(function() {
+    $("input[name=tags]").tagsInput({
+      width: '300px',
+      height: '35px'
+    });
+
+    $('input[name=quarantine]').change(function() {
+      if (this.checked) {
+        $('.welcome-email').attr("style", "background-color: rgba(1,1,1,0.5);");
+        $('.welcome-email input').hide();
+      } else {
+        $('.welcome-email').attr("style", '');
+        $('.welcome-email input').show();
+      }
+    });
+  });

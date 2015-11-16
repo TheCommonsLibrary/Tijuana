@@ -1,0 +1,61 @@
+<div class="layout-container" id="<%= layout_container %>">
+  <h3><%= "#{layout_container.to_s.gsub("_", " ").upcase}" %></h3>
+  <% if layout_container == :main_content && @page_sequence.static? %>
+  <span>
+    <%= outer_form.label :paginate_main_content, "Paginate?" %>
+    <%= outer_form.check_box :paginate_main_content %>
+  </span>
+  <% end %>
+
+  <ul id="<%= "#{layout_container}" %>-modules">
+    <%= render :partial => "content_module", :collection => content_modules, :locals => {:layout_container => layout_container} %>
+  </ul>
+
+  <div class="button-links">
+    <div class="left">
+      <a class="unlock-sorting" href="#unlock-sorting" unlock="<%= "#{layout_container}" %>-modules">Unlock Sorting</a>
+    </div>
+    <div class="add-ask-buttons">
+      <%= add_content_module_link(PetitionModule, layout_container, "Add a petition") if PetitionModule.for_container?(layout_container) && !@page_sequence.static? %>
+      <%= add_content_module_link(EmailTargetsModule, layout_container, "Add a targeted email") if EmailTargetsModule.for_container?(layout_container) %>
+      <%= add_content_module_link(EmailMPModule, layout_container, "Add an email to MP") if EmailMPModule.for_container?(layout_container) && !@page_sequence.static? %>
+      <%= add_content_module_link(CallMPModule, layout_container, "Add a call to MP") if CallMPModule.for_container?(layout_container) && !@page_sequence.static? %>
+      <%= add_content_module_link(DonationModule, layout_container, "Add a donation") if DonationModule.for_container?(layout_container) %>
+      <%= add_content_module_link(PastCampaignModule, layout_container, "Add a past campaign") if PastCampaignModule.for_container?(layout_container) && @page_sequence.static? %>
+      <%= add_content_module_link(DoorknockModule, layout_container, "Add Doorknock") if DoorknockModule.for_container?(layout_container) && !@page_sequence.static? %>
+      <%= add_content_module_link(TargetListModule, layout_container, "Add a targeted list") if TargetListModule.for_container?(layout_container) && !@page_sequence.static? %>
+      <%= add_content_module_link(MerchModule, layout_container, "Add a merch") if MerchModule.for_container?(layout_container) && !@page_sequence.static? %>
+    </div>
+    <div class="button-row">
+      <div class="add-ask-buttons">
+        <%= add_content_module_link(EmailPledgesModule, layout_container, "Add a pledge") if EmailPledgesModule.for_container?(layout_container) && !@page_sequence.static? %>
+        <%= add_content_module_link(DonationUpgradeModule, layout_container, "Add a donation upgrade") if DonationUpgradeModule.for_container?(layout_container) && !@page_sequence.static? %>
+        <%= add_content_module_link(ImageShareModule, layout_container, "Add an image share") if ImageShareModule.for_container?(layout_container) && !@page_sequence.static? %>
+        <%= add_content_module_link(FacebookCommentModule, layout_container, "Add FB target") if FacebookCommentModule.for_container?(layout_container) && !@page_sequence.static? %>
+      </div>
+      <span class="add-tell-a-friend-button">
+        <%= add_content_module_link(TellAFriendModule, layout_container, "Add a Tell A Friend") if TellAFriendModule.for_container?(layout_container) %>
+        <%= add_content_module_link(TellAFriendAskModule, layout_container, "Add a Tell A Friend") if TellAFriendAskModule.for_container?(layout_container) %>
+      </span>
+      <%= add_content_module_link(StandfirstModule, layout_container,  "Add Standfirst") if StandfirstModule.for_container?(layout_container) %>
+      <%= add_content_module_link(HtmlModule, layout_container,  "Add HTML") if HtmlModule.for_container?(layout_container) %>
+      <%= add_content_module_link(TestimonialModule, layout_container,  "Add Testimonials") if TestimonialModule.for_container?(layout_container) %>
+      <%= add_content_module_link(AccordionModule, layout_container, "Add accordion") if AccordionModule.for_container?(layout_container) %>
+      <%= add_content_module_link(TransparencyStatsModule, layout_container, "Add transparency stats") if TransparencyStatsModule.for_container?(layout_container) %>
+      <%= add_content_module_link(DirectLandingHtmlModule, layout_container,  "Add Direct Landing HTML") if DirectLandingHtmlModule.for_container?(layout_container) %>
+      <%# add_content_module_link(RecommendationModule, layout_container,  "Add recommendations") if RecommendationModule.for_container?(layout_container) %>
+      <%= link_to("Bookmarks", show_bookmarks_admin_page_path(@page, :container => layout_container), :title => "Choose a Bookmarked Module to Add", :id => "add-from-bookmarks-#{layout_container}", :class => "add-module-link bookmark") %>
+    </div>
+
+ </div>
+</div>
+
+<%= javascript_tag do %>
+  $(function() {
+    reorderSequence('<%= sort_content_modules_admin_page_path(@page) %>', '#<%= "#{layout_container}" %>-modules', '#<%= "#{layout_container}" %>');
+
+    $("#add-from-bookmarks-<%= layout_container %>").colorbox({
+      width: '400px'
+    });
+  });
+<% end %>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<p>Hello <%= @resource.email %>!</p>
+
+<p>Your admin password has been reset and needs to be changed for security reasons. You will get an email with
+  instructions for resetting your password</p>
+
+<p>Please review the admins in the system:</p>
+
+<ul>
+    <% User.where(is_admin: true).each do |user| %>
+        <li><%= user.email %></li>
+    <% end %>
+</ul>
+
+<p>Please review the volunteers in the system:</p>
+
+<ul>
+    <% User.where(is_volunteer: true).each do |user| %>
+        <li><%= user.email %></li>
+    <% end %>
+</ul>
+
+</body>
+</html>

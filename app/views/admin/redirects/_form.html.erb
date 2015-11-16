@@ -1,0 +1,32 @@
+<%= form_for([:admin, @redirect]) do |f| %>
+  <%= form_errors(@redirect) %>
+
+  <div class="redirect">
+    <% if @redirect.new_record? %>
+      <%= f.label :alias_path, 'Alias Path', :class => "req" %>
+      <%= f.text_field :alias_path, :placeholder => "current-campaign" %>
+      <p class="label">OR</p>
+      <%= f.label :alias_domain, 'Alias Domain', :class => "req" %>
+      <%= f.text_field :alias_domain, :placeholder => "ausvote.org.au" %>
+    <% else %>
+      <%= f.label :alias_path, 'Alias Path' %>
+      <%= f.text_field :alias_path, :disabled => true %>
+      <%= f.label :alias_domain, 'Alias Domain' %>
+      <%= f.text_field :alias_domain, :disabled => true %>
+      <div class="info">
+        Existing aliases cannot be renamed or deleted.
+      </div>
+    <% end %>
+  </div>
+
+  <div class="redirect">
+    <%= f.label :target, 'Target', :class => "req" %>
+    <%= f.text_field :target, :placeholder => "https://www.getup.org.au/my-campaign/page-sequence/my-page" %>
+  </div>
+
+  <div class="buttonbar">
+    <%= f.submit @redirect.new_record? ? "Create redirect" : "Save redirect", :disable_with => "Saving…" %>
+    <%= link_to "Cancel", admin_redirects_path %>
+  </div>
+<% end %>
+

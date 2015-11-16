@@ -1,0 +1,33 @@
+<%= link_to "Bookmark", "#bookmark",
+  :id => "bookmark-module-#{content_module.id}", 
+  :class => "bookmark", 
+  :title => "Bookmark this module",
+  :style => content_module.bookmarked? ? "display:none" : ""
+%>
+<%= link_to "Unbookmark", unbookmark_content_module_admin_page_path(@page, :content_module_id => content_module.id),
+  :id => "unbookmark-module-#{content_module.id}",
+  :class => "bookmark bookmarked", 
+  :title => "Remove from bookmarks",
+  :remote => true, :data => { :confirm => "Remove this module from bookmarks?" },
+  :style => content_module.bookmarked? ? "" : "display:none"
+%>
+
+<% content_for :bookmark_forms do %> 
+  <form action="#add-bookmark" id="bookmark-form-<%= content_module.id %>" style="display: none" class="bookmark-form">
+    <input type="hidden" name="content_module_id" value="<%= content_module.id %>"/>
+    <input type="text" name="bookmark_name" placeholder="Bookmark Name (visible to all campaigners)"/>
+    <div class="buttonbar">
+      <%= link_to "Cancel", "#cancel", :class => "cancel", :id => "cancel-bookmark-#{content_module.id}" %>
+      <%= submit_tag "Add Bookmark" %>
+    </div>
+    <div class="error"></div>
+  </form>
+<% end %>
+
+<%= yield :bookmark_forms if @render_bookmark_form_inline %>
+
+<%= javascript_tag do %>
+  $(function() {
+    pageEditing().setupBookmarkableModule(<%= content_module.id %>, '<%= bookmark_content_module_admin_page_path(@page) %>');
+  });
+<% end %>

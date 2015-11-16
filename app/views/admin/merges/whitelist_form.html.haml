@@ -1,0 +1,14 @@
+- title "Whitelist"
+- content_for :sub_nav do
+  = render "admin/shared/nav_header"
+
+.section
+  %h3 Merge Tokens Whitelist
+  = form_tag(update_whitelist_admin_merges_path, method: :put) do
+    = label_tag('merge_tokens', 'Whitelisted merge tokens', {:class => 'tooltip', 'data-tip' => 'merge-tokens-tip'})
+    = text_area_tag 'merge_tokens', Setting[:whitelist_merge_tokens]
+    = label_tag('password')
+    = password_field_tag 'password'
+    #merge-tokens-submit.clear= submit_tag 'submit'
+    #merge-tokens-tip{:style => "display:none"}
+      %p Place merge tokens on a new line. Use '#' for comments - anything after the '#' will be ignored. E.g. first_name #the member's first name.

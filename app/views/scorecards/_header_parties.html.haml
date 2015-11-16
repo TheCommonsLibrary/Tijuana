@@ -1,0 +1,9 @@
+.row.hidden-xs
+  .col-sm-4
+    %h5.party.rating GetUp's rating:
+  .col-sm-8
+    .row
+      .col-sm-2.no-width
+      - parties.each do |party|
+        .col-sm-2.no-padding
+          %h5.party=party

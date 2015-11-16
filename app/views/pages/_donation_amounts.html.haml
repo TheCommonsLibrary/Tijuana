@@ -1,0 +1,36 @@
+- amounts_list = donation_module.amounts_list(@token_user)
+- selected_item = params[:donation] ? params[:donation][:amount_in_dollars] : donation_module.default_amount_in_dollars(@token_user)
+- custom_amount_selected = params[:donation] && donation_module.custom_amount_selected?(params[:donation])
+
+%label Donation Amount
+.donation{'data-toggle' => 'buttons-radio'}
+  - show_all_amounts = show_all_amounts?(amounts_list)
+  .js-button-layout.hide
+    - amounts_list.each do |amount|
+      - amount_in_currency = number_to_currency(amount.to_f, :strip_insignificant_zeros => true)
+      = button_tag(amount_in_currency,
+                  :class => "btn#{amount.to_s.end_with?('*') ? nil : ' verbose-min-980' unless show_all_amounts}#{' active' if amount.to_f == selected_item.to_f} js-amount-#{amount.to_i}",
+                  :type => 'button',
+                  'data-amount' => amount.to_i,
+                  :value => amount)
+    .others
+      %button.btn.otherbtn.js-amount-other{:type => "button", :class => "#{'active' if custom_amount_selected}", 'data-amount' => 'other'} $
+
+  .clearfix
+  - amounts_list.each do |amount|
+    .suggested-amount{:class => "#{amount.to_s.end_with?('*') ? nil : 'verbose-min-980' unless show_all_amounts}" }
+      - amount_in_currency = number_to_currency(amount.to_f, :strip_insignificant_zeros => true)
+      = f.radio_button :amount_in_dollars, amount.to_f, :checked => (selected_item.to_f == amount.to_f) && !disabled, :id => "donation_donation_amount_in_dollars_#{amount.to_i}_#{suffix}", :class => 'payment-input', :disabled => disabled, 'data-amount' => amount.to_i
+      = f.label "donation_amount_in_dollars_#{amount.to_i}_#{suffix}", amount_in_currency
+
+  .clearfix
+  .others.suggested-amount
+    = f.radio_button :amount_in_dollars, "other", :checked => custom_amount_selected && !disabled, :id => "", :class => 'payment-input', :disabled => disabled, 'data-amount' => 'other'
+    = f.text_field :custom_amount_in_dollars, :class => 'otheramount input-mini js-amount-other payment-input', :id => nil, :placeholder => 'Other', :disabled => disabled
+
+  = field_errors(f.object, :amount_in_dollars)
+
+- unless donation_module.only_allow_one_off_payment?
+  .frequency
+    = label_tag "donation-frequency-#{suffix}", 'Frequency'
+    = f.select :frequency, donation_module.available_frequencies_for_select, {}, :class => 'payment-input', :disabled => disabled, id: "donation-frequency-#{suffix}"

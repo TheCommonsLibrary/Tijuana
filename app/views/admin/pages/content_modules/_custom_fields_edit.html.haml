@@ -1,0 +1,5 @@
+.custom_fields_edit
+  %a.actions{:href => "#"} Edit Custom Fields
+  .custom_fields_container{:style => "display:none"}
+    = f.label :custom_fields_as_yaml
+    = f.text_area :custom_fields_as_yaml, rows: 15

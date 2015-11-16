@@ -1,0 +1,15 @@
+.container
+  .row
+    #getup-logo.span12
+      %a#brand.heroes{:href => '/'}
+        =image_tag('public/getup_logo.png', :alt => 'GetUp!')
+    - if @valid_main_content_modules.present?
+      = render partial: 'content_module', collection: @valid_main_content_modules, locals: {email: @email}
+    -#= render :partial => "themes/heroes/pages/heroes_content"
+
+#videoModal.modal.hide.fade{:tabindex => '-1'}
+  %button.close{'aria-hidden' => 'true', 'data-dismiss' => 'modal'} &times;
+  .modal-body.heroes-video
+
+- content_for :footer_js do
+  = javascript_include_tag "themes/heroes/heroes_video_display"

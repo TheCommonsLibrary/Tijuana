@@ -1,0 +1,43 @@
+- content_module_errors = ''
+= fields_for "content_modules[#{content_module.id}]", content_module do |f|
+  - content_module_errors = f.object.errors.messages[:content].present? ? %W/#{f.object.errors.messages[:content]}/[0] : nil.to_json
+  %li{id: "content_module_#{content_module.id}", class: "module #{content_module.class.name.underscore}",  data: {is: { ask: "#{content_module.is_ask?}"}}}
+    .module-header
+      %span.handle
+      %h4{class: content_module.class.name.underscore}
+        = content_module.class.name.titlecase
+      = render :partial => "bookmark_form", :locals => {:content_module => content_module}
+      .actions
+        = link_to "Remove module", remove_content_module_admin_page_path(@page, :content_module_id => content_module.id), |
+          :remote => true, :data => { :confirm => "Remove #{content_module.class.name.titlecase}?\n\nThis cannot be undone." },        |
+          :id => "remove-module-#{content_module.id}"                                                                     |
+        - other_container = layout_container.to_sym == :main_content ? :sidebar : :main_content
+        - if content_module.class.for_container?(other_container) && layout_container != :header_content
+          - switch_container_text = layout_container.to_sym == :main_content ? "Move to sidebar" : "Move to main content"
+          |
+          = link_to switch_container_text, switch_container_admin_page_path(@page, :content_module_id => content_module.id),  :method => :put, :remote => true,  :id => "switch-container-#{content_module.id}"
+    = form_errors(f.object)
+    = f.hidden_field :id
+    = render :partial => edit_content_module_partial(content_module), :locals => {:f => f, :content_module => content_module}
+
+    - if content_module.linked?
+      .content-end.button-links.link-controls
+        .left
+          = link_to "Unlock editing", "#unlock-editing", :class => "unlock-editing"
+          = link_to "Unlink this module", unlink_content_module_admin_page_path(@page, :content_module_id => content_module.id),                        |
+            :remote => true, :class => "unlink-module",                                                                                                 |
+            :data => { :confirm => "Unlink #{content_module.class.name.titlecase}?\n\nChanges made afterwards will only affect this page.\nThis cannot be undone." } |
+          .info
+            This module is linked to multiple pages; changes made here will affect every page it appears on. Unlink the module if you want to edit this page in isolation.
+    .content-end
+
+:javascript
+  $(function() {
+    pageEditing().setupContentModule('#{content_module.id}');
+  });
+
+- if content_module.handles_extended_validation?
+  :javascript
+    $(function() {
+      codeMirrorPlugin("#content_modules_#{content_module.id}_content", #{content_module_errors});
+    });

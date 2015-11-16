@@ -1,0 +1,25 @@
+.searchbar {
+  label {
+    width: 9em;
+    display: inline-block;
+    margin-right:1em;
+  }
+  .filter-payment-options {
+    width: 37.7em;
+
+  }
+  input[type=text] {
+    width:36.4em;
+  }
+
+  input.amount {
+    width:125px;
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+
+  input.date-picker {
+    width:125px;
+  }
+}
+

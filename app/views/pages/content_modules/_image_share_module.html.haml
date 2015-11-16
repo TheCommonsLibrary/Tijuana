@@ -1,0 +1,25 @@
+- image_share = content_module
+.well
+  .petition-content
+    %h2
+      = image_share.title.upcase
+    %p
+      =raw render_html(image_share.content)
+  %hr
+  - if image_share.disable_user_details
+    %form{id: 'action-form'}
+      = render partial: 'pages/content_modules/image_share_module_content', :locals => {:image_share => image_share}
+  - else
+    = render :layout => "pages/form_with_user_lookup", :locals => {:content_module => content_module, :auto_submittable => true} do
+      = render partial: 'pages/content_modules/image_share_module_content', :locals => {:image_share => image_share}
+
+- if image_share.font_url.present?
+  = content_for(:extra_css) do
+    %link{:rel => "stylesheet", :type => "text/css", :href => "#{image_share.font_url}"}
+= content_for(:extra_js) do
+  %script{:src => '//connect.facebook.com/en_US/sdk.js'}
+  = javascript_include_tag 'public/lib/fontfaceonload'
+
+= content_for(:footer_js) do
+  :javascript
+    imageShareTool("#{content_module.fb_app_id}", 'canvas', '.caption', '.btn-download', '.post-fb .btn-social', 'bg-img', '#action-form', "#{content_module.fb_page_name}", "#{content_module.fb_page_description}", "#{content_module.fb_page_caption}", '.loading', "#{next_page_full_url}", #{image_share.disable_user_details}, #{zero_when_blank(image_share.caption_x)}, #{zero_when_blank(image_share.caption_y)}, "#{image_share.font_size_px}", "#{image_share.font_family}", "##{image_share.font_colour}", #{!!image_share.caption_uppercase}, "#{image_share.caption_right_padding}");

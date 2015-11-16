@@ -1,0 +1,28 @@
+<% title "Edit Homepage" %>
+<div id="edit-homepage">
+  <div id="legend">
+    <%= image_tag("admin/homepage_legend.png") %>
+  </div>
+
+  <%= form_for([:admin, @homepage]) do |f| %>
+    <%= form_errors(@homepage) %> 
+    <%= f.label :banner_text, :class => "req" %>
+    <%= f.text_field :banner_text %>
+    <%= render :layout => "admin/shared/token_replacement_help" do %>
+      <br/>{MEMBERCOUNT} = the current number of subscribed members
+    <% end %>
+    <% [:campaign_image, :campaign_url, :campaign_alt_text,
+        :campaign2_image, :campaign2_url, :campaign2_alt_text,
+        :campaign3_image, :campaign3_url, :campaign3_alt_text,].each do |field| %>
+      <%= f.label field, :class => "req" %>
+      <%= f.text_field field %>
+    <% end %>
+  
+    <div class="buttonbar">
+      <%= f.submit "Save Homepage", :disable_with => "Saving…"  %>
+      <%= link_to "Cancel", admin_root_path %>
+    </div>
+  <% end %>
+
+  <%= render :partial => 'admin/shared/history', :locals => {:entity => @homepage } %>
+</div>

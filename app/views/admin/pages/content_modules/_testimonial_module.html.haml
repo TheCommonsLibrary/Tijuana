@@ -1,0 +1,27 @@
+.code-mirror-plugin
+  = f.label :content, 'Content'
+  = f.text_area :content, :rows => 4
+  %p.help
+    E.g.
+    %em
+      "Thank you for chipping in to help us XXXX.
+      %br
+      %br
+      While you're here, why not tell your friends why you were inspired to take action?"
+
+= f.label :url, 'URL', :class => "req"
+= f.object.url.present? ? f.text_field(:url) : f.text_field(:url, value: friendly_url(@page.page_sequence.pages.first))
+%p.help
+  URL of the page that the comments are about. By default, this is the URL of the first page in the sequence. The URL must be an absolute URL.
+
+= f.label :number_of_comments, 'Number of comments', :class => "req"
+= f.text_field :number_of_comments
+%p.help
+  Number of comments to initially load. Only load more than 10 if there is no ask module on the page. Otherwise, too many initial comments pushes the ask down the page too far.
+
+= f.label :comments_order, 'Comments order', :class => "req"
+= f.select :comments_order, TestimonialModule.comments_order_options.map{|option| [option.titleize, option]} 
+%p.help
+  The default is
+  %em Social
+  which is to display the most popular and relevant comments first

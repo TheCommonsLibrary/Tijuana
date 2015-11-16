@@ -1,0 +1,11 @@
+<%= f.fields_for rule.class.code do |f| %>
+  <%= f.select :not, [["is", false], ["is not", true]], {:selected => rule.negate?}, {:class => "filter-negate"} %>
+
+  <dt <%= 'class="inactive"' unless rule.active? %>>
+    <%= f.check_box :activate, :checked => rule.active? %>
+  </dt>
+  <dd <%= 'class="inactive"' unless rule.active? %>>
+    <%= render :partial => "admin/list_cutter/rules/#{rule.class.code}", :locals => {:rule => rule, :f => f} %>
+    <%= render :partial => "admin/list_cutter/rules/rule_errors", :locals => {:list => list, :key => rule.class.code} %>
+  </dd>
+<% end %>

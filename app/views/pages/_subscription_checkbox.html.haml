@@ -1,0 +1,4 @@
+= fields_for :user do |f|
+  %label.checkbox(for="become-member-checkbox" style="#{@user.is_member? ? 'display:none' : ''}")
+    = f.check_box(:is_member, {:checked => true, :class=>'full', :id=>'become-member-checkbox'})
+    Receive updates

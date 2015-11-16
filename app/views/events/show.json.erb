@@ -1,0 +1,5 @@
+<% if @event.confirmed? %>
+  <%= render :partial => "common/events", :locals => {:events => [@event] } %>
+<% else %>
+  <%= render :partial => "common/events", :locals => {:events => [] } %>
+<% end %>

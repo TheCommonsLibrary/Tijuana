@@ -1,0 +1,205 @@
+= f.label :title, 'Title', :class => "req"
+= f.text_field :title
+.code-mirror-plugin
+  = f.label :content, 'Blurb'
+  = f.text_area :content, :rows => 4
+
+.frequency-options
+  = f.label :frequency_options, 'Allow recurring?'
+  = f.fields_for :frequency_options do |frequency_options_fields|
+    = render :partial => "admin/pages/content_modules/frequency_option", :collection => DonationModule::FREQUENCIES, :locals => {:f => frequency_options_fields, :donation_module => f.object}
+- unless content_module.is_a? MerchModule
+  .paypal-options
+    %span.note PayPal must be disabled for future or time limited donations
+    %label
+      Disable PayPal
+      \#{f.check_box :disable_paypal}
+
+
+- if content_module.eligible_for_personalised_donation_tests?
+  %div{:style => "position:relative;clear:both;"}
+    = f.label :use_fixed_amounts, "Use fixed amounts"
+    = f.check_box :use_fixed_amounts, :"data-content-module" => content_module.id
+    %p.help Leave this unchecked to use optimised personalised amounts. Check this only if you wish to use to use fixed amounts for all members viewing this module. 
+
+  %div{id: "amounts_info_#{content_module.id}"}
+    %p.help
+      %strong Non-donors
+      will be shown suggested amounts of
+      %strong=content_module.suggested_amounts
+      dollars with a default value of
+      %strong="$#{content_module.default_amount}."
+
+    %p.help
+      %strong Donors
+      will be exposed to one of four A/B test conditions:
+      %ol.module-help-list
+        %li
+          Fixed amounts of
+          %strong=DonationModule::DEFAULT_PERSONALISED_AMOUNTS
+          dollars with a default of
+          %strong $#{DonationModule::DEFAULT_PERSONALISED_AMOUNTS_DEFAULT}
+        %li
+          Relative amounts to their highest previous donation in the last 18 months of 
+          %strong=DonationModule::RELATIVE_TO_HPD_AMOUNTS
+          with a default of
+          %strong=DonationModule::RELATIVE_TO_HPD_AMOUNTS_DEFAULT
+        %li
+          Relative amounts adjusted to their recency and amount by the following conditions:
+          %br
+          If their HPD is $15 or under, boost the amounts by 20% i.e. 
+          %strong=DonationModule::BOOSTED_RELATIVE_TO_HPD_AMOUNTS
+          with a default of
+          %strong=DonationModule::BOOSTED_RELATIVE_TO_HPD_AMOUNTS_DEFAULT
+          %br
+          If their HPD is over $15 and their last donation was within 21 days, reduce by 20% and the upper amounts i.e.
+          %strong=DonationModule::REDUCED_RELATIVE_TO_HPD_AMOUNTS
+          with a default of
+          %strong=DonationModule::REDUCED_RELATIVE_TO_HPD_AMOUNTS_DEFAULT
+          %br
+          Otherwise, use the same amounts as
+          %strong 2.
+        %li
+          Relative amounts adjusted based on the relationship between their average donation and HPD:
+          %br
+          If their average donation is less than half of their HPD
+          %strong=DonationModule::SIGNIFCANTLY_REDUCED_RELATIVE_TO_HPD_AMOUNTS
+          with a default of
+          %strong=DonationModule::SIGNIFCANTLY_REDUCED_RELATIVE_TO_HPD_AMOUNTS_DEFAULT
+          %br
+          Otherwise, use the same amounts as
+          %strong 2.
+      %p.help
+        %strong *
+        visible on mobile
+      %p.help
+        %em Note:
+        the cap for Highest Previous Donation Amount used is $#{content_module.personalised_cap}.
+        This means that if a donor has donated more than the cap in the past (e.g. $#{content_module.personalised_cap.to_i + 100}),
+        their personalised donation amounts will only be calculated using a value of $#{content_module.personalised_cap}.
+
+  %div{id: "amounts_form_#{content_module.id}"}
+    = f.label :suggested_amounts, 'Suggested amounts', :class => "req"
+    = f.text_field :suggested_amounts
+
+    %p.help
+      Add an asterisk to the amounts you wish to be visible on mobile and other small devices (e.g. 10*, 50, 100* - 10 and 100 will always be visible).
+      = succeed "If" do
+        %br
+      you don't add any asterisks, all amounts will be visible on all devices (this may not look so good on mobiles).
+
+    = f.label :default_amount, 'Default amount', :class => "req"
+    = f.text_field :default_amount
+- else
+  = f.label :suggested_amounts, 'Suggested amounts', :class => "req"
+  = f.text_field :suggested_amounts
+
+  %p.help
+    Suggested Amounts are used if there are no Personalised Amounts set or we cannot identify a highest previous donation amount (HPDA) for the user.
+  %p.help
+    Add an asterisk to the amounts you wish to be visible on mobile and other small devices (e.g. 10*, 50, 100* - 10 and 100 will always be visible).
+    = succeed "If" do
+      %br
+    you don't add any asterisks, all amounts will be visible on all devices (this may not look so good on mobiles).
+
+  %p{:style => "color: blue; padding-left: 130px;"} REMEMBER TO TEST DIFFERENT AMOUNTS WITH DIFFERENT PAGES
+  = f.label :default_amount, 'Default amount', :class => "req"
+  = f.text_field :default_amount
+
+  = f.label :personalised_amounts, 'Personalised amounts'
+  = f.text_field :personalised_amounts
+  %p.help
+    Personalised amounts are used if we can identify the user and they have a highest previous donation amount (HPDA). Specify normal amounts as numbers, personalised amounts as percentages. Eg, '5*, 75%, 100%*, 125%*, 5000'. Asterisk means visible on mobile.
+
+  = f.label :personalised_cap, 'Personalised cap'
+  = f.text_field :personalised_cap
+  %p.help
+    Used as the user's HPDA if user's HPDA is higher than this cap. 
+
+  = f.label :personalised_default_amount, 'Personalised default amount'
+  = f.text_field :personalised_default_amount
+  %p.help
+    Can be dollar amount or percentage. Should match one of the entries in personalised amounts. Do not include *.
+
+= f.label :thermometer_threshold, 'Show progress at', :class => "req"
+= f.text_field :thermometer_threshold
+
+%div{:style => "position:relative;clear:both;"}
+  - # Disabled future recurring as all donations would be lost. Card up to fix/remove this feature permanently
+  = # f.label :commence_donation_at, "Future recurring?", :class => "date"
+  = # f.text_field :commence_donation_at, :class => "date"
+  %span{:id => "content_modules_#{content_module.id}_commence_donation_at_clear", :style => "position:absolute;right:30px;top:14px;font-weight:bold;text-transform:uppercase;"} Clear
+  = render :partial => "admin/pages/content_modules/activity_stream_templates", :locals => {:f => f}
+  %div
+    = f.label :button_text, 'Button text', :class => "req"
+    = f.text_field :button_text
+
+  %fieldset.make-recurring
+    %legend Make Recurring Followup Ask
+    .info
+      Post-donation modal pop-up to ask the member if they'd like to make their previous donation monthly.
+    %div
+      = f.label :make_recurring_enabled, 'Enabled'
+      = f.check_box :make_recurring_enabled
+    %div
+      = f.label :make_recurring_header, 'Header text'
+      = f.text_field :make_recurring_header
+    %div
+      = f.label :make_recurring_body, 'Body text'
+      = f.text_area :make_recurring_body, rows: 3
+    %div
+      = f.label :make_recurring_button, 'Button text'
+      = f.text_field :make_recurring_button
+
+  %fieldset.recurring-checkbox
+    %legend Make Recurring Checkbox
+    .info
+      Checkbox on standard donation form that asks a member to make their donation recurring
+    %div
+      = f.label :make_recurring_checkbox_enabled, 'Enabled'
+      = f.check_box :make_recurring_checkbox_enabled
+    %div
+      = f.label :make_recurring_checkbox_text, 'Text'
+      = f.text_field :make_recurring_checkbox_text
+
+  %fieldset.quick-donate
+    %legend Quick Donate Enrolment
+    .info Post-donation modal pop-up to save payment details. If Make Recurring is enabled, this appears second.
+    %div
+      = f.label :quick_donate_enabled, 'Enabled'
+      = f.check_box :quick_donate_enabled
+    %div
+      = f.label :quick_donate_text, 'Description'
+      = f.text_area :quick_donate_text, rows: 3
+    %div
+      = f.label :quick_donate_button_text, 'Button text'
+      = f.text_field :quick_donate_button_text
+
+  = render partial: "admin/pages/content_modules/custom_fields_edit", locals: {f: f}
+
+
+:javascript
+  $(function() {
+    toggle_edit_custom_fields();
+    $.datepicker.setDefaults({dateFormat: 'dd-mm-yy'});
+    
+    $('#content_modules_#{content_module.id}_commence_donation_at').datepicker({minDate:1});
+    $('#content_modules_#{content_module.id}_commence_donation_at').keydown(function(event) {
+      event.preventDefault();
+    });
+    $('#content_modules_#{content_module.id}_commence_donation_at_clear').click(function() {
+      $('#content_modules_#{content_module.id}_commence_donation_at').val('');
+    });
+
+    var toggleExperiment = $('#content_modules_#{content_module.id}_use_fixed_amounts');
+    var $info = $('#amounts_info_#{content_module.id}');
+    var $form = $('#amounts_form_#{content_module.id}');
+    function displayDonationAmountsForm(){
+      var useFixedAmounts = toggleExperiment.is(':checked');
+      $form.toggle(useFixedAmounts);
+      $info.toggle(!useFixedAmounts);
+      $form.find('input').prop('disabled', !useFixedAmounts ? 'disabled' : null);
+    }
+    toggleExperiment.click(displayDonationAmountsForm);
+    displayDonationAmountsForm();
+  });

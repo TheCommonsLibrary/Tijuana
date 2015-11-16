@@ -1,0 +1,45 @@
+
+#csv-importer-container {
+  #csv-importer-form {
+    form {
+      div {
+        clear: both;
+        padding-top: 15px;
+        label {
+          float: none;
+          display: inline-block;
+          margin-right: 0px;
+          padding-top: 0px;
+          width: 110px;
+          text-align: right;
+          padding-right: 15px
+        }
+      }
+      label[for=tags] {
+        float: left;
+      }
+      .tagsinput {
+        float: left;
+        padding-top: 5px;
+        clear: none;
+      }
+      .tagsinput div {
+        padding-top: 0;
+        clear: none;
+      }
+    }
+    select {
+      width:100px;
+      margin-right:20px;
+    }
+    #identifier-tip, #file-tip, #preview-tip, #import-tip, #welcome-tip, #low_volume_tip, #tag_tip {
+      display:none;
+    }
+    li {
+      padding: 4px;
+    }
+  }
+
+  #csv-import-info {
+  }
+}

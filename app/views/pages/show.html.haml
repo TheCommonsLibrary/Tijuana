@@ -1,0 +1,43 @@
+- title @page.name
+%article
+  .container
+    %section
+      %article
+        - unless @page.main_content_modules.empty? && @page.no_wrapper
+          - if @page.valid_header_content_modules.present?
+            - @page.valid_header_content_modules.each do |content_module|
+              = render :partial => content_module_partial(content_module), :locals => {:content_module => content_module, :section => :header}
+          %h1
+            = page_header_title
+          - if @valid_main_content_modules.present?
+            = render partial: 'content_module', collection: @valid_main_content_modules, locals: {email: @email}
+            - if @page.paginate_main_content?
+              = will_paginate @valid_main_content_modules
+              .clearfix
+
+      - if @page.valid_aside_content_modules.present?
+        %aside.verbose-min-980
+          = render partial: 'content_module', collection: @valid_aside_content_modules, locals: {email: @email}
+
+      #action
+        - @page.sidebar_content_modules.select(&:valid?).each do |content_module|
+          - next if exclude_module_from_daisy_chain?(content_module)
+          - if @email.nil? || content_module.class.name != "DirectLandingHtmlModule"
+            = render :partial => content_module_partial(content_module), :locals => {:content_module => content_module, :section => :sidebar}
+
+= include_facebook_like_from_theme(@page.page_sequence.theme, 'dark', 'standard')
+
+- qd = display_quick_donate_enrol?(@page)
+- mr = display_make_recurring?(@page)
+
+- if qd || mr
+  - content_for :extra_css do
+    - stylesheet_link_tag 'public/new_modal'
+
+-# lowest modal shows first
+- if qd
+  = render 'quickdonate_enrol'
+- if mr
+  = render 'make_recurring'
+
+= remarketing_content

@@ -1,0 +1,24 @@
+<%= form_for([:admin, @campaign]) do |f| %>
+    <%= form_errors(@campaign) %>
+
+    <%= f.label :name, :class => "req" %>
+    <%= f.text_field :name %>
+
+    <div class="info">
+      Name is used for the URL and will be visible to the public. Description is for internal use only.
+    </div>
+
+    <%= f.label :description %>
+    <%= f.text_area :description, :rows => 3 %>
+
+    <%= f.label :accounts_key, 'Pillar' %>
+    <%= f.select :accounts_key, Campaign.accounts_keys, {include_blank: true}, {style: 'width: auto;'} %>
+
+    <%= f.label :hidden_in_admin, 'Hide in admin', style: 'clear: left' %>
+    <%= f.check_box :hidden_in_admin, style: 'float: left; margin-top: 1em;' %>
+
+    <div class="buttonbar">
+      <%= f.submit @campaign.new_record? ? "Create campaign" : "Save campaign",  :disable_with => "Saving…" %>
+      <%= link_to "Cancel", admin_campaigns_path %>
+    </div>
+<% end %>

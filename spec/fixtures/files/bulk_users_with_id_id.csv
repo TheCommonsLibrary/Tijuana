@@ -1,0 +1,5 @@
+identifier,first_name,last_name,mobile_number,home_number,street_address,suburb,country_iso,postcode,result
+1,Michael,Michaelson,04100100,"03 3333 3333",1 Road,Sydney,AU,2000,
+2,David,Davidson,04100100,"03 3333 3333",2 Road,Sydney,AU,2000,
+3,Ardelio,Ardelison,04100100,"02 9281 2818",3 Road,Surry Hills,AU,2010,
+4,Richard,Richardson,04100100,"02 2222 2222",4 Road,Surry Hills,AU,2010,

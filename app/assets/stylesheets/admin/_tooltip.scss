@@ -1,0 +1,87 @@
+.customised-tooltip {
+  .ui-tooltip-content {
+  	padding: 8px 15px;
+  	font-size: 12px;
+  	color: #6E5232;
+  	
+  	h3 {
+    	margin-top: 8px;
+    	clear: both;
+    	display: block;
+    	color: #6E5232;  	
+      /*	line-height: 15px;*/
+  	}
+  
+  }
+}
+
+.tooltip {
+	background: image-url('admin/tooltip_icon.png') no-repeat;
+	cursor :help;
+	background-position: right center; 
+	padding-right: 18px;
+}
+
+div.list-cutter-tip {
+  background-position: right 25%;
+  height: 20px;
+  width: 15px;
+  padding: 0px;
+  display: inline-block;
+}
+
+div.unknown-postcode-tip {
+  float:left;
+  padding-bottom: 17px;
+}
+
+div.postcode-tip {
+  float:right;
+  padding-top: 13px;
+}
+
+label.tooltip {
+   padding-right: 16px;
+   width: 9.5em;
+   background-position: right 15px;
+}
+
+.checkbox-group {
+  .tooltip{
+    width: 10em;
+    padding-right: 16px;
+    background-position-y:  4px;
+  }
+}
+
+#listForm {
+  .tooltip{
+    overflow:hidden;
+  }
+}
+
+.choose-email_action_rule {
+  #rules_email_action_rule_action, span, .tooltip{
+    float: left
+  }
+}
+.choose-action_taken_rule {
+  dd {
+    width: 500px;
+  }
+  .tooltip {
+    width: 20em;
+    display: inline;
+  }
+}
+
+.choose-state_territory_rule, .choose-email_domain_rule, .choose-campaign_rule, .choose-donor_rule, .choose-tagged_users_rule {
+  dd {
+    width:500px;
+  }
+}
+
+#blasts .send-actions{
+  padding-right: 18px;
+  margin-right: 10px;
+}

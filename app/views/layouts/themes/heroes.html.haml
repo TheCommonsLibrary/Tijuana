@@ -1,0 +1,13 @@
+= render :partial => "layouts/themes/heroes_head"
+= render :partial => "common/flash_notifications"
+= render :partial => "common/no_script"
+%body{:id => body_id, :class => body_class}
+  = yield
+  %footer
+    .container
+      %section
+        .copyright
+          &copy;
+          = Date.today.year
+          GetUp! All rights reserved. Authorised by #{AppConstants.authorised_by}, #{AppConstants.office_address}.
+  = render :partial => "layouts/footer_js"

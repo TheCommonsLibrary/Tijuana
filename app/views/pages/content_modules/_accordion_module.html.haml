@@ -1,0 +1,9 @@
+.content-module.accordion-module.main-content
+  .accordion-heading
+    %a.accordion-toggle.collapsed{"data-toggle" => "collapse", :href => "#accordion-module-content-#{content_module.id}"}
+      %i.icon-arrow-right
+      %i.icon-arrow-down
+      %span= content_module.title
+  .accordion-body.collapse{:id => "accordion-module-content-#{content_module.id}"}
+    .accordion-inner= raw render_html(content_module.content)
+

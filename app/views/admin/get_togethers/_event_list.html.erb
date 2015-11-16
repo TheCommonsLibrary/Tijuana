@@ -1,0 +1,20 @@
+<div id="events-list">
+  <h3>Events</h3>
+  <p><%= pluralize(@get_together.events.size, 'event') %> (<%= @get_together.events.unconfirmed.size %> unconfirmed).</p>
+  <% @events.each do |event| %>
+  <div class="push big-link" id="event-<%= event.id %>">
+    <%= link_to event.name, event_path(event) %> <%= event.status %>. Hosted by <%= link_to event.host.name, edit_admin_user_path(event.host) %>
+    <div class="actions">
+      <%= link_to "Manage Event (public view)", event_path(event) %>
+    </div>
+    <div class="event-details">
+      <%= event.address %>
+    </div>
+  </div>
+  <% end %>
+  <div class="button-links">
+    <%= link_to "Host an event (public view)", public_event_url(new_event_url(:get_together_id => @get_together.id)), :class=>'add-event' %>
+  </div>
+  <%= will_paginate @events %>
+  <%= page_entries_info @events %>
+</div>

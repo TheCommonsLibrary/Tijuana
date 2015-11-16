@@ -1,0 +1,58 @@
+- if @event.get_together
+  .gt-details-on-event-page
+    - if @event.get_together.community_get_together.present?
+      = render partial: 'sidebar_description', locals: {name: @event.get_together.name, description: @event.get_together.description, get_together_id: @event.get_together.community_get_together.friendly_id, count: @event.get_together.events.count + @event.get_together.community_get_together.events.count}
+    - elsif @event.get_together.managed_get_together.present?
+      = render partial: 'sidebar_description', locals: {name: @event.get_together.name, description: @event.get_together.description, get_together_id: @event.get_together.friendly_id, count: @event.get_together.events.count + @event.get_together.managed_get_together.events.count}
+    - else
+      = render partial: 'sidebar_description', locals: {name: @event.get_together.name, description: @event.get_together.description, get_together_id: @event.get_together.friendly_id, count: @event.get_together.events.count}
+- if @event.confirmed? && !@event.canceled?
+  - if can? :email_attendees, @event
+    - if @event.number_of_attendees > 0 && date_within_three_months?(@event.date)
+      #message-attendees-form
+        %hr
+        = form_tag(message_attendees_event_path(@event), :method => :post, :id => "message-attendees-form") do
+          %h4 E-mail all attendees
+          %dl.static-fields
+            %dt From:
+            %dd
+              = current_user.name
+              %span.email-address
+                \&lt;#{current_user.email}&gt;
+            %dt BCC:
+            %dd
+              = @event.number_of_attendees
+              recipients
+            %dt Subject:
+            %dd.locked
+              Message to "#{@event.name}"
+          = text_area_tag "message", nil, :rows => 6, :cols => 25, :id => "message"
+          = submit_tag "Send Message", :id => "message-attendees", :class => "btn btn-primary btn-full"
+          .clearfix
+        %hr
+  - if can_be_attended?(@event, current_user) || @event.is_full?
+    #attend-this-event
+      - if can_be_attended?(@event, current_user)
+        %h3 RSVP to this event
+        %span.tagline Please use a unique email for each RSVP
+        = form_tag(attend_event_path(@event, :t => params[:t]), :method => :post, :id => "attend-form", :class => 'auto-submittable') do
+          = render :partial => '/pages/user_details', locals: {user_details_requirements: @user_details_requirements}
+          = submit_tag "Sign Up", :id => "attend", :class => "btn btn-primary btn-full btn-large", :'data-disable-with' => 'Submitting..'
+      .clearfix
+      - if @event.is_full?
+        %span Sorry, this event is full.
+    :javascript
+      $(function () {
+        lookupUser('#{lookup_users_path}', 'get_together_id', #{@event.get_together.id}, '#user_email', '#ask-specific-user-details', 'label[for="become-member-checkbox"]', #{@clear_user_details_form || false});
+      });
+
+- if should_display_attendees?(@event)
+  .attending
+    %h3 Attending this event
+    - no_attendees = @event.number_of_attendees + 1
+    %span= "#{pluralize(no_attendees, 'person')}"
+    .avatars
+      = image_tag("https://gravatar.com/avatar/#{Digest::MD5.hexdigest(@event.host.email.downcase)}?s=45&d=mm", :alt => @event.host.first_name)
+      - @event.attendees.each do |attendee|
+        = image_tag("https://gravatar.com/avatar/#{Digest::MD5.hexdigest(attendee.email.downcase)}?s=45&d=mm", :alt => attendee.first_name)
+

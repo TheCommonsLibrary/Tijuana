@@ -1,0 +1,135 @@
+@media (min-width: 768px) {
+  .home {
+
+    .user-lookup-message {
+      color: $white;
+    }
+
+    aside {
+      margin-left: 80px;
+      margin-right: 80px;
+    }
+
+    .btn.btn-primary:hover, .buttons a:hover {
+      background-color: $maroon-hover;
+    }
+    .strap {
+      top: 100px;
+      background-color: transparent;
+      width: 540px;
+      left: 45%;
+      text-align: center;
+      margin-left: -220px;
+      font-size: 1.4em;
+      font-weight: bold;
+      line-height: 1.2em;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    form {
+      background-color: rgba(0,0,0,0.8);
+      padding: 10px 20px 20px;
+      margin-left: -10px;
+      border-radius: 14px;
+    }
+
+    .well {
+      width: 300px;
+      position: absolute;
+      top: 170px;
+      background-color: transparent;
+      left: 50%;
+      margin-left: -150px;
+      color: $white;
+      z-index: 1;
+
+      h3, .progress, .pull-right {
+        display: none;
+      }
+      label {
+        color: $white;
+      }
+      button {
+        background-color: $bg-white;
+        color: $maroon;
+        border-radius: 7px;
+      }
+      input {
+        height: 32px;
+        border-radius: 7px;
+        width: 100%;
+      }
+      input[type='checkbox'] {
+        width: inherit;
+      }
+    }
+
+    .btn-full {
+      font-size: 1.2em;
+    }
+
+    h1 {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 1em;
+      float: left;
+      width: 34%;
+      line-height: 41px;
+    }
+
+    .pledge-title {
+      font-size: 3em;
+      margin: 42px 0px 0px;
+      overflow: hidden;
+    }
+    .pledge-line {
+      width: 33%;
+      float: left;
+      border-bottom: 3px $bg-white solid;
+      height: 1px;
+      padding-bottom: 18px;
+    }
+
+    .pledge-container {
+      padding-top: 10px;
+      min-height: 230px;
+
+      .html-module {
+        min-height: 200px;
+        padding-top: 23px;
+      }
+    }
+    .pledge-abstract.respect {
+      line-height: 1.1em;
+    }
+    .pledge-img {
+      max-width: 255px;
+      margin-right: 80px;
+      margin-left: 20px;
+      &.equality {
+        max-width: 190px;
+        margin-right: 131px;
+        margin-left: 36px;
+        padding-top: 30px;
+      }
+    }
+    .pledge-abstract {
+      font-size: 1.7em;
+      line-height: 1em;
+      &.equality {
+        padding-top: 40px;
+      }
+    }
+
+    .pledge-container::after {
+      background-image: image-url('themes/nbia/white_wire.svg');
+      background-repeat: no-repeat;
+      content: '';
+      height: 125px;
+      width: 32px;
+      position: absolute;
+      left: 33%;
+      top: 22%;
+    }
+  }
+}

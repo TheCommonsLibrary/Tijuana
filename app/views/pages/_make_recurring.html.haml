@@ -1,0 +1,37 @@
+- dm = @page.previous.get_donation_module
+.make-recurring.modal.daisy-chain.hide
+  .modal-header
+    %button.close.dismiss Skip
+
+  .modal-body
+    .content#action
+      .clearfix.donate-well.well.modal-well(style="display: block;")
+        .top-section
+          %h2
+            = raw render_html(dm.make_recurring_header)
+            %hr
+          .intro
+            = raw render_html(dm.make_recurring_body)
+            .content-end
+          %label.credit-secure-icon
+            %i.icon-lock
+            SECURE
+        .confirmation-btn
+          = button_tag make_recurring_button_text(dm), class: 'btn btn-primary btn-large btn-full'
+
+  .modal-footer
+    %button.close.dismiss Skip
+
+:javascript
+  $(function(){
+    postDonateModal(
+      $('.make-recurring.modal'),
+      $('.make-recurring.modal .btn-primary'),
+      $('.make-recurring.modal .dismiss'),
+      '#{make_recurring_users_path}',
+      '#{image_path('common/lib/gritter/success.png')}',
+      '#{image_path('common/lib/gritter/error.png')}',
+      'Your donation was upgraded to monthly.',
+      'Oops!! Something went wrong while trying to upgrade your donation.'
+    )
+  });

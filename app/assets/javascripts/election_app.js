@@ -1,0 +1,9 @@
+// =require ./events/lib/jquery.min.js
+// =require ./events/lib/jquery.validate.js
+// =require ./events/lib/jquery-ui.min.js
+// =require ./common/lib/mustache
+// =require_tree ./election_app
+// =require ./events/maps.event_builder
+// =require ./events/new_event
+// =require ./events/geo
+// =require ./events/comments.event

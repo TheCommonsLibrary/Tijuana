@@ -1,0 +1,9 @@
+= render "layouts/themes/nbia_head"
+%body{id: body_id, class: "#{body_class} #{choose_nbia_layout(@page)}" }
+  #skip-to-main-content
+    %a{href:"#content"}Skip to main content
+  = render "layouts/themes/nbia_header"
+  #content
+  = yield
+  = render "layouts/themes/nbia_footer"
+  = render "layouts/themes/nbia_footer_js"

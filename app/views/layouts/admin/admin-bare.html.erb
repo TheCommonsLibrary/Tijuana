@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= page_title %></title>
+    <script type="text/javascript">
+    var myfont_webfont_test = false;
+    var woffEnabled = true;
+    var customPath = "/fonts";
+    </script>
+    <%= stylesheet_link_tag 'common/legacy-screen', 'admin' %>
+    <%= javascript_include_tag 'admin', 'public' %>
+    <%= csrf_meta_tag %>
+  </head>
+  <body class="admin-section has_navbar">
+    <div id="main">
+      <%= yield %>
+    </div>
+    <%= javascript_tag do %>
+      var ajaxWaitImagePath = '<%= image_path("common/throbber.gif") %>';
+    <% end %>
+    <!-- silk icon set by Mark James: http://www.famfamfam.com/lab/icons/silk/ --> 
+    <!-- fugue icon set by Yusuke Kamiyamane: http://p.yusukekamiyamane.com/ -->
+    </body>
+</html>

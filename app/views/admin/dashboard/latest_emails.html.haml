@@ -1,0 +1,77 @@
+:css
+  body {
+    padding:4px;
+  }
+  table {
+    width: 100%;
+    background-color: #eee;
+    margin-bottom:4px;
+    font-size:1em;
+   }
+
+   td, th {
+    border:2px solid #fff;
+    padding:2px;
+   }
+
+   .headings {
+    background-color: #fcc;
+    font-size:1em;
+    font-weight:bold;
+    padding:2px;
+   }
+
+   .strong { font-weight: bold; }
+
+:javascript
+  setTimeout(function(){ location.reload(); }, (1000*60));
+-title "Dashboard"
+#admin-dashboard
+  .headings
+    Proofed Emails
+  %table#emails-table
+    %tr
+      %th
+        Subject
+      %th
+        Campaign
+      %th
+        Push
+      %th
+        Proofed at
+    - @proofed_emails.each do |email|
+      %tr
+        %td
+          = email.subject
+        %td
+          = email.blast.push.campaign.name
+        %td
+          = email.blast.push.name
+        %td
+          = email.test_sent_at.strftime '%a %e, %l:%M%p'
+  .headings
+    Sent Emails
+  %table#emails-table
+    %tr
+      %th
+        Subject
+      %th
+        Campaign
+      %th
+        Push
+      %th
+        Sent to
+      %th
+        Created at
+    - @sent_emails.each do |sent_email|
+      %tr
+        %td
+          = sent_email.subject
+        %td
+          = campaign(sent_email)
+        %td
+          = push(sent_email)
+        %td{:class=>((sent_email.recipient_count >= 200000) ? "strong" : "")}
+          = number_to_human(sent_email.recipient_count, :units => {:thousand => 'K', :million => 'Mil'})
+        %td
+          = sent_email.created_at.strftime '%a %e, %l:%M%p'

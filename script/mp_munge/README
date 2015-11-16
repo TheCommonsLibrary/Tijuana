@@ -1,0 +1,6 @@
+1. get pdf from here: http://www.aph.gov.au/~/media/03%20Senators%20and%20Members/32%20Members/Lists/MemList.ashx
+2. run pdf_scrape.rb to scrape contact details.
+3. import the result of step 2 to excel to format it.
+4. run mp_munge.rb to munge the contact details with CSV MP data from SurnameRepsCSV.csv which was downloaded from the APH site.
+5. Manually edit the munged data to format it the same was as db/csv/mps.csv
+

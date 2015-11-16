@@ -1,0 +1,125 @@
+#action .donate-well {
+  background-color: $nbia-grey;
+  .top-section {
+    background: $maroon;
+  }
+  .top-section h2 {
+    padding-bottom: 10px;
+  }
+  h2 {
+    padding-bottom: 10px;
+  }
+  .controls label, .cvc label, .screen.step2 label {
+    font-weight: bold;
+  }
+  input {
+    border: none;
+    border-radius: 3px;
+  }
+  .bottom-section a, .paypal-donation {
+    color: $maroon;
+  }
+  .otheramount {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .btn-primary-alternate {
+    background: none;
+    background-color: $maroon;
+    box-shadow: none;
+    font-family: 'Oswald', sans-serif;
+    font-weight: normal;
+  }
+  .alert-danger, .alert-error {
+    width: 100%;
+    font-weight: bold;
+  }
+  .btn.active {
+    background: $maroon-light !important;
+  }
+}
+.js #step-1-amount .donation .input-prepend.other-prepend .add-on.active {
+  background-color: $maroon-light !important;
+  border-color: $maroon-light !important;
+}
+#step-3-payment .processing {
+  background: rgba(187, 187, 187, 0.45);
+}
+
+@media (min-width: 768px) {
+  .ie {
+    .step3 {
+      padding-top: 20px;
+    }
+  }
+  #action .donate-well {
+    background-color: $nbia-grey;
+    .top-section {
+      background-color: transparent;
+    }
+    .top-section h2 {
+      text-align: left;
+      padding: 0 0 20px 0;
+      margin: 30px 0 20px 20px;
+    }
+    .top-section .intro {
+      color: $white;
+    }
+    .credit-secure-icon {
+      color: $white;
+    }
+    .screen-nav li a {
+      color: $nbia-grey;
+    }
+    .screen-nav li a:after {
+      background: $nbia-grey;
+      line-height: 42px;
+      letter-spacing: 0;
+    }
+    .screen-nav li a.active:after {
+      background: $maroon;
+    }
+    .screen-nav li.middle-tab:before, .screen-nav li.middle-tab:after {
+      background: $nbia-grey;
+    }
+    .screens {
+      padding-top: 20px;
+    }
+    .screens .donation {
+      letter-spacing: 0;
+    }
+    form {
+      width: 96%;
+      margin-bottom: 10px;
+    }
+    .processing {
+      top: -20px;
+    }
+    .bottom-section {
+      letter-spacing: 0px;
+      p {
+        color: #999;
+      }
+      a {
+        color: $white;
+      }
+    }
+    a.btn-primary-alternate {
+      text-decoration: none;
+    }
+    .screen-content {
+      overflow: initial;
+    }
+  }
+}
+
+@media (min-width: 979px) {
+  .screen-nav li.middle-tab:before, .screen-nav li.middle-tab:after {
+    width: 144px;
+  }
+}
+@media (min-width: 1200px) {
+  #action .donate-well .top-section .intro { padding: 0 20px; }
+  #action .donate-well .bottom-section { padding: 0 20px; }
+  #action .donate-well form { padding: 0 20px; }
+}

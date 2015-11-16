@@ -1,0 +1,17 @@
+- title 'Merges'
+
+.searchbar
+  = form_tag(admin_merges_path, :method => :get) do
+    = text_field_tag :query, params[:query], :placeholder => 'Search',:class => "query"
+    = submit_tag "Search"
+.button-links
+  = link_to("Create new merge", new_admin_merge_path, :class => 'new-merge')
+#campaigns-list
+  - @merges.each do |merge|
+    .campaign.big-link{:id => "merge_#{merge.id}"}
+      = link_to merge.name, edit_admin_merge_path(merge)
+      .actions
+        = link_to "Manage Merge", edit_admin_merge_path(merge)
+      .description= merge.description
+  = will_paginate @merges
+  = page_entries_info @merges

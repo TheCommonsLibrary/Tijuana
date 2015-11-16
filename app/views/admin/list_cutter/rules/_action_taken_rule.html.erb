@@ -1,0 +1,6 @@
+<span class="connector">greater than</span>
+<%= f.text_field :greater_than, :value => rule.greater_than, :class => "required-if-present" %>
+<span class="connector">on page ids</span>
+<div class="tooltip" data-tip="page-id-tip">
+  <%= f.text_field :page_ids, :value => rule.page_ids, :class => "required-if-present" %>
+</div>

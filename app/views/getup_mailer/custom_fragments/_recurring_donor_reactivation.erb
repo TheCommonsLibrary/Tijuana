@@ -1,0 +1,8 @@
+<% d = user.donations.where('flagged_since IS NOT NULL').first %>
+<% unless d.blank? %>
+According to our records, your <%= d.frequency %> contribution of $<%= d.amount_in_dollars.to_int %> to GetUp was unable to be processed this week. The error might mean that you have a new card, or that your details have changed.
+<br /><br />
+Visit this custom link to resolve your problem: <a href="https://www.getup.org.au/dashboard/update-card/<%= d.id %>">https:///www.getup.org.au/dashboard/update-card/<%= d.id %></a>
+<% else %>
+According to our records, there appears to be a problem with your donation.  Please contact us on <%= AppConstants.financial_contact_number %> between 9am and 6pm to resolve this matter.
+<% end %>

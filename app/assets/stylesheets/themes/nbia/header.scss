@@ -1,0 +1,46 @@
+#brandbar {
+  background-color: $bg-white;
+  color: $maroon;
+  #tinybrand {
+    display: inline-block;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    color: $maroon;
+    font-weight: bold;
+    font-size: 1.4em;
+    margin-left: -20px;
+    width: auto;
+    letter-spacing: 0em;
+    line-height: 2.2em;
+    img {
+      float: none;
+      width: 120px;
+      vertical-align: sub;
+    }
+  }
+}
+
+.nav {
+  background-color: $maroon;
+  color: $white;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.3em;
+  text-align: center;
+  margin-bottom: 0px;
+}
+.nav-item {
+  display: inline;
+  line-height: 2.2em;
+  a {
+    color: $white;
+    margin: 0 5px;
+  }
+}
+
+.divider {
+  display: inline;
+}
+
+.divider::after {
+  content: '|';
+}

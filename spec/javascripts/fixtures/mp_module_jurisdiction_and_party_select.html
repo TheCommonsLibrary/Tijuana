@@ -1,0 +1,97 @@
+<div>
+
+    <div id="jurisdiction">
+        <label for="content_modules_21_jurisdiction_code">Jurisdiction</label>
+        <select id="jurisdiction-select" name="content_modules[21][jurisdiction_code]" style="width:20%">
+            <option value="NSW">New South Wales</option>
+            <option value="QLD">Queensland</option>
+            <option value="SA">South Australia</option>
+            <option value="VIC">Victoria</option>
+            <option value="WA">Western Australia</option>
+            <option value="ACT">Australian Capital Territory</option>
+            <option value="NT">Northern Territory</option>
+            <option value="TAS">Tasmania</option>
+            <option value="FEDERAL" selected="selected">Federal</option>
+        </select>
+    </div>
+
+
+    <div class="party-options" id="parties">
+        <label for="content_modules_21_target_parties">Target Parties</label>
+
+        <div class="party-option">
+            <label for="content_modules_21_target_party_ids_1">Australian Labor Party</label>
+            <input name="content_modules[21][target_party_ids][1]" type="hidden" value="0"/><input
+                id="content_modules_21_target_party_ids_1" name="content_modules[21][target_party_ids][1]"
+                type="checkbox" value="1"/>
+        </div>
+        <div class="party-option">
+            <label for="content_modules_21_target_party_ids_2">Liberal Party</label>
+            <input name="content_modules[21][target_party_ids][2]" type="hidden" value="0"/><input
+                id="content_modules_21_target_party_ids_2" name="content_modules[21][target_party_ids][2]"
+                type="checkbox" value="1"/>
+        </div>
+        <div class="party-option">
+            <label for="content_modules_21_target_party_ids_3">Australian Greens</label>
+            <input name="content_modules[21][target_party_ids][3]" type="hidden" value="0"/><input
+                id="content_modules_21_target_party_ids_3" name="content_modules[21][target_party_ids][3]"
+                type="checkbox" value="1"/>
+        </div>
+        <div class="party-option">
+            <label for="content_modules_21_target_party_ids_4">National Party</label>
+            <input name="content_modules[21][target_party_ids][4]" type="hidden" value="0"/><input
+                id="content_modules_21_target_party_ids_4" name="content_modules[21][target_party_ids][4]"
+                type="checkbox" value="1"/>
+        </div>
+        <div class="party-option">
+            <label for="content_modules_21_target_party_ids_5">Country Liberal Party</label>
+            <input name="content_modules[21][target_party_ids][5]" type="hidden" value="0"/><input
+                id="content_modules_21_target_party_ids_5" name="content_modules[21][target_party_ids][5]"
+                type="checkbox" value="1"/>
+        </div>
+        <div class="party-option">
+            <label for="content_modules_21_target_party_ids_6">Family First Party</label>
+            <input name="content_modules[21][target_party_ids][6]" type="hidden" value="0"/><input
+                id="content_modules_21_target_party_ids_6" name="content_modules[21][target_party_ids][6]"
+                type="checkbox" value="1"/>
+        </div>
+        <div class="party-option">
+            <label for="content_modules_21_target_party_ids_7">Independents</label>
+            <input name="content_modules[21][target_party_ids][7]" type="hidden" value="0"/><input
+                id="content_modules_21_target_party_ids_7" name="content_modules[21][target_party_ids][7]"
+                type="checkbox" value="1"/>
+        </div>
+        <div class="party-option">
+            <label for="content_modules_21_target_party_ids_8">Democratic Labor Party</label>
+            <input name="content_modules[21][target_party_ids][8]" type="hidden" value="0"/><input
+                id="content_modules_21_target_party_ids_8" name="content_modules[21][target_party_ids][8]"
+                type="checkbox" value="1"/>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+
+    <div id="target-selection" style="display: block;">
+        <label for="content_modules_21_target">Target</label>
+        <select id="content_modules_21_target" name="content_modules[21][target]">
+            <option value="MP" selected="selected">MPs</option>
+            <option value="MP or Senator">MPs with fallback to Senators if MP is not targeted</option>
+            <option value="Senator">Senators</option></select>
+    </div>
+
+  <div class="mp-evaluated-msg">
+    Please call your MP
+    <br/>
+    Harold Holt
+    <br/>
+    <div class="mp-phone-number">
+    <span class="icon">
+      <i class="icon-phone icon-large"></i>
+    </span>
+    <span class="text phone-number">
+     (02) 9555 5555
+    </span>
+    </div>
+  </div>
+
+</div>

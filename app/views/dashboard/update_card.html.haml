@@ -1,0 +1,128 @@
+%article
+  .container
+    %section
+      %article
+        #content-modules.with-ask
+          .inner
+            #main-content-modules.left
+              .inner
+                %h1 UPDATE YOUR DONATION DETAILS
+                .module.html_module
+                  %p Thanks for updating your details with GetUp!
+                  %p
+                    According to our records, there was an error with your last contribution. Not sure what went wrong? To find
+                    out why there was an error on your card, take a look at the field on the right to see which card you last
+                    used.
+                  %p To fix this up, it's as simple as entering your current credit card details in the form on the right.
+                  %p.bold
+                    If you'd like our help with updating your details, give us a call on: #{AppConstants.financial_contact_number} or email
+                    us at donations@getup.org.au. We're more than happy to help.
+
+                  .accordion-heading
+                    %a.accordion-toggle{"data-toggle" => "collapse", :href => "#accordion-module-content-1"}
+                      %i.icon-arrow-right
+                      %span I'd prefer to update my details over the phone.
+                  .accordion-body.collapse{:id => "accordion-module-content-1"}
+                    .accordion-inner
+                      No worries! Just drop us a line between 9am and 6pm, Monday to Friday, on #{AppConstants.financial_contact_number}. We're more
+                      than happy to help. 
+
+                  .accordion-heading
+                    %a.accordion-toggle{"data-toggle" => "collapse", :href => "#accordion-module-content-2"}
+                      %i.icon-arrow-right
+                      %span  What if I want to change these details in the future?
+                  .accordion-body.collapse{:id => "accordion-module-content-2"}
+                    .accordion-inner
+                      You can always get in touch with us by calling us on the number above, or emailing us at
+                      donations@getup.org.au - we're happy to help.
+
+                  .accordion-heading
+                    %a.accordion-toggle{"data-toggle" => "collapse", :href => "#accordion-module-content-3"}
+                      %i.icon-arrow-right
+                      %span Can I change the donation amount and frequency of my donations?
+                  .accordion-body.collapse{:id => "accordion-module-content-3"}
+                    .accordion-inner
+                      Absolutely. The easiest way to change the amount and frequency of your donations is by emailing us at
+                      donations@getup.org.au.
+
+                  .accordion-heading
+                    %a.accordion-toggle{"data-toggle" => "collapse", :href => "#accordion-module-content-4"}
+                      %i.icon-arrow-right
+                      %span Is this site secure?
+                  .accordion-body.collapse{:id => "accordion-module-content-4"}
+                    .accordion-inner
+                      Yes. All information is encrypted using industry standard SSL encryption. If you encounter any difficulties
+                      using this facility, or have any questions, please contact us at donations@getup.org.au. This is a
+                      personalised page, tailored to fixing your donation from the unique link in the email we sent you. Your
+                      details have not been shared with anyone else.
+
+                  .accordion-heading
+                    %a.accordion-toggle{"data-toggle" => "collapse", :href => "#accordion-module-content-5"}
+                      %i.icon-arrow-right
+                      %span I'd like to become a regular donor to GetUp.
+                  .accordion-body.collapse{:id => "accordion-module-content-5"}
+                    .accordion-inner
+                      GetUp receives no Government funding and relies on small individual donations to fund the campagins you
+                      care about. Having those donations come in at predictable increments is invaluable in our forward planning
+                      and allows us to take on new, rapid response campaigns.
+                      %b
+                        Give us a call at #{AppConstants.financial_contact_number} to find out how
+                        you can become one of our key supporters.
+
+                  .accordion-heading
+                    %a.accordion-toggle{"data-toggle" => "collapse", :href => "#accordion-module-content-6"}
+                      %i.icon-arrow-right
+                      %span I'd like to donate to a different campaign.
+                  .accordion-body.collapse{:id => "accordion-module-content-6"}
+                    .accordion-inner
+                      No worries - give us a call at #{AppConstants.financial_contact_number} and we can direct your money to fuel whichever issue or
+                      campaign you feel most strongly about.
+
+                  .content-end
+            .content-end
+      #action
+        .well
+          %p.hide-when-done
+            Unfortunately your donation with the card ending in the following numbers is
+            currently not being processed:
+          %p{:style => "background-color:#333;border:1px solid #555;padding: 5px;text-align:center;"}
+            %span#masked-card-number= mask_card_number(@recurring_donation.card_last_four_digits)
+          %p.hide-when-done
+            Please re-enter the card details in full, or use a new card to update your
+            donation.
+          .corner
+          = form_for @recurring_donation, :index => @recurring_donation.id, :method => 'PUT', :html => {:id => "update-donation-form-#{@recurring_donation.id}", :class => 'update-donation-form hide-when-done'} do |f|
+            #card-types
+              %label Credit Card
+              - Donation::CREDIT_CARD_TYPES.each do |card_type|
+                %img{:class => "card_type,", :src => image_path("public/card-types.#{card_type}.png")}/
+            #card-number
+              %label Card number
+              = f.text_field :card_number, :placeholder => "Credit Card Number", :class => "creditcard required"
+            #card-holder-name
+              %label Name on card
+              = f.text_field :name_on_card, :placeholder => "Name On Card", :value => "", :class => "required"
+            .group
+              #expiry
+                %label Expiry
+                = f.text_field :card_expiry_month, :placeholder => "MM", :id => 'donation_card_expiry_month', :value => "", :class => "required", :style => 'width: 85px; margin-right: 14px;'
+                = f.text_field :card_expiry_year, :placeholder => "YYYY", :id => 'donation_card_expiry_year', :value => "", :class => "required", :style => 'width: 85px;'
+              #cvv
+                %label Verification number
+                = f.text_field :card_cvv, :placeholder => "CVV", :id => 'donation_card_cvv', :class => "required"
+            %br/
+            %hr/
+            = button_tag "Save", :id => "update-donation-#{@recurring_donation.id}-submit-button", :class => "ask-submit-button btn btn-primary btn-large btn-full"
+
+
+= javascript_include_tag 'common/lib/jquery-ui'
+= javascript_include_tag 'common/lib/jquery.validate'
+
+:javascript
+  $(document).ready(function () {
+    var donation_id = '#{@recurring_donation.id}';
+    var recurring_donation_path = '#{donation_path(@recurring_donation)}';
+    var error_image_path = '#{image_path('common/lib/gritter/error.png')}';
+    var success_image_path = '#{image_path('common/lib/gritter/success.png')}';
+    updateCard(donation_id, recurring_donation_path, error_image_path, success_image_path);
+  });

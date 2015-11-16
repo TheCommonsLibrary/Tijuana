@@ -1,0 +1,144 @@
+<%= form_tag(admin_list_cutter_count_path, :id => "listForm") do %>
+  <%= raw error_for(@list, :rules) %>
+  <%= hidden_field_tag :list_id, @list.id %>
+  <%= hidden_field_tag :blast_id, @list.blast_id %>
+
+  <fieldset class="list-cutter">
+    <h3>Filters</h3>
+
+    <div class="mode-toggles">
+      <% if AppConstants.low_volume_enabled %>
+        <div class="global-control tooltip" data-tip="low-volume-tip">
+          <%= check_box_tag :include_low_volume_members, '1', @list.include_low_volume_members? %>
+          <%= label_tag :include_low_volume_members %>
+        </div>
+      <% end %>
+
+      <div class="global-control tooltip" data-tip="quarantine-tip">
+        <%= check_box_tag :include_quarantine_members, '1', @list.include_quarantine_members? %>
+        <%= label_tag :include_quarantine_members %>
+      </div>
+    </div>
+
+    <div class="list-cutter-errors">
+      <%= raw error_for(@list, :rules) %>
+    </div>
+    <ul class="list-cutter-filters">
+      <li class="list-cutter-filter section" >
+        <span class="list-cutter-filter-type">
+          <span class="remove-filter">Delete</span>
+          Where
+          <select class="filter-by" name="filter-type">
+            <option value="filter-empty">Filter</option>
+            <% rules_for_form.each do |rule| %>
+              <option value="filter-<%= rule[:class].code %>"><%= rule[:label] %></option>
+            <% end %>
+          </select>
+        </span>
+        <ul class="list-cutter-filter-value"><li class="nothing-selected"></li></ul>
+      </li>
+    </ul>
+    <div class="filter-values">
+      <ul class="choose-toggle">
+        <%= fields_for :rules do |f| %>
+          <% rules_for_form.each do |rule| %>
+            <li class="choose-<%= rule[:class].code %>">
+              <dl>
+                <%= render :partial => "admin/list_cutter/rule_template", :locals => {:list => @list, :rule => get_rule(@list, rule[:class]), :f => f} %>
+              </dl>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+
+
+    <div class="filter-actions">
+      <span class="add-filter">Add</span>
+    </div>
+    <div>
+      <%= submit_tag "Show count" %>
+    </div>
+   </fieldset>
+<% end %>
+
+<div id="list-cutter-results" class="section"></div>
+<%= render :partial => "admin/list_cutter/tooltips" %>
+
+<%= javascript_tag do %>
+  $(function() {
+    list_cutter($("fieldset.list-cutter"));
+
+    var errorMessages = function(errors, errorsContainer) {
+      $.each(errors, function(index, value) {
+        $.each(value, function(i, v) {
+          $.each(v, function(ia, va) {
+            $.each(va, function(iab, vab) {
+              errorsContainer.append($("<p></p>").addClass("error").text(humanize(index) + ": " + vab)); })
+          })
+        })
+      });
+    };
+
+    <% if show_save_button %>
+      $("#save-list").live('click', function() {
+          if($('#listForm').valid()) {
+              $.post('<%= admin_list_cutter_count_url %>', $("#listForm").serialize(), function(data) {
+                window.location = "<%= admin_push_url(@list.blast.push) %>";
+              });
+          }
+      });
+    <% end %>
+
+    $("#listForm").submit(function () {
+      var submitButton = $("#listForm input[type='submit']")
+      submitButton.attr('disabled', 'disabled');
+      $.post('<%= admin_list_cutter_count_url %>', $("#listForm").serialize(), function(data) {
+          $('#list_id').val(data.list_id);
+          if (!$.isEmptyObject(data.errors)) {
+            $(".list-cutter-errors").empty();
+            errorMessages(data.errors, $(".list-cutter-errors"));
+            submitButton.removeAttr('disabled');
+          } else {
+            $(".list-cutter-errors").empty();
+            periodicalUpdater({
+                  resultId: data.intermediate_result_id,
+                  resultsContainer: $("#list-cutter-results"),
+                  complete: <%= count_complete_function ||= "function(){}" %>,
+                  showSaveButton: <%= show_save_button %>,
+                  submitButton: submitButton
+              });
+            $("html").animate({"scrollTop": $("#list-cutter-results").offset().top + 200 }, 1200 );
+            $("#list-cutter-results").html("<div class='loading'><img class='loading' src='<%= image_path("admin/lib/colorbox/loading.gif") %>' alt='loading'/><h3 class='processing'>Processing results...</h3></div>");
+            $("#list-cutter-results").show();
+          }
+        }, "json");
+
+       return false;
+    });
+    $("#listForm").validate({
+        groups: {"postcodeWithin": "postcode within"  },
+        errorPlacement: function(error, element) {
+          error.insertAfter(element.parent());
+        },
+        messages: {
+            "rules[postcode_within_rule][postcode_ids]": "Please provide one or more postcodes",
+            "rules[email_domain_rule][domain]": "Please provide a domain",
+            "rules[action_taken_rule][page_ids]": "Please provide page ids",
+            "rules[electorate_rule][electorate_ids]": "Please enter one or more electorates",
+            "rules[state_territory_rule][states_territories][]": "Please select one or more states/territories",
+            "rules[email_action_rule][email_id]": "Please enter an email ID",
+            "rules[old_tagged_users_rule][old_tags]": "Please enter one or more tags",
+            "rules[campaign_rule][campaigns][]":"Please select one or more campaigns"
+        },
+       success: function() { },
+       invalidHandler: function () {
+         $("#list-cutter-results").hide();
+         $("#listForm input[type='submit']").removeAttr('disabled');
+      }
+    });
+    <% if @list.new_record? && @list.rules.any? %>
+      $("span.add-filter").click();
+    <% end %>
+  });
+<% end %>

@@ -1,0 +1,36 @@
+:css
+  .form-control{
+    float: left;
+    clear: left;
+  }
+  .buttonbar{
+    clear: left;
+  }
+  .form-control select, .form-control input[type=text] {
+    margin-top: 12px;
+    width: 200px;
+  }
+
+
+- title "New Social Link"
+
+= form_for([:admin, @page, @acquisition_source]) do |f|
+  = form_errors(@acquisition_source)
+
+  - [:source, :medium].each do |field|
+    .form-control
+      = f.label field, field.to_s.titleize, class: "req"
+      = f.select field, AcquisitionSource.send(:"options_for_#{field}"), class: 'input-sm'
+
+  .form-control
+    = f.label :content, 'Version', class: "req"
+    = f.select :content, AcquisitionSource.options_for_content
+
+  .form-control
+    = f.label :name, 'Name', class: "req"
+    = f.text_field :name 
+
+
+  .buttonbar
+    = f.submit "Generate social link ", disable_with: "Saving…"
+    = link_to "Cancel", admin_page_acquisition_sources_path(@page)

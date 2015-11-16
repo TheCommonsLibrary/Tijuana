@@ -1,0 +1,22 @@
+<% title "Image Details" %>
+
+<div class="image-preview">
+  <h2>Image Preview</h2>
+  <%= hosted_image_tag @image %>
+
+  <%= render "embed_code_for_page" %>
+  <%= render "embed_code_for_email" %>
+
+  <h4>Image File Summary</h4>
+
+  <table>
+    <% image_info(@image).each do |key, value| %>
+      <tr>
+        <th><%= key %></th>
+        <td><%= value %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= render "admin/shared/history", entity: @image %>

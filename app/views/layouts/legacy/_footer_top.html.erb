@@ -1,0 +1,28 @@
+<div class="footer-content">
+  <div class="footer-content-inner">
+    <div class="footer-blurb">
+      <h5>GetUp! Action for Australia</h5>
+      <p>An independent movement to build a progressive Australia and bring participation back into our democracy.</p>
+    </div>
+     <% unless Rails.env == "test" %>
+     <div class="footer-share">
+       <p class="find-us-on">Find us on:</p>
+       <a href="http://www.youtube.com/user/getupaustralia" target="_blank" title="Visit GetUp! YouTube channel"><%= image_tag "dashboard/share-youtube.png" %></a>
+       <a href="http://twitter.com/getup" target="_blank" title="Visit GetUp! Twitter page"><%= image_tag "dashboard/share-twitter.png" %></a>
+       <a href="http://www.facebook.com/pages/GetUp/13527056454" target="_blank" title="Visit GetUp! Facebook page"><%= image_tag "dashboard/share-facebook.png" %></a>
+     </div>
+    <% end %>
+  </div>
+
+  <% ["We Are…", "Media", "WordUp!", "Community", "Please Donate", "Campaigns"].each do |heading| %>
+    <% next if not heading == "DISABLED UNTIL WE HAVE CONTENT TO POINT AT" %>
+    <div class="footer-links">
+      <h6><%= heading %></h6>
+      <ul>
+        <li><a href="#">Footer link one</a></li>
+        <li><a href="#">Footer link two</a></li>
+        <li><a href="#">Footer link three</a></li>
+      </ul>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+ <body>
+  <%= raw(@body_text.html_linebreaks) %>
+  <% if @tracking_token %>
+  <img src="http://<%= AppConstants.host %>/emailer/<%= @tracking_token %>/beacon.gif">
+  <% end %>
+</body>
+</html>

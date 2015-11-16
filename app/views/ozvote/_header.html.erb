@@ -1,0 +1,17 @@
+<div class="ozvote"><img src="/images/htv/ballot-logo.svg"/></div>
+<div class="<%= electorate.issue.issue %> <%= electorate.issue['slug'] %> title">
+    <%= "#{electorate.issue.title} in #{electorate.name}" %>
+</div>
+<div class="<%= electorate.issue.issue %> blurb">
+    <div class="<%= electorate.issue.issue %> heading">
+        <%= electorate.issue["blurb_heading"] %>
+    </div>
+    <div class="content">
+        <%= electorate.issue["blurb_content"] %>
+    </div>
+</div>
+<div class="strap">
+    <div class="heading">
+        <%== electorate.issue["strap"].gsub(/^Here are( the)?/, "Here are #{parties.length}") + "<span class=\"click-prompt\"> - click one to see how to vote for them.</span>"%>
+    </div>
+</div>

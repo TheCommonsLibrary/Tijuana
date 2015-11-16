@@ -1,0 +1,18 @@
+<% if entity %>
+  <div class="historybar">
+    <% if entity.respond_to?(:created_at) && entity.created_at %>
+      Created 
+      <span class="time" title="<%= entity.created_at.to_s(:long) %>">
+        <%= time_ago_in_words(entity.created_at) %>
+      </span>
+      <%= (entity.respond_to?(:created_by) && !entity.created_by.blank?) ? "ago by #{entity.created_by}." : "ago." %>
+    <% end %>
+    <% if entity.respond_to?(:updated_at) && entity.updated_at %>
+      Updated 
+      <span class="time" title="<%= entity.updated_at.to_s(:long) %>">
+        <%= time_ago_in_words(entity.updated_at) %>
+      </span>
+      <%= (entity.respond_to?(:updated_by) && !entity.updated_by.blank?) ? "ago by #{entity.updated_by}." : "ago." %>
+    <% end %>
+  </div>
+<% end %>

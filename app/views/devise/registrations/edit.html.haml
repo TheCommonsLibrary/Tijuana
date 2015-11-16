@@ -1,0 +1,37 @@
+%article
+  .container
+    %section
+      %article
+        .login#registration.span7
+          %h2
+            Edit
+            = resource_name.to_s.humanize
+          %hr
+          = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+            = form_errors(resource)
+
+            = f.label :email
+            = f.text_field :email
+
+            %label.password.tooltipped{ :rel => 'tooltip', 'data-placement' => 'right', 'data-original-title' => "leave blank if you don't want to change it" }
+              Password
+              %i.icon-info-sign
+            = f.password_field :password
+
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation
+
+            %label.current_password.tooltipped{ :rel => 'tooltip', 'data-placement' => 'right', 'data-original-title' => "we need your current password to confirm your changes" }
+              Password
+              %i.icon-info-sign
+            = f.password_field :password_confirmation
+
+            = f.submit "Update", :class => "btn btn-primary"
+
+          %h3 Cancel my account
+
+          %p
+            Unhappy?
+            = link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete
+
+          = link_to "Back", :back

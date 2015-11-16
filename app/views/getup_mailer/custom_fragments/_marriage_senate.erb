@@ -1,0 +1,23 @@
+<% if user.postcode.nil? %>
+<p>We have no postcode stored for you, please visit <a href="http://www.getup.org.au/marriage-roll-call">www.getup.org.au/marriage-roll-call</a> to see how your representatives voted.</p>
+<% else %>
+<p><strong>Senators for <%= user.postcode.state %></strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Senator</th>
+      <th>Phone Number</th>
+      <th>How they voted</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% Senator.where(:state => user.postcode.state).includes(:party).each do |senator| %>
+    <tr>
+      <td><%= "<strong>#{senator.first_name} #{senator.last_name}</strong> (#{senator.party.abbreviation})".html_safe %></td>
+      <td><%= senator.office_phone %></td>
+      <td><%= senator.marriage_bill %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>

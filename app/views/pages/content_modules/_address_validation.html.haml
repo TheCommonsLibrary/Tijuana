@@ -1,0 +1,65 @@
+!= form_errors(content_module.postal_address)
+= fields_for content_module.postal_address do |f|
+  #address-lookup
+    = f.hidden_field 'search_outcome'
+    .tabbable
+      %ul.nav.nav-tabs
+        %li.active
+          %a{href: '#address-search', data: {toggle: 'tab'}, class: 'address-tab-search donation-verbose'} Find Address
+          %a{href: '#address-search', data: {toggle: 'tab'}, class: 'address-tab-search donation-curt'} Find
+        %li.js-tab.hide
+          %a{href: '#manual-address', data: {toggle: 'tab'}, class: 'address-tab-manual donation-verbose'} Enter Address Manually
+          %a{href: '#manual-address', data: {toggle: 'tab'}, class: 'address-tab-manual donation-curt'} Manual Entry
+      .tab-content
+        .address-search#address-search.tab-pane.active
+          .tab-content-wrap
+            = label_tag 'postal_address_address_search', 'Update your Address*'
+            %i.icon-search
+            = f.text_field 'address_search', placeholder: 'Start typing your postal address...'
+            %a{href: '#manual-address', class: 'cancel-search'} Can't find your address?
+        .manual-address#manual-address.tab-pane
+          .tab-content-wrap.clearfix
+            .search-failure-message.hide
+              Search is not available at the moment, please enter your address manually.
+            .manual-address-message
+              To ensure your package arrives in time, try finding your address using the 'Find Address' tab first. If that doesn't work enter it manually below.
+            .street-address
+              = label_tag 'street_address', 'Street Address*'
+              = f.text_field 'street_address', placeholder: 'Street Address'
+              = field_errors(f.object, :street_address)
+            .suburb
+              = label_tag 'suburb', 'Suburb*'
+              = f.text_field 'suburb', placeholder: 'Suburb'
+              = field_errors(f.object, :suburb)
+            .postcode
+              = label_tag 'postcode_number', 'Postcode*'
+              = f.text_field 'postcode_number', placeholder: 'Postcode'
+              = field_errors(f.object, :postcode_number)
+            .state
+              = label_tag 'state', 'State'
+              = f.text_field 'state', placeholder: 'State'
+      %hr
+.clearfix
+
+:javascript
+  var lookupUrl = "#{address_users_path}";
+  $(function() {
+    var addressContainer = $('#address-lookup');
+    var chequeTab = $('#cheque-tab');
+    addressContainer.checkAddress({ endPoint : lookupUrl });
+
+    var quantityDropDown = $('#donation_quantity');
+    var showHideAddress = function() {
+      if (quantityDropDown.val() === "NONE") {
+        addressContainer.hide();
+        chequeTab.show();
+      } else {
+        addressContainer.show();
+        chequeTab.hide();
+      }
+    };
+    quantityDropDown.change(showHideAddress);
+    showHideAddress();
+  });
+
+   

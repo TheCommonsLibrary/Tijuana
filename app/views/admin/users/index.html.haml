@@ -1,0 +1,35 @@
+- title "Users"
+- content_for :breadcrumb_links do
+  = link_to 'Import users', show_import_admin_users_path
+  |
+  #{link_to "Cut a list to record actions / tag", tag_admin_users_path}
+#user-search-form.searchbar
+  = form_tag(admin_users_path, :method => :get) do
+    .left
+      = select_tag "query_option", options_for_select(UserSearchQuery.select_options, params[:query_option])
+      = text_field_tag :query, params[:query], :class => "query", :placeholder => "", :autofocus => true
+      = text_field_tag :first_name, params[:first_name], :class => "query", :placeholder => "First name"
+      = text_field_tag :last_name, params[:last_name], :class => "query", :placeholder => "Last name"
+      = text_field_tag :card_last_four_digits, params[:card_last_four_digits], :class => "query", :placeholder => "Card last 4 digits"
+    .right
+      %div
+        = check_box_tag :admins_only, params[:admins_only], params[:admins_only]
+        = label_tag :admins_only, "Only admins"
+      %div
+        = hidden_field_tag :exact_match, nil, :id => :exact_match_hidden
+        = check_box_tag(:exact_match, "on", params[:exact_match] == "on" || !params.has_key?(:exact_match))
+        = label_tag :exact_match, "Exact match for all fields", :class => "exact-match"
+      = submit_tag "Search", :class => "search"
+#users-list
+  .button-links
+    = link_to("Create new user", new_admin_user_path, :class => 'new-user')
+  - @users.each do |user|
+    .user.big-link{:id => "user_#{user.id}"}
+      %span{class: user.is_member ? 'member' : 'non-member'}
+        = link_to user.full_name, edit_admin_user_path(user)
+      .actions
+        = link_to "Manage User", edit_admin_user_path(user)
+      .description= "ID: #{user.id} - #{user.email}#{user.postcode ? ' - Postcode: ' + user.postcode.number : ''}#{user.is_admin ? ' - Administrator' : ''}"
+  .pagination-info
+    = will_paginate @users
+  = page_entries_info @users, :entry_name => 'user', :plural_name => 'users'

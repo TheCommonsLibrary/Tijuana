@@ -1,0 +1,27 @@
+.canvas-container
+  .loading
+    = image_tag 'public/default.svg'
+  %canvas#canvas
+    Sorry, unable to render the image. Try in a different browser.
+%img#bg-img{crossorigin: "anonymous", alt: "image to share", style: "position:absolute;top:-20000px;left:-20000px;", src: image_share.image_src}
+%label
+  Your message
+- if image_share.caption_default
+  %input.caption{type: 'text', name: 'caption', value: image_share.caption_default, maxlength: image_share.caption_max_length}
+- else
+  %input.caption{type: 'text', name: 'caption', placeholder: 'Your text here', maxlength: image_share.caption_max_length}
+
+.image-share
+  %a.post-fb
+    %button.btn.btn-primary.btn-large.btn-social
+      %span.icon
+        %i.icon-facebook.icon-large
+      %span.text
+        Share
+  %a.btn-download
+    %button.btn.btn-primary.btn-large.btn-social
+      %span.icon
+        %i.icon-download.icon-large
+      %span.text
+        Download
+.clearfix

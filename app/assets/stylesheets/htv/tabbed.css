@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box; }
+
+html {
+  height: 100%;
+  width: 100%; }
+
+body {
+  min-height: 100%;
+  color: #4b4b4b;
+  padding: 5%; }
+
+ul {
+  padding: 0;
+  list-style: none;
+  max-height: 100%; }
+
+ul > li > input {
+  display: none; }
+
+ul > li {
+  text-align: center;
+  margin: 5px auto; }
+
+ul > li > label {
+  font-size: 20px;
+  cursor: pointer;
+  border: 2px dashed #4b4b4b;
+  width: 100%;
+  display: inline-block;
+  opacity: 0.6;
+  padding-top: 5px; }
+
+ul > li > article {
+  overflow: hidden;
+  visibility: hidden;
+  height: 0; }
+
+ul > li > input:checked ~ article {
+  height: auto;
+  visibility: visible; }
+
+ul.htvs-1-tabbed > li > article {
+  height: auto;
+  visibility: visible; }
+
+ul > li > input:checked + label {
+  opacity: 1;
+  border-style: solid; }
+
+/*# sourceMappingURL=tabbed.css.map */

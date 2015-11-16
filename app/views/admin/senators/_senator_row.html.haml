@@ -1,0 +1,9 @@
+%tr
+  - senator_attributes.each do |key, value|
+    %td
+      - if key == 'party_id'
+        = @parties[senator.region.jurisdiction.id].detect{|entry| senator[key] == entry.first}.try(:second)
+      - elsif key == 'region_id'
+        = senator.region
+      - else
+        = senator[key]

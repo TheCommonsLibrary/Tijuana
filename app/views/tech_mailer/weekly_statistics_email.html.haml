@@ -1,0 +1,11 @@
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+  %body
+    %div(style="font-weight:bold;font-size:1.3em;margin-bottom:20px;")
+      ="#{Time.now.to_date} Weekly Statistics"
+    = render partial: @weekly_stats[:push].partial_name, locals: {stat: @weekly_stats[:push]}
+    = render partial: @weekly_stats[:user].partial_name, locals: {user_stat: @weekly_stats[:user], push_stat: @weekly_stats[:push]}
+    = render partial: @weekly_stats[:donation].partial_name, locals: {stat: @weekly_stats[:donation]}
+    %div
+      = "Report finish time: #{Time.now}"

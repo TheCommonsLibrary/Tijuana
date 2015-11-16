@@ -1,0 +1,21 @@
+- title "Senator Editor"
+- content_for :sub_nav do
+  = render "admin/shared/nav_header"
+
+= will_paginate @senators
+
+%table.mp-list
+  %tr
+    - senator_attributes.each do |column|
+      %th= column.humanize
+  - @senators.each do |senator|
+    = render partial: 'senator_row', locals: {senator: senator}
+
+= will_paginate @senators
+
+:javascript
+  $(function() {
+    var gritterSuccessImagePath = '#{image_path('common/lib/gritter/success.png')}';
+    var gritterErrorImagePath = '#{image_path('common/lib/gritter/error.png')}';
+    mpEditor(gritterSuccessImagePath, gritterErrorImagePath);
+  });

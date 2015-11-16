@@ -1,0 +1,17 @@
+<% title "Static Pages" %>
+
+<div id="static-sequences">
+  <% PageSequence.static.each do |sequence| %>
+    <div class="static-sequence">
+      <h2><%= link_to sequence.name, admin_page_sequence_path(sequence) %></h2>
+      <ol class="static-pages">
+        <% sequence.pages.each do |page| %>
+          <li><%= link_to page.name, edit_admin_page_path(page) %></li>
+        <% end %>
+      </ol>
+      <div class="actions">
+        <%= link_to "Manage pages", admin_page_sequence_path(sequence), :class => "subtle" %>
+      </div>
+    </div>
+  <% end %>
+</div>

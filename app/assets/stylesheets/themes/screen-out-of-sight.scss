@@ -1,0 +1,20 @@
+#brand .out-of-sight-logo {
+    width: auto;
+    height: 90px;
+}
+
+#brandbar #tinybrand {
+  width: 280px;
+}
+
+#brandbar #tinybrand img.out-of-sight-logo {
+  width: 157px;
+  height: auto;
+  margin: 9px 0 0 7px;
+}
+
+@media (max-width: 979px) and (min-width: 768px) {
+  #brand .out-of-sight-logo {
+    height: 79px;
+  }
+}

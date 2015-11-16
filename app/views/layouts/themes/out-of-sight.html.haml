@@ -1,0 +1,9 @@
+- content_for :extra_css do
+  = stylesheet_link_tag 'themes/screen-out-of-sight'
+
+= render :partial => "layouts/head"
+%body{:id => body_id, :class => body_class}
+  = render :partial => "layouts/themes/out_of_sight_header"
+  = yield
+  = render :partial => "layouts/footer"
+  = render :partial => "layouts/footer_js"

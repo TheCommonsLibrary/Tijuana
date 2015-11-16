@@ -1,0 +1,46 @@
+%footer
+  .container
+    %section
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header= link_to("Campaigns", "/campaign-pillars")
+          %span.verbose
+            %li= link_to("Volunteer", "http://action.getup.org.au")
+            %li= link_to("Economic Fairness", "/campaign-pillars/economic-fairness")
+            %li= link_to("Environmental Justice", "/campaign-pillars/environmental-justice")
+            %li= link_to("Human Rights", "/campaign-pillars/human-rights")
+            %li= link_to("Democratic Integrity", "/campaign-pillars/democratic-integrity")
+            %li= link_to("Start a Campaign", "http://www.communityrun.org/petition/new?source=footer")
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header= link_to("Social", "https://www.facebook.com/getupaustralia")
+          %span.verbose
+            %li= link_to("Facebook", "https://www.facebook.com/getupaustralia")
+            %li= link_to("Twitter", "https://www.twitter.com/getup")
+            %li= link_to("Youtube", "https://www.youtube.com/user/getupaustralia")
+            %li= link_to("Instagram", "https://www.instagram.com/getup_australia")
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header= link_to("Info", "/about")
+          %span.verbose
+            %li= link_to("FAQs", "/about/faqs")
+            %li= link_to("Contact", "/about/contact-us")
+            %li= link_to("Work at GetUp!", "/getup-is-hiring")
+            %li= link_to("Privacy", "/about/privacy")
+            %li= link_to("Unsubscribe", "/unsubscribe")
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header= link_to("Donate", "/donate")
+          %span.verbose
+            %li= link_to("Make a Donation", "/donate")
+            %li= link_to("Gift in your Will", "/donate/willpower")
+            %li= link_to("Donations Disclosure", "/about/disclosure")
+    %section
+      .acknowledgement-of-country
+        Our team acknowledges that we meet and work on the land of the Gadigal people of the Eora Nation. We wish to pay respect to their Elders &mdash; past, present and future &mdash; and acknowledge the important role all Aboriginal and Torres Strait Islander people continue to play within Australia and the GetUp community.
+        %br
+        %strong WARNING: Aboriginal and Torres Strait Islander people are warned that this website may contain images or names of deceased persons.
+      .copyright
+        &copy;
+        = Date.today.year
+        GetUp! All rights reserved. Authorised by #{AppConstants.authorised_by}, #{AppConstants.office_address}.

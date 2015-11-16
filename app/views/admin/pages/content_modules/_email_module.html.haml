@@ -1,0 +1,42 @@
+= f.label :send_to_target, 'Send email to target'
+= f.check_box :send_to_target
+.info
+  Uncheck this box to ensure email is NOT sent to the target.
+
+= f.label :default_subject, 'Default subject', :class => "req"
+= f.text_field :default_subject
+
+= f.label :default_body, 'Default body', :class => "req"
+= f.text_area :default_body, :rows => 8
+
+- if content_module.pro_forma_body?
+  = f.label :pro_forma_prefix, 'Pro forma body prefix', :class => "req"
+  = f.text_area :pro_forma_prefix, :rows => 8
+  .info
+    This text will be added to the start of every email sent. At least one of the prefix or the suffix must be set.
+
+  = f.label :pro_forma_suffix, 'Pro forma body suffix', :class => "req"
+  = f.text_area :pro_forma_suffix, :rows => 8
+  .info
+    This text will be added to the start of every email sent. At least one of the prefix or the suffix must be set.
+
+= f.label :email_prompt_as, "Default email subject and body"
+%ul.email-prompt-text
+  %li
+    = f.radio_button :email_prompt_as, "default"
+    = f.label :email_prompt_as, "Use as default text", value: "default"
+    .info
+      Text will appear in the subject/body and be editable by the member.  Use this if you want to provide a template message that could be sent without changes or with some modifications by the member.
+  %li
+    = f.radio_button :email_prompt_as, "placeholder"
+    = f.label :email_prompt_as, "Use as placeholder", value: "placeholder"
+    .info
+      Text will appear in light grey in subject/body but will disappear when the member clicks into the field.  Just provide a short instruction, for example - "Describe how this policy has disadvantaged your family"
+  - if content_module.has_hidden_default?
+    %li
+      = f.radio_button :email_prompt_as, "none", {checked: (!content_module.prompt_as_placeholder? && !content_module.prompt_as_default?)}
+      = f.label :email_prompt_as, "Use as hidden default text", value: "none"
+      .info
+        Text will not appear in either the subject/body, but if the member does not provide any text of their own they will be asked to confirm whether they should use the default text.
+
+= render :partial => "admin/pages/talking_point", :locals => {:f => f, :content_module => content_module}

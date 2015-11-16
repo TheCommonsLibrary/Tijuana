@@ -1,0 +1,14 @@
+<% if target_ip?(request.remote_ip) %>
+<script>
+
+<% if AppConstants.facebook_tracking_id.present? %>
+window.fbq = window.fbq || [];
+fbq.push(['track', 'target_view']);
+<% end %>
+
+<% if AppConstants.ga_wid.present? %>
+ga('send', 'event', 'target', 'view', 'target_view');
+<% end %>
+
+</script>
+<% end %>

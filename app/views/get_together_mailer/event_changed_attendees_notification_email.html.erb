@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+<body>
+  Dear Friend,
+  <br><br>
+  The event <i>"<%= @event.name %>"</i> you had registered to go to has changed.
+  <br><br>
+  Please note the new details:
+  <br>
+  EVENT NAME: "<%= @event.name %>"<br>
+  DATE: <strong><%= I18n.localize(@event.date).to_date.to_s(:long) %></strong><br>
+  TIME: <strong><%= @event.time_str %></strong><br>
+  EVENT ADDRESS: <%= @event.address %><br>
+  NOTES: <%= @event.host_notes %>
+  <br><br><br>
+  You can view all the details of your event <%= link_to "by clicking here", event_url(@event.friendly_id) %>
+  <br><br><br>
+  Thanks for all you do,<br>
+  The GetUp! team
+</body>
+</html>

@@ -1,0 +1,14 @@
+- if subject.errors.full_messages.any?
+  .alert.alert-error
+    %button.close{"type" => "button", "data-dismiss" => "alert"}
+      &times;
+    %strong
+      - if subject.errors.messages[:credit_card].nil?
+        Hmmm. That doesn't look right…
+      - else
+        Payment failed…
+    %ul
+      - subject.errors.each do |field, value|
+        - next if field.to_s.include?('.') # ignore nested attributes errors
+        %li
+          = humanized_error_message_for_field(field, value)

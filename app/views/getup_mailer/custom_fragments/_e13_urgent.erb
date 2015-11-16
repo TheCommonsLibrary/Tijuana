@@ -1,0 +1,13 @@
+<% events = GetTogether.find(13).events.with_number_of_attendees.within(25,:origin=>user.postcode).order(:distance).delete_if{|e| true if e.number_of_attendees > 8} %>
+<% if events.length > 0 %>
+<p>Your closest event that still needs volunteers: <a href="http://www.getup.org.au/events/<%= events.first.slug.name %>"><%= events.first.name %></a> in <%= events.first.street %>
+<p>If you can travel, the following events <b>urgently</b> need volunteers on Saturday</p>
+<ul>
+  <% events.delete_if{|e|true if e.number_of_attendees > 3}.sort_by{|e|e.distance}.each_with_index do |event,i| %>
+  <% if (i < 5) %><li><a href="http://www.getup.org.au/events/<%= event.slug.name %>"><%= event.name %></a> hosted by <%= event.host.first_name %>'s team - <%= event.street %></li><% end %>
+  <% end %>
+</ul>
+<% else %>
+<p>Search for your nearest team that still needs <b>volunteers</b>.</p>
+<p><a href="http://www.getup.org.au/volunteer">www.getup.org.au/volunteer</a></p>
+<% end %>

@@ -1,0 +1,71 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+*,
+*:after,
+*:before
+{
+    box-sizing: border-box;
+}
+html
+{
+    width: 100%;
+    height: 100%;
+}
+body
+{
+    min-height: 100%;
+    padding: 5%;
+    color: #4b4b4b;
+}
+ul
+{
+    max-height: 100%;
+    padding: 0;
+
+    list-style: none;
+}
+ul > li > input
+{
+    display: none;
+}
+ul > li
+{
+    margin: 5px auto;
+
+    text-align: center;
+}
+ul > li > label
+{
+    font-size: 20px;
+
+    display: inline-block;
+
+    width: 100%;
+    padding-top: 5px;
+
+    cursor: pointer;
+
+    opacity: .6;
+    border: 2px dashed #4b4b4b;
+}
+ul > li > article
+{
+    visibility: hidden;
+    overflow: hidden;
+
+    height: 0;
+}
+ul > li > input:checked ~ article
+{
+    visibility: visible;
+
+    height: auto;
+}
+ul > li > input:checked + label
+{
+    opacity: 1;
+    border-style: solid;
+}

@@ -1,0 +1,138 @@
+%article#whatshappening
+  .container
+    %section
+      .span8
+        #myCarousel.carousel.slide
+          .carousel-inner
+            .item.active
+              = link_to(raw(substitute_real_cdn_url(image_tag(homepage.campaign_image, :alt => homepage.campaign_alt_text, :height => 356, :title => "#campaign-title"))), homepage.campaign_url)
+              .carousel-caption
+                %h2
+                  %a{:href => homepage.campaign_url}
+                    = homepage.campaign_alt_text
+            .item
+              = link_to(raw(substitute_real_cdn_url(image_tag(homepage.campaign2_image, :alt => homepage.campaign2_alt_text, :height => 356, :title => "#campaign2-title"))), homepage.campaign2_url)
+              .carousel-caption
+                %h2
+                  %a{:href => homepage.campaign2_url}
+                    = homepage.campaign2_alt_text
+            .item
+              = link_to(raw(substitute_real_cdn_url(image_tag(homepage.campaign3_image, :alt => homepage.campaign3_alt_text, :height => 356, :title => "#campaign3-title"))), homepage.campaign3_url)
+              .carousel-caption
+                %h2
+                  %a{:href => homepage.campaign3_url}
+                    = homepage.campaign3_alt_text
+          %a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel"} ‹
+          %a.right.carousel-control{"data-slide" => "next", :href => "#myCarousel"} ›
+
+      #actions.span4.verbose
+        %h2
+          What's Happening
+        .activity-stream
+    %div.findoutmore
+      %a Scroll Down
+      %br
+      %span &#x25bc;
+%article#getinvolved
+  .container
+    %section
+      .span6
+        %h1
+          =raw homepage.banner_html
+      = render :partial => "become_a_member_form"
+%article.tile#stories
+  .container
+    %section
+      .span6.offset1.storyvideo
+        %img{:alt => "", :src => image_path("public/video.spacer.png"), :class => "spacer"}
+        - unless Rails.env.test?
+          %iframe{:allowscriptaccess => "always", :allowFullScreen => "true", :frameborder => "0", :height => "480", :src => "//www.youtube.com/embed/XGwymiJhWPg?autohide=1&showinfo=0", :title => "YouTube video player", :width => "640"}
+      .span5.storyblurb
+        %h2
+          GetUp! is an independent movement to build a
+          %span.highlight
+            progressive Australia
+          and bring participation back into our democracy.
+      .span3.offset2.pillar.first.verbose
+        %i.icon-legal.icon-large
+        %h2 Social Justice
+        %p GetUp members believe in a fair go for everyone and continue to fight for fairer treatment of asylum seekers, reforms in the mental health system, free and fair media and marriage equality for all Australians.
+      .span3.pillar.verbose
+        %i.icon-credit-card.icon-large
+        %h2 Economic Fairness
+        %p Our community is committed to campaigning for a fairer taxation system, a better education for every child, a comprehensive National Disability Insurance Scheme, and a welfare system that protects society's most vulnerable people.
+      .span3.pillar.verbose
+        %i.icon-leaf.icon-large
+        %h2 Environmental Sustainability
+        %p In a crucial decade for our planet, GetUp members are leading the way on action against climate change and for a renewable energy future. We also stand for the ongoing protection of our forests, national parks and Great Barrier Reef.
+%article.dark#stories
+  .container
+    %section
+      .span4.firststory.storyteaser.verbose
+        %div.teaser
+          = image_tag 'public/dana-story.jpg', class: "teaserhero", alt: "GetUp member Dana's story"
+        .storybox
+          %h2
+            %a{href: '/campaigns/the-people-who-power-getup/heroes/heroes#Dana'} Dana's Story
+          %p
+            Dana couldn't believe it when she heard about the threats of dredging and dumping on the Great Barrier reef. As a member of Greg Hunt's electorate of Flinders, she felt like she had that little bit of extra power to make change.
+      .span4.storyteaser.verbose
+        %div.teaser
+          = image_tag 'public/suyog-story.jpg', class: "teaserhero", alt: "GetUp member Suyog's story"
+        .storybox
+          %h2
+            %a{href: '/campaigns/the-people-who-power-getup/heroes/heroes#Suyog'} Suyog's Story
+          %p
+            Suyog is a 25 year old management consultant from Sydney. In the lead up to the 2013 Federal election, he felt like there was a really negative political climate, so he decided to become a GetUp Booth Captain and make sure his community could make an informed vote.
+      .span4.storyteaser.verbose
+        %div.teaser
+          = image_tag 'public/lyn-story.jpg', class: "teaserhero", alt: "GetUp member Lyn's story"
+        .storybox
+          %h2
+            %a{href: '/campaigns/the-people-who-power-getup/heroes/heroes#Lyn'} Lyn's Story
+          %p
+            After her property was destroyed in the Blue Mountains fires last year, Lyn felt the need the urge to mobilise her community on the National Day of Climate Action, to demand greater action on climate change from our politicians.
+      %h2.span8.quote.offset2
+        %a{class: 'verbose',href: '/campaigns/the-people-who-power-getup/heroes/heroes'}  More stories from our members
+        %a{class: 'curt',href: '/campaigns/the-people-who-power-getup/heroes/heroes'} Stories from our members
+%article#connect
+  .container
+    %section
+      .span6.offset3.socialicons
+        .row
+          %h2.leading.sectionheading
+            %strong Connect
+            with us:
+          .span3
+            %a{:href=>"//twitter.com/getup", :target => "_blank"}
+              %i.icon-twitter.icon-large
+              %h4
+                %span Twitter
+          .span3
+            %a{:href=>"//www.facebook.com/pages/GetUp/13527056454", :target => "_blank"}
+              %i.icon-facebook.icon-large
+              %h4
+                %span Facebook
+          .span3
+            %a{:href=>"//www.youtube.com/user/getupaustralia", :target => "_blank"}
+              %i.icon-facetime-video.icon-large
+              %h4
+                %span Youtube
+          .span3
+            %a{:href=>"https://www.linkedin.com/company/getup", :target => "_blank"}
+              %i.icon-linkedin.icon-large
+              %h4
+                %span LinkedIn
+
+:javascript
+  $(function () {
+    activityStream({
+      itemCount: 8,
+      listSelector: '.activity-stream',
+      streamUrl: '#{activity_path}'
+    });
+
+    $('.carousel').carousel({});
+  });
+
+= remarketing_content

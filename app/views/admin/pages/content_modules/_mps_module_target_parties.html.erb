@@ -1,0 +1,24 @@
+<div id="jurisdiction">
+  <%= f.label :jurisdiction_code, "Jurisdiction" %>
+  <%= f.select :jurisdiction_code, options_for_select(Jurisdiction.select_options, content_module.jurisdiction.code), {}, {:id => "jurisdiction-select", :style => "width:20%"} %>
+</div>
+
+<div class="party-options" id="parties">
+  <%= f.label :target_parties, 'Target Parties', :class => "req" %>
+  <%= f.fields_for :target_party_ids do |parties_fields| %>
+      <%= render :partial => "admin/pages/content_modules/party_option", :collection => content_module.jurisdiction.parties, :locals => {:f => parties_fields, :email_mp_module => f.object} %>
+  <% end %>
+</div>
+
+<div class="clear"></div>
+
+<div id="target-selection">
+  <%= f.label :target%>
+  <%= f.select :target, f.object.target_options %>
+</div>
+
+<script>
+  $(function(){
+      initEmailMpModule({url:"<%= party_options_mps_path %>", data:"module_id=<%=content_module.id%>", resultsContainer:"#parties", upperHousePresent: <%= content_module.jurisdiction.upper_house_present? %> });
+  });
+</script>

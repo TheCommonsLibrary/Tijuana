@@ -1,0 +1,403 @@
+//
+// Buttons
+// --------------------------------------------------
+
+
+// Base styles
+// --------------------------------------------------
+
+// Core
+.btn {
+  display: inline-block;
+  @include ie7-inline-block();
+  padding: 4px 14px;
+  margin-bottom: 1px; // For input.btn
+  font-size: $baseFontSize;
+  line-height: $baseLineHeight;
+  *line-height: $baseLineHeight;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+
+  background: #EEE; /* Old browsers */
+
+
+  color:$gray;
+  border:0;
+
+  // @include box-shadow(0px 1px 1px rgba(0,0,0,0.5));
+
+  @include ie7-restore-left-whitespace(); // Give IE7 some love
+
+  @include transition(background-color .5s linear);
+  @include transition(box-shadow .5s linear);
+
+  // Hover state
+  &:hover,
+  &:active {
+    background: lighten($gray,60%);
+    *background: lighten($gray,60%); /* Buttons in IE7 don't get borders, so darken on hover */
+  }
+
+
+  &.active {
+    color:$white;
+    text-decoration: none;
+    background: lighten($blue,10%) !important;
+  }
+
+  // Focus state for keyboard and accessibility
+  &:focus {
+    @include tab-focus();
+  }
+
+  // Disabled state
+  &.disabled,
+  &[disabled] {
+    cursor: default;
+    @include opacity(0.65);
+    @include box-shadow(none);
+  }
+
+  h1,h2,h3,h4,h5 {
+    margin:0 0 0 0;
+    padding:0 0 0 0;
+    text-align:center;
+    line-height:1.2em;
+  }
+
+}
+
+.ie7 .btn,
+.ie8 .btn {
+  display:inline;
+  background:#f5f5f5 image-url('public/btn.png') repeat-x 0 50%;
+  &:hover,
+  &:active {
+    background-image:none;
+    filter:none;
+    background-color:#A6A6A6;
+  }
+  &.active {
+    filter:none;
+    background-color:#3C9AF7;
+  }
+}
+.ie9 .btn {
+  filter:none;
+  &:hover,
+  &.active,
+  &:active {
+    filter:none;
+  }
+}
+
+// Button Sizes
+// --------------------------------------------------
+
+// Large
+.btn-large {
+  padding: 9px 14px;
+  font-size: $baseFontSize + 2px;
+  line-height: normal;
+}
+.btn-large [class^="icon-"] {
+  margin-top: 2px;
+}
+
+// Small
+.btn-small {
+  padding: 3px 9px;
+  font-size: $baseFontSize - 2px;
+  line-height: $baseLineHeight - 2px;
+}
+.btn-small [class^="icon-"] {
+  margin-top: 0;
+}
+.btn-full {
+  width:100%;
+}
+#action .btn-full {
+ font-size: $baseFontSize + 10;
+ font-size: 24px;
+ padding: 6px 0;
+ padding: 10px 16px;
+}
+// Mini
+.btn-mini {
+  padding: 3px 8px;
+  font-size: $baseFontSize - 1px;
+  line-height: $baseLineHeight - 1px;
+}
+
+// Block button
+.btn-block {
+  display: block;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  @include box-sizing(border-box);
+}
+.btn-block + .btn-block {
+  margin-top: 5px;
+}
+
+
+// SOCIAL
+
+@mixin social-icon() {
+  display:block;
+  width: 20px;
+  padding: 7px 5px;
+  background:darken($grayLighter,5%);
+  color:$white;
+  font-size:20px;
+}
+
+@mixin social-btn-primary() {
+  &.btn-primary {
+    .icon {
+      background: darken($blue,8%);
+      display: flex;
+      padding: 8px;
+      height: 24px;
+      align-items: center;
+      justify-content: center;
+      i {
+        padding: 0px !important;
+        margin: 0px !important;
+      }
+    }
+    .text {
+      color:lighten($blue,50%);
+    }
+  }
+}
+
+.btn-facebook {
+  padding: 0 !important;
+  .icon {
+    float: left;
+    @include social-icon();
+  }
+  .text {
+    float: left;
+    padding: 7px 10px;
+  }
+  @include social-btn-primary();
+}
+
+#action .well .image-share .btn-large.btn-social {
+  width: 98%;
+  margin-left: 0px;
+  line-height: 1.6em;
+  margin-bottom: 10px;
+}
+
+.btn-social {
+  padding: 0 !important;
+  position:relative;
+  min-width:95px;
+  width:95px;
+  font-size: 15px;
+  float:left;
+  margin:0 5px 5px 0;
+  // text-transform:uppercase;
+  .icon {
+    @include social-icon();
+  }
+  .text {
+    display:block;
+    position:absolute;
+    top:0;
+    left:37px;
+    width:100%;
+    padding: 7px 0px 7px 0px;
+    width: auto;
+    color:lighten($gray,10%);
+  }
+  &:hover,
+  &:focus {
+    .icon {
+      background: darken($blue,8%);
+    }
+  }
+  &.btn-large {
+    float:left;
+    min-width:200px;
+    width:240px;
+    font-size: 22px;
+    margin:0 0 $baseLineHeight 0;
+    .icon {
+      width: 30px;
+      padding-right: 10px;
+      padding: 7px 9px  ;
+    }
+    .text {
+      top:0;
+      left:50px;
+      font-size: 22px;
+      font-size: 18px;
+      width:100%;
+      padding: 7px 0px 7px 0px;
+      text-align:left;
+    }
+  }
+  @include social-btn-primary();
+
+}
+.ie8 .btn.btn-social {
+  &:hover,
+  &:focus {
+    .icon  {
+      border-radius:0px;
+    }
+  }
+}
+
+.ie7 .btn.btn-social {
+  height:35px;
+  position:relative;
+  .icon {
+    width:20px;
+    height:20px;
+  }
+  &:hover,
+  &:focus {
+    background:$blue;
+    .icon  {
+      border-radius:0px;
+     width:20px;
+      height:20px;
+    }
+  }
+  &.btn-large {
+    height:44px;
+    .text {
+      width:100px;
+    }
+    .icon {
+      height:30px;
+      width:32px;
+    }
+  }
+}
+
+// Set the backgrounds
+// -------------------------
+.btn {
+  // reset here as of 2.0.3 due to Recess property order
+  border-color: #c5c5c5;
+  border-color: rgba(0,0,0,.15) rgba(0,0,0,.15) rgba(0,0,0,.25);
+}
+.btn-primary {
+  background: $btnPrimaryBackground; /* Old browsers */
+  color:$white;
+  font-weight:600;
+  width: auto !important;
+  position: relative;
+  &:hover,
+  &.active {
+    background:darken($btnPrimaryBackground,10%);
+  }
+  &:hover {
+    // @include box-shadow(0 0 $baseLineHeight $blue);
+  }
+}
+
+.btn-primary-alternate {
+  background: $orange; /* Old browsers */
+  color:$white;
+  font-weight:600;
+  position: relative;
+  &:hover,
+  &.active {
+    background:darken($orange,10%);
+  }
+  &:hover {
+    // @include box-shadow(0 0 $baseLineHeight $orange);
+  }
+}
+// Warning appears are orange
+.btn-warning {
+  background:$btnWarningBackground;
+  color:$white;
+}
+// Danger and error appear as red
+.btn-danger {
+  background:$btnDangerBackground;
+  color:$white;
+  font-weight:600;
+}
+// Success appears as green
+.btn-success {
+  background:$btnSuccessBackground;
+  color:$white;
+}
+// Info appears as a neutral blue
+.btn-info {
+  background:$btnInfoBackground;
+  color:$white;
+}
+// Inverse appears as dark gray
+.btn-inverse {
+  background:$btnInverseBackground;
+  color:$white;
+}
+
+.ie7 .btn-primary,
+.ie8 .btn-primary {
+  background:#6bb9f4 image-url("public/btn.primary.png") repeat-x 0 50%;
+}
+
+// Cross-browser Jank
+// --------------------------------------------------
+
+button.btn,
+input[type="submit"].btn {
+
+  // Firefox 3.6 only I believe
+  &::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+  }
+
+  // IE7 has some default padding on button controls
+  *padding-top: 3px;
+  *padding-bottom: 3px;
+
+  &.btn-large {
+    *padding-top: 7px;
+    *padding-bottom: 7px;
+  }
+  &.btn-small {
+    *padding-top: 3px;
+    *padding-bottom: 3px;
+  }
+  &.btn-mini {
+    *padding-top: 1px;
+    *padding-bottom: 1px;
+  }
+}
+
+
+// Link buttons
+// --------------------------------------------------
+
+// Make a button look and behave like a link
+.btn-link,
+.btn-link:active {
+  background-color: transparent;
+  background-image: none;
+  @include box-shadow(none);
+}
+.btn-link {
+  border-color: transparent;
+  cursor: pointer;
+  color: $linkColor;
+}
+.btn-link:hover {
+  color: $linkColorHover;
+  text-decoration: underline;
+  background-color: transparent;
+}

@@ -1,0 +1,14 @@
+require 'rake'
+scenario_files = FileList['scenarios/*.rb'].exclude("scenarios/scenario_helper.rb").include('scenarios/integration/*.rb')
+
+guard 'rspec', all_after_pass: false, all_on_start: false, cmd: %{spring rspec --pattern "#{scenario_files.join(',')}" scenarios} do
+  watch(%r{.+\.(rb|haml|sass|js)$}) { 'scenarios' }
+end
+
+guard 'livereload' do
+  watch(%r{app/views/.+\.(erb|haml|slim)$})
+  watch(%r{app/helpers/.+\.rb})
+  watch(%r{config/locales/.+\.yml})
+  # Rails Assets Pipeline
+  watch(%r{(app|vendor)(/assets/\w+/(.+\.(css|js|html))).*}) { |m| "/assets/#{m[3].sub(/\.scss/, '')}" }
+end

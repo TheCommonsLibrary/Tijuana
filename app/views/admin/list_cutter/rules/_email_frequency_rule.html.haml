@@ -1,0 +1,9 @@
+%span.email-frequency-is
+  is
+= f.text_field :email_frequency, {:value => rule.email_frequency, :class => 'inline-number'}
+%span
+  or less emails in the last
+= f.text_field :time_period, {:value => rule.time_period, :class => 'inline-number'}
+%span
+  days
+.tooltip.list-cutter-tip{ 'data-tip' => "email-frequency-tip"}

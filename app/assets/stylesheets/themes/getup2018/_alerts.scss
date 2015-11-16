@@ -1,0 +1,77 @@
+//
+// Alerts
+// --------------------------------------------------
+
+
+// Base styles
+// -------------------------
+
+.alert {
+  padding: 8px 35px 8px 14px;
+  margin-bottom: $baseLineHeight;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  background-color: $warningBackground;
+  color: $warningText;
+}
+.alert h4 {
+  margin: 0;
+}
+
+// Adjust close link position
+.alert .close {
+  position: relative;
+  top: -7px;
+  right: -27px;
+  line-height: $baseLineHeight;
+}
+
+// Alternate styles
+// -------------------------
+.alert-success {
+  background-color: $successBackground;
+  color: $successText;
+}
+.alert-danger,
+.alert-error { 
+  background-color: $errorBackground;
+  color: $errorText;
+  ul {
+    margin-top: 10px;
+  }
+}
+.alert-info {
+  background-color: $infoBackground;
+  color: $infoText;
+}
+
+// Block alerts
+// -------------------------
+
+.alert-block {
+  display: block; // account for any element using help-block
+  margin: 0 0 0 0;
+  padding:0 5px 2px 5px;
+  font-size: $baseFontSize;
+  font-weight:600;
+  background: $infoText;
+  color:$white;
+  &.alert-error {
+    background: $errorText;
+    color:$white;
+  }
+}
+.alert-block > p,
+.alert-block > ul {
+  margin-bottom: 0;
+}
+.alert-block p + p {
+  margin-top: 5px;
+}
+
+
+// Input Alerts
+input.error,
+textarea.error {
+  margin-bottom:0px;
+  border:0px;
+}

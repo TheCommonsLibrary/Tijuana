@@ -1,0 +1,9 @@
+:javascript
+  $(function() {
+    $("#skip-to-main-content a").focus(function() {
+      ga('send', 'event', 'link', 'focus', 'skip-nav');
+    });
+    $("#skip-to-main-content a").click(function() {
+      ga('send', 'event', 'link', 'focus', 'skip-nav');
+    });
+  });

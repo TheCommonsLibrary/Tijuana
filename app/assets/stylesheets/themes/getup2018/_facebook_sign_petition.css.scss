@@ -1,0 +1,50 @@
+body#petition div#sign-with-facebook, #comment-on-latest-facebook-post {
+  .fb-button-table {
+    .fb-button-cell {
+      .fb-button {
+        background: rgb(78, 105, 162);
+        border: none;
+        border-radius: 2px;
+        color: white;
+        font-weight: bold;
+        i {
+          margin: 0 4px;
+          padding: 0 0 0 2px;
+          vertical-align: middle;
+        }
+        span {
+          color: inherit;
+          vertical-align: middle;
+        }
+      }
+
+      .fb-button[disabled] {
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: 0.65;
+        filter: alpha(opacity=65);
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      @media screen and (min-width: 980px) and (max-width: 1199px) {
+        .fb-button {
+          font-size: 22px;
+        }
+      }
+    }
+    .fb-loader {
+      display: none;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 10px;
+      width: 16px;
+      height: 16px;
+      background-image: image-url("common/ajax-loader.gif");
+      background-repeat: no-repeat;
+    }
+  }
+  .fb-error {
+    margin-top: 10px;
+  }
+}
+

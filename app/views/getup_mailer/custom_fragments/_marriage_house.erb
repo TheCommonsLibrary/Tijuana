@@ -1,0 +1,25 @@
+<% if user.postcode.nil? %>
+<p>We have no postcode stored for you, please visit <a href="http://www.getup.org.au/marriage-roll-call">www.getup.org.au/marriage-roll-call</a> to see how your representatives voted.</p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th>Electorate</th>
+      <th>Representative</th>
+      <th>Phone Number</th>
+      <th>How they voted</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% user.postcode.electorates.where(:jurisdiction_id => 9).includes(:mps => :party).each do |electorate| %>
+    <tr>
+      <td><%= electorate.name %></td>
+      <td><%= "<strong>#{electorate.mps.first.first_name} #{electorate.mps.first.last_name}</strong> (#{electorate.mps.first.party.abbreviation})".html_safe %></td>
+      <td><%= electorate.mps.first.office_phone %></td>
+      <td><%= electorate.mps.first.marriage_bill %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% if user.postcode.electorates.where(:jurisdiction_id => 9).includes(:mps => :party).count > 1 %><span><em>Your postcode* overlaps more than one federal electorate; above are the MPs who may represent you. A list of how your state or territory senators voted is at the bottom of this email.</em></span><% end %>
+<% end %>

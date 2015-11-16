@@ -1,0 +1,90 @@
+<script>
+$(document).ready(function () {
+  window.bootstrap_maps = function () {
+      var maps = getup.maps.<%= variant %>.create({
+      api_key: "<%= AppConstants.google_maps_api_key %>",
+      template_provider: Mustache.to_html,
+      geo_source: window.location + ".json",
+      map_factory: function (display_node, options) {
+        return new google.maps.Map(display_node, options);
+      },
+      marker_factory: function (options) {
+        var marker,
+            filename,
+            markerStatus,
+            path,
+            _this = this;
+        if (options.add) {
+           filename = (options.add.order) ? "marker" + options.add.order + ".png" : "blank.png";
+           markerStatus = (options.add.status) ? options.add.status : 'open';
+           path = '/images/map-markers/' + markerStatus + '/' + filename;
+           marker = new google.maps.Marker({
+            icon: new google.maps.MarkerImage(
+              path,
+              new google.maps.Size(20,34),
+              new google.maps.Point(0,0),
+              new google.maps.Point(10,34)),
+            shadow: new google.maps.MarkerImage(
+              'https://www.google.com/intl/en_us/mapfiles/ms/icons/msmarker.shadow.png',
+              new google.maps.Size(59,32),
+              new google.maps.Point(0,0),
+              new google.maps.Point(10,34)),
+            shape: {
+              coord: [55,2,56,3,56,4,56,5,56,6,56,7,56,8,56,9,56,10,56,11,56,12,56,13,56,14,56,15,56,16,56,17,56,18,56,19,56,20,56,21,56,22,56,23,56,24,56,25,56,26,56,27,55,28,33,29,31,30,30,31,28,32,27,33,25,34,24,35,22,36,21,36,21,35,22,34,22,33,23,32,23,31,24,30,24,29,3,28,2,27,2,26,2,25,2,24,2,23,2,22,2,21,2,20,2,19,2,18,2,17,2,16,2,15,2,14,2,13,2,12,2,11,2,10,2,9,2,8,2,7,2,6,2,5,2,4,2,3,4,2,55,2],
+              type: 'poly'
+            },
+            map: options.add.map,
+            position: options.add.position,
+            title: options.add.title
+          });
+          google.maps.event.addListener(marker, 'click', function() {
+            _this.info_window.maxWidth = 250;
+            _this.info_window.setContent(options.add.content);
+            _this.info_window.open(options.add.map, marker);
+          });
+          return marker;
+        } else if (options.remove) {
+          options.remove.marker.setMap(null);
+        }
+      },
+      info_window: (new google.maps.InfoWindow()),
+      geocoder: (new google.maps.Geocoder()),
+      geocoder_status_codes: google.maps.GeocoderStatus,
+      display_location_map_node: $("<%= map_selector %>"),
+      <% if local_assigns.has_key? :text_selector %>
+        display_location_text_node: $("<%= text_selector %>"),
+        display_lookup_button_node: $("<%= lookup_button_selector %>"),
+        display_verify_button_node: $("<%= verify_button_selector %>"),
+      <% end %>
+      map_type: google.maps.MapTypeId.ROADMAP
+      <% if get_together.managed_get_together_id.present? %>
+        ,clashing_event_detector: function(lat, lng, callback) {
+          jQuery.getJSON('<%= get_together_path(get_together.managed_get_together) %>.json', {latitude: lat, longitude: lng, search_radius: <%= get_together.managed_get_together.exclusion_radius %>, limit: 1}, function(results){
+            if (results.all.length > 0) {
+              callback(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port  + results.all[0].path);
+            } else {
+              callback();
+            }
+          });
+        }
+      <% end %>
+    });
+
+    <% if variant == "event_viewer" %>
+      maps.get_and_display_events();
+    <% end %>
+
+    maps.bind_to_node(jQuery("<%= bind_selector %>"), <%= get_together.in_future? %>, <%= get_together.is_admin_managed? %>);
+
+    if (navigator.geolocation) {
+      getup.geo.user({map: maps, location_property: "user_location", locator: navigator.geolocation });
+    }
+  };
+
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src = "https://maps.google.com/maps/api/js?sensor=false&key=<%= AppConstants.google_maps_api_key %>&region=AU&libraries=geometry&callback=bootstrap_maps";
+  document.body.appendChild(script);
+
+});
+</script>

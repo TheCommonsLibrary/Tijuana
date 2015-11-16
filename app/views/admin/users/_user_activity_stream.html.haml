@@ -1,0 +1,13 @@
+- user.user_activity_events.order('created_at DESC').each do |event|
+  %li
+    = remove_second_and_time_zone(event.created_at)
+    |
+    - if event.activity == UserActivityEvent::Activity::EXTERNAL_ACTION && event.campaign && event.page_sequence && event.page
+      External Action: 
+      = link_to event.campaign.name, admin_campaign_path(event.campaign)
+      \- 
+      = link_to event.page_sequence.name, admin_page_sequence_path(event.page_sequence)
+      \- 
+      = link_to event.page.name, edit_admin_page_path(event.page)
+    - else
+      \#{raw event.public_stream_html}

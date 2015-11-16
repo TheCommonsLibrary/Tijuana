@@ -1,0 +1,4 @@
+<div class="party-option">
+  <%= f.label party_option.id, party_option.name %>
+  <%= f.check_box party_option.id, :checked => email_mp_module.target_party_ids.include?(party_option.id) %>
+</div>

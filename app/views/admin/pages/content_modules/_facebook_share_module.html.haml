@@ -1,0 +1,18 @@
+= f.label :title, 'Title', class: 'req'
+= f.text_field :title
+
+= f.label :content, 'Blurb', class: 'req'
+= f.text_area :content, rows: 4
+%p.info This field is HTML enabled.
+
+= f.label :button_text, 'Button text', class: 'req'
+= f.text_field :button_text
+
+= f.label :link, 'Link to share'
+= f.text_field :link
+%p.info Leave blank to share the current page
+
+
+= f.label :query, 'Query to find friends'
+= f.text_area :query, rows: 4
+%p.info A valid <a target="_blank" href="https://developers.facebook.com/docs/technical-guides/fql/">FQL</a> query that  must at least select uid and name. Leave blank to select all friends.

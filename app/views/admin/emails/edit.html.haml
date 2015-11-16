@@ -1,0 +1,31 @@
+- title "#{@email.name} (Edit)"
+- content_for :breadcrumb_links do
+  = link_to 'Create short URL', '#', id: 'social-sharing-shortened-url'
+  - if can?(:destroy, @email) && !@email.has_been_sent?
+    |
+    = link_to "Delete email", admin_email_path(@email), :method => :delete, :data => { :confirm => "Delete '#{@email.name}'?" }
+#link-shortener{style: 'display: none;'}
+  .layout-container
+    .help-text
+      %h5
+        User ID: #{@user_id} - Email ID: #{@email_id}
+      %p
+        Generate a shortened URL by entering either a Page ID or Redirect ID
+    = label_tag 'page-id-field', 'Page ID:'
+    = text_field_tag 'page-id-field'
+    %span
+      OR
+    = label_tag 'redirect-id-field', 'Redirect ID:'
+    = text_field_tag 'redirect-id-field'
+    = button_tag 'Generate shortened URL', id: 'url-shortened-link', disabled: true
+    #shortened-url-placeholder
+= render :partial => "form"
+
+:javascript
+  $(function() {
+    $('a#social-sharing-shortened-url').click(function(){
+      $('#link-shortener').show();
+    });
+
+    linkShortener($('#link-shortener'), #{@user_id}, #{@email_id});
+  });

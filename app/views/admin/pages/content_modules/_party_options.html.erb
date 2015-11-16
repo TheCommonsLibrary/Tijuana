@@ -1,0 +1,15 @@
+<% if @target_parties.empty? %>
+    <%= content_tag :p, "THERE IS NO TARGET PARTY, PLEASE CONTACT TECH TEAM", class: "error"%>
+<% else %>
+    <%= label_tag :target_parties, 'Target Parties', :class => 'req' %>
+<% end %>
+<% @target_parties.each do |party| %>
+    <div class="party-option">
+      <% element_id = "content_modules[#{@mp_module.id}][target_party_ids][#{party.id}]" %>
+
+      <%= label_tag element_id, party.name %>
+      <%= hidden_field_tag element_id, 0, :id => nil %>
+      <%= check_box_tag element_id, party.id, @mp_module.target_party_ids.include?(party.id), :value => 1 %>
+    </div>
+
+<% end %>

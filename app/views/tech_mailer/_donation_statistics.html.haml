@@ -1,0 +1,88 @@
+- style_heading = 'margin-top:20px;margin-bottom:10px;font-size:1.1em;font-weight:bold;'
+- style_cell_currency = "text-align:right;"
+- style_cell_number = "text-align:center;"
+- style_total_row = "text-align:right;font-weight:bold;"
+- stripe_colours = ['#eeeeee', '#cccccc']
+- style_left_cell = 'text-align:left;width:200px;padding-right:10px;'
+- comment = 'font-size:0.9em;font-style:italic;margin-top:-10px;margin-bottom:10px'
+%div(style=style_heading)
+  Donation Statistics
+%table
+  %tr
+    %th(style=style_left_cell)
+    %th(style='padding-right:10px;')
+      1 Week
+    %th
+      26 Week Average
+  %tr
+    %td(style=style_left_cell)
+      One off
+    %td(style=style_cell_currency)
+      =number_to_currency(stat.one_week_object.one_off_donations_amount_in_dollars, delimiter: ',')
+    %td(style=style_cell_currency)
+      =number_to_currency(stat.six_month_object.one_off_donations_amount_in_dollars, delimiter: ',')
+  %tr
+    %td(style=style_left_cell)
+      Recurring
+    %td(style=style_cell_currency)
+      =number_to_currency(stat.one_week_object.periodic_donations_amount_in_dollars, delimiter: ',')
+    %td(style=style_cell_currency)
+      =number_to_currency(stat.six_month_object.periodic_donations_amount_in_dollars, delimiter: ',')
+  %tr
+    %td(style=style_left_cell)
+      One Off Donation Count
+    %td(style=style_cell_number)
+      =number_with_precision(stat.one_week_object.one_off_donations_count, precision: 0)
+    %td(style=style_cell_number)
+      =number_with_precision(stat.six_month_object.one_off_donations_count, precision: 0)
+  %tr
+    %td(style=style_left_cell)
+      New Recurring Donor Count
+    %td(style=style_cell_number)
+      =number_with_precision(stat.one_week_object.new_recurring_donor_count, precision: 0)
+    %td(style=style_cell_number)
+      =number_with_precision(stat.six_month_object.new_recurring_donor_count, precision: 0)
+- limit = 1000.0
+%div(style=style_heading)
+  Donation Breakdown (Previous Week)
+%div(style=comment)
+  = "Page Sequences with sub-total > #{number_to_currency(limit, delimiter: ',')}"
+- stat.one_week_object.ordered_donation_hash_keys.each do |page_sequence_id|
+  - page_sequence = stat.one_week_object.donations_by_page_sequence[page_sequence_id]
+  - periodic = page_sequence[:totals][:periodic] || 0
+  - one_off = page_sequence[:totals][:one_off] || 0
+  - if ((periodic + one_off) > limit )
+    %div
+      %strong
+        Campaign:
+      = page_sequence[:campaign]
+    - stripe_counter = 0
+    %div
+      %strong
+        Page Sequence:
+      = page_sequence[:name]
+    %table(style="margin-bottom:20px;")
+      %tr
+        %th(style=style_left_cell)
+          Pages
+        %th(style=style_cell_currency)
+          One Off
+        %th(style=style_cell_currency)
+          Recurring
+      - page_sequence[:pages].each do |page, totals|
+        - style_page_row_colour = "background-color:#{stripe_colours[stripe_counter%2]};"
+        - stripe_counter+=1
+        %tr(style=style_page_row_colour)
+          %td(style=style_left_cell)
+            = page
+          %td(style=style_cell_currency)
+            = number_to_currency(totals[:one_off], delimiter: ',')
+          %td(style=style_cell_currency)
+            = number_to_currency(totals[:periodic], delimiter: ',')
+      %tr(style=style_total_row)
+        %td
+          Sub-total
+        %td
+          = number_to_currency(page_sequence[:totals][:one_off], delimiter: ',')
+        %td
+          = number_to_currency(page_sequence[:totals][:periodic], delimiter: ',')

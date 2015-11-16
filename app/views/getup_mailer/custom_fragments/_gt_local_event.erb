@@ -1,0 +1,14 @@
+<% events = GetTogether.find(9).events.confirmed.includes(:attendees,:slug,:host).within(75, :origin => user.postcode).order('distance ASC').limit(15).select{ |e| e and (e.attendees.count.to_f/e.capacity) < 1 }.collect{ |e| {:name => e.name, :host_name => e.host.first_name, :suburb => e.address.split(",")[e.address.split(',').length <= 2 ? 0 : e.address.split(',').length - 2], :url => "http://www.getup.org.au/events/#{e.slug.name}", :fullness => ( e.attendees.count.to_f / e.capacity ) } }.sort_by { |e| e[:fullness] } unless user.postcode.blank? %>
+<% if user.postcode.blank? %>
+  <p>Sorry, it looks like no one has put their hand up to host an event near you. But don't worry, you'll still have an opportunity to shape the agenda by filling out the 2013 Vision Survey we'll send out after we've compiled all the suggestions coming out of the GetTogethers.</p>
+<% elsif events.count == 0 %>
+  <p>It seems like we don't have a postcode on file for you. <a href="http://www.getup.org.au/get_togethers/9">Click here to enter your postcode and find your closest event.</a></p>
+<% elsif events.count > 0 %>
+  <ul>
+    <% events.each do |event| %>
+      <li><a href="<%= event[:url] %>" target="_blank"><%= event[:name].upcase %> (<%= event[:suburb] %>) hosted by <%= event[:host_name].blank? ? "a local GetUp member" : event[:host_name].upcase %></a></li>
+    <% end %>
+  </ul>
+  <p><i>The postcode we have on file for you is <%= user.postcode.number %>. If this is out of date, please <a href="http://www.getup.org.au/get_togethers/9">click here to search for your local events</a>.</i></p>
+<% end %>
+<% events = nil %>

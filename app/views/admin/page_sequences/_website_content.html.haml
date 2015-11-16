@@ -1,0 +1,38 @@
+#page-sequence-website-content
+  %h3 Website Content
+
+  = f.label :pillar_show, 'Show on Pillar Page'
+  = f.check_box :pillar_show
+  .info
+    Selecting will display this page sequence on the pillar page.
+    %a{href: '/campaign-pillars/economic-fairness/', target: '_blank'} example pillar page
+
+  = f.label :pillar_pin, 'Pin to top of Pillar Page'
+  = f.check_box :pillar_pin
+  .info
+    Selecting will filter this page sequence to top of the pillar page.
+
+  = f.label :title
+  = f.text_field :title
+  .info
+    Title is displayed when being viewed on the pillar page (#{PageSequence::TITLE_MAX} character limit).
+
+  = f.label :blurb
+  = f.text_field :blurb
+  .info
+    Blurb is used for the short description when being viewed on the pillar page (#{PageSequence::BLURB_MAX} character limit).
+
+  = f.label :expired
+  = f.check_box :expired
+  .info
+    Page Sequence is expired and user should be redirected.
+
+  = f.label :expires_at
+  = f.date_field :expires_at
+  .info
+    When expired page sequence expires and user should be redirected.
+
+  = f.label :expired_redirect_page_sequence_id
+  = f.number_field :expired_redirect_page_sequence_id
+  .info
+    When page sequence is expired, what related page sequence it should redirect to. (leave blank to redirect to pillar page)

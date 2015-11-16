@@ -1,0 +1,15 @@
+- if @page.page_sequence.landing_page.tag_list.include?('embed')
+  = render 'layouts/themes/getup2018/embed'
+- else
+  = render 'layouts/themes/getup2018/head'
+  %body{id: body_id, class: body_class, 'data-environment' => Rails.env}
+    #skip-to-main-content
+      %a{href: '#content'} Skip to main content
+    = render 'layouts/themes/getup2018/header'
+    #content
+    = yield
+    = render 'layouts/themes/getup2018/footer'
+    .device-phone.visible-phone
+    .device-tablet.visible-tablet
+    .device-desktop.visible-desktop
+    = render 'layouts/footer_js'

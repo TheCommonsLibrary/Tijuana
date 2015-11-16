@@ -1,0 +1,21 @@
+%article
+  .container
+    %section
+      %article
+        #content-modules.single-column
+          .inner
+            #main-content-modules
+              .inner
+                %h1 Get Togethers
+                %h2 Upcoming
+                %ul.items.upcoming-get-togethers
+                  - @current_get_togethers.each do |get_together|
+                    %li
+                      = link_to get_together.name, get_together
+                      (Happening between #{(l(get_together.from_date) || "N/A")} and #{l(get_together.to_date)})
+                %h2 Past
+                %ul.items.past-get-togethers
+                  - @past_get_togethers.each do |get_together|
+                    %li
+                      = link_to get_together.name, get_together
+                      (Happening between #{(get_together.from_date.blank? ? "N/A" : l(get_together.from_date))} and #{get_together.to_date.blank? ? "N/A" : l(get_together.to_date)})

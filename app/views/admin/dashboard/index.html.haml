@@ -1,0 +1,121 @@
+-title "Dashboard"
+#admin-dashboard
+  .headings
+    Emails
+  %table#emails-table
+    %tr
+      %th.email-id
+        Email ID
+      %th
+        Subject
+      %th
+        Campaign
+      %th
+        Push
+      %th
+        Sent to
+      %th
+        SQL
+      %th.date-time
+        Date/Time
+      %th.statistics
+        Statistics
+    - @sent_emails.each do |sent_email|
+      %tr
+        %td
+          = sent_email.email_id
+        %td
+          = link_to_email(sent_email)
+        %td
+          = link_to_campaign(sent_email)
+        %td
+          = link_to_push(sent_email)
+        %td
+          = sent_email.recipient_count
+        %td.sql
+          %a{:href => '#', :class => 'sql-accordion'} Show
+          .sql-wrapper.hidden
+            %pre
+              %code.language-sql
+                = sent_email.sql
+        %td
+          = sent_email.created_at.strftime '%a %e, %l:%M%p'
+        %td
+          %button.btn-show-stats{:data => {'url' => url_for_push(sent_email)}} Fetch
+  .headings
+    Pages
+  %table#pages-table
+    %tr
+      %th
+        Public
+      %th
+        Name
+      %th
+        Page Sequence
+      %th
+        Campaign
+      %th
+        Date/Time
+    - @pages.each do |page|
+      %tr
+        %td
+          = link_to "View", friendly_path(page), :target => "_blank"
+        %td
+          = link_to(page.name, edit_admin_page_url(page.id))
+        %td
+          = link_to(page.page_sequence.name, admin_page_sequence_url(page.page_sequence.id))
+        %td
+          - campaign = page.page_sequence.campaign
+          = link_to(campaign.name, admin_campaign_url(campaign.id)) unless campaign.nil?
+        %td
+          = page.updated_at.strftime '%a %e, %l:%M%p'
+:javascript
+  $(function() {
+    $('a.sql-accordion').click(function() {
+      var sqlWrapper = $(this).parent().find('.sql-wrapper');
+      if (sqlWrapper.hasClass('hidden')) {
+        sqlWrapper.removeClass('hidden');
+        $(this).html('Hide');
+      }
+      else
+      {
+        sqlWrapper.addClass('hidden');
+        $(this).html('Show');
+      }
+    });
+
+    $('.btn-show-stats').on('click', function() {
+      var throbber = '<p class="loading">#{image_tag('admin/lib/colorbox/loading.gif')}Fetching your statistics...</p>';
+      var nextTr = $(this).parent().parent().next();
+      if(nextTr != null && nextTr.hasClass('data-table'))
+      {
+        nextTr.remove();
+      }
+
+      var pushUrl = $(this).data('url');
+      if(pushUrl) {
+        var $tr = $('<tr class="data-table"></tr>');
+        var $td = $('<td colspan="7"></td>');
+        $tr.append($td);
+        $(this).parent().parent().after($tr);
+
+          $.ajax({
+            url: pushUrl + '/stats',
+            dataType: 'html',
+            beforeSend: function() {
+              $(this).attr('disabled', true);
+              $($td).html(throbber);
+            },
+            success: function(data) {
+              $($td).html(data);
+            },
+            error: function() {
+              $($td).html('<p>There was a problem fetch your statistics, please try again in a few moments.</p>');
+            },
+            complete: function() {
+              $(this).removeAttr('disabled');
+            }
+          });
+         }
+        });
+  });

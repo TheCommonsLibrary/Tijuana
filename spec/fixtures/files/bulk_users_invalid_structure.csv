@@ -1,0 +1,5 @@
+mobile_number,email,first_name,last_name,home_number,street_address,suburb,country_iso,postcode,result
+04001111,1@gmail.com,Michael,Michaelson,"03 3333 3333",1 Road,Sydney,AU,2000,
+04001111,2@gmail.com,David,Davidson,"03 3333 3333",2 Road,Sydney,,AU,2000,
+04001111,3@gmail.com,Ardelio,Ardelison,"02 9281 2818",3 Road,Surry Hills,AU,2010,
+04001111,4@gmail.com,Richard,Richardson,"02 2222 2222",4 Road,Surry Hills,AU,2010,

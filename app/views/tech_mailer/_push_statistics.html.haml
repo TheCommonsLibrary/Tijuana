@@ -1,0 +1,105 @@
+- stripe_colours = ['#eeeeee', '#cccccc']
+- cell_padding = 'padding:2px 5px;'
+- center_align = 'text-align:center;'
+- cell_width_percents = 'width:60px;'
+- cell_width_sends = 'width:65px;'
+- cell_day = "width:40px;#{center_align}#{cell_padding}"
+- cell_with_percents = "#{cell_padding}#{center_align}#{cell_width_percents}"
+- cell_sends = "#{cell_padding}#{center_align}#{cell_width_sends}"
+%div(style='margin-top:20px;margin-bottom:10px;font-size:1.1em;font-weight:bold;')
+  Push Statistics
+%table
+  %tr
+    %th(style='width:150px;padding-right:10px;')
+    %th(style='padding-right:10px;')
+      1 Week
+    %th
+      26 Week Average
+  %tr
+    %td(style='width:150px;')
+      Views from Sends
+    %td(style='text-align:center;')
+      =value_to_percentage_string(stat.one_week_object.group_stats[:views_from_sends])
+    %td(style='text-align:center;')
+      =value_to_percentage_string(stat.six_month_object.group_stats[:views_from_sends])
+  %tr
+    %td(style='width:150px;')
+      (Clicks from Sends)
+    %td(style='text-align:center;')
+      =value_to_percentage_string(stat.one_week_object.group_stats[:clicks_from_sends])
+    %td(style='text-align:center;')
+      =value_to_percentage_string(stat.six_month_object.group_stats[:clicks_from_sends])
+  %tr
+    %td(style='width:150px;')
+      Clicks from Views
+    %td(style='text-align:center;')
+      =value_to_percentage_string(stat.one_week_object.group_stats[:clicks_from_views])
+    %td(style='text-align:center;')
+      =value_to_percentage_string(stat.six_month_object.group_stats[:clicks_from_views])
+  %tr
+    %td(style='width:150px;')
+      Actions from Clicks
+    %td(style='text-align:center;')
+      =value_to_percentage_string(stat.one_week_object.group_stats[:actions_from_clicks])
+    %td(style='text-align:center;')
+      =value_to_percentage_string(stat.six_month_object.group_stats[:actions_from_clicks])
+  %tr
+    %td(style='width:150px;')
+      Sends
+    %td(style='text-align:center;')
+      =number_with_precision(stat.one_week_object.group_stats[:average_sends], precision: 0, delimiter: ',')
+    %td(style='text-align:center;')
+      =number_with_precision(stat.six_month_object.group_stats[:average_sends], precision: 0, delimiter: ',')
+  %tr
+    %td(style='width:150px;')
+      Emails
+    %td(style='text-align:center;')
+      =number_with_precision(stat.one_week_object.group_stats[:average_emails], precision: 0, delimiter: ',')
+    %td(style='text-align:center;')
+      =number_with_precision(stat.six_month_object.group_stats[:average_emails], precision: 0, delimiter: ',')
+%div(style='margin-top:20px;margin-bottom:10px;font-size:1.1em;font-weight:bold;')
+  Push Statistics Breakdown (Previous Week)
+- stripe_counter = 0
+%table(style="table-layout:fixed;word-break:break-all;word-wrap:break-word;margin-bottom:20px;")
+  %tr
+    %th(style=cell_day)
+      Day
+    %th(style=cell_padding)
+      Push
+    %th(style=cell_padding)
+      Blast
+    %th(style=cell_padding)
+      Email Subject
+    %th(style=cell_sends)
+      Sends
+    %th(style=cell_with_percents)
+      Views/<br />Sends
+    %th(style=cell_with_percents)
+      Clicks/<br />Sends
+    %th(style=cell_with_percents)
+      Clicks/<br />Views
+    %th(style=cell_with_percents)
+      Actions/<br />Clicks
+  - stat.one_week_object.individual_stats.each_pair do |id, email|
+    - style_page_row_colour = "background-color:#{stripe_colours[stripe_counter%2]};"
+    - stripe_counter+=1
+    %tr(style=style_page_row_colour)
+      %td(style=cell_day)
+        =email[:sent_date]
+      %td(style=cell_padding)
+        =email[:push_name]
+      %td(style=cell_padding)
+        =email[:blast_name]
+      %td(style=cell_padding)
+        %a{href: "http://#{AppConstants.host}#{':3000' if AppConstants.host == 'localhost'}/admin/emails/#{id}/edit"}
+          =email[:subject]
+      %td(style=cell_sends)
+        =number_with_precision(email[:sends], precision: 0, delimiter: ',')
+      %td(style=cell_with_percents)
+        =value_to_percentage_string(email[:views_from_sends])
+      %td(style=cell_with_percents)
+        =value_to_percentage_string(email[:clicks_from_sends])
+      %td(style=cell_with_percents)
+        =value_to_percentage_string(email[:clicks_from_views])
+      %td(style=cell_with_percents)
+        =value_to_percentage_string(email[:actions_from_clicks])

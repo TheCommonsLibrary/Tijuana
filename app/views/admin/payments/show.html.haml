@@ -1,0 +1,45 @@
+- title "Config"
+- content_for :sub_nav do
+  = render "admin/shared/nav_header"
+
+.section
+  %h3 Blocked IPs
+  = form_tag(set_blocked_ips_admin_payments_path, method: :put) do
+    = label_tag('ip_addresses', 'IP addresses blocked from performing transactions:', {:class => 'tooltip', 'data-tip' => 'ip-addresses-tip'})
+    = text_area_tag 'ip_addresses', @blocked_ips.join("\n")
+    #ip-submit.clear= submit_tag 'submit'
+    #ip-addresses-tip{:style => "display:none"}
+      %p Separate IP addresses by commas, spaces or putting each on a separate line.
+      
+#fraudguard.section
+  %h3.tooltip{"data-tip" => "fraudguard-tip"} FraudGuard
+  = form_tag(set_fraud_guard_admin_payments_path, method: :put) do
+    = label_tag('fraud_guard', 'Enabled')
+    = radio_button_tag('fraud_guard', 'enabled', !Setting[:use_fraud_guard].blank?)
+    = label_tag('fraud_guard', 'Disabled')
+    = radio_button_tag('fraud_guard', 'disabled', Setting[:use_fraud_guard].blank?)
+    .clear= submit_tag 'submit'
+    #fraudguard-tip{:style => "display:none"}
+      %p FraudGuard is independent of IP blocking so IPs will be blocked regardless of whether FraudGuard is enabled or not.
+      
+#emergency-paypal.section
+  %h3.tooltip{data: {tip: "emergency-paypal-tip"}} EMERGENCY Paypal for one-off donation forms
+  = form_tag(set_emergency_paypal_admin_payments_path, method: :put) do
+    = label_tag('emergency_paypal', 'Enabled')
+    = radio_button_tag('emergency_paypal', 'enabled', !Setting[:emergency_paypal].blank?)
+    = label_tag('emergency_paypal', 'Disabled')
+    = radio_button_tag('emergency_paypal', 'disabled', Setting[:emergency_paypal].blank?)
+    .clear= submit_tag 'submit'
+    #emergency-paypal-tip{style: "display:none"}
+      %p
+        Switch all multistep donate forms to Paypal when SecurePay shits the bed again.
+        %strong This only works for one-off donations forms. Recurring donation forms are unaffected and you should consider EMERGENCY CC Logging.
+
+.section.gateway1-percentage
+  %h3 Gateway Switcher
+  = form_tag(set_gateway1_percentage_admin_payments_path, method: :put) do
+    = label_tag 'gateway1_percentage', "#{GatewaySwitcher.gateway1_mapper.name} Percentage:"
+    #{number_field_tag 'gateway1_percentage', @gateway1_percentage, :min => 0, :max => 100} %
+    #ip-submit.clear= submit_tag 'submit'
+    #ip-addresses-tip{:style => "display:none"}
+      %p Separate IP addresses by commas, spaces or putting each on a separate line.

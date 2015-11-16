@@ -1,0 +1,20 @@
+article{
+  width: auto !important;
+
+  .recommendations {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+
+    .recommendation {
+      width: 330px;
+      margin: 10px;
+      box-shadow: rgba(0,0,0,0.1) 2px 3px 6px;
+      border: 1px solid #e1e1e1;
+
+      .internal{
+        padding: 0.75em;
+      }
+    }
+  }
+}

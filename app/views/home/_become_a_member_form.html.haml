@@ -1,0 +1,11 @@
+= form_for @user, :url => {:action => 'subscribe'}, :html => {:class => "span5 offset1"}  do |f|
+  .input-append
+    .email
+      = f.label :email, :class => 'screen-reader-only'
+      = f.text_field :email, :placeholder => "you@email.com", :class => "email"
+      - if @user.errors.full_messages.any? && !@user.errors[:email].empty?
+        .error
+          .alert-block.alert-error
+            = "#{:email.to_s.humanize} #{@user.errors[:email].join(" and ")}"
+    %button.btn.btn-primary.btn-large.submit{:type => "submit", :'data-disable-with' => 'Joining...'}
+      Get Involved!

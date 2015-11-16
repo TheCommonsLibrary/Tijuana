@@ -1,0 +1,31 @@
+ul#pages-list {
+  li {
+    overflow: auto;
+    a {
+      vertical-align: top;
+    }
+    span {
+      vertical-align: top;
+    }
+  }
+}
+
+.acts-as-taggable-on {
+  display: inline-block;
+  margin-right: 10px;
+
+  .tagsinput {
+    cursor: text;
+    padding-bottom: 0;
+
+    span.tag {
+      background-color: #e3f2fe;
+      color: #2098f5;
+      border-color: #2098f5;
+
+      a {
+        color: #2098f5;
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+.admin-edit-links
+  = link_to('edit page', edit_admin_page_url(@page.id))
+  \/
+  = link_to('sequence', admin_page_sequence_url(id: @page.page_sequence.id))

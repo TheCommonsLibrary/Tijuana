@@ -1,0 +1,36 @@
+{
+  "all": [
+  <% events.each_with_index do |event, i| %> 
+    {
+      <% if (event.has_attribute?(:distance)) %>"order": <%= (i + 1).to_s %>,<% end %>
+      "name": <%= raw(event.name.to_json) %>,
+      <% if (event.host.has_attribute?(:first_name)) %>
+        "host": <%= raw(event.host.first_name.to_json) %>,
+      <% end %>
+          "geo": {
+            "lat": <%= event.address_latitude %>,
+            "lng": <%= event.address_longitude %>
+          },
+      "street": <%= raw(event.street.to_json) %>,
+      "suburb": <%= raw(event.suburb.to_json) %>,
+      "postcode": <%= raw(event.postcode.to_json) %>,
+      <% if (event.has_attribute?(:distance)) %>"distance": "<%= pretty_distance event.distance %>",<% end %>
+      <% if (event.capacity.present?) %> "capacity": "<%= event.capacity %>",<% end %>
+      "is_open": <%= event.status == "open" %>,
+      "is_ended": <%= event.status == "ended" %>,
+      "is_full": <%= event.status == "full" %>,
+      <% if (event.status == "open" && event.capacity.present? && !event.is_full?) %>"remaining": "<%= event.capacity - event.number_of_attendees %>",<% end %>
+      "phone": <%= raw(event.phone.to_json) %>,
+      "notes": <%= raw(word_truncate(event.host_notes, 90).to_json) %>,
+      "date": "<%= display_date event.date %>",
+      "status": "<%= event.status %>",
+      "path": "<%= event_path(event)%>",
+      "path_with_token": "<%= params[:t].blank? ? event_path(event) : event_path(event, :t => params[:t].gsub('.json',''))%>",
+      "token": "<%= params[:t].blank? ? '' : params[:t].gsub('.json','')%>"
+    }
+    <% if event != events.last %>
+    ,
+    <% end %>
+  <% end %>
+  ]
+}

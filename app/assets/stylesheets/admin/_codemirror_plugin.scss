@@ -1,0 +1,70 @@
+.code-mirror-plugin {
+  position: relative;
+  clear: both;
+
+  .error-help-text {
+    position: absolute;
+    top: 36px;
+    width: 90px;
+    font-size: 0.8em;
+    color: #999;
+    left: 32px;
+    text-align: right;
+    display: none;
+
+    span {
+      background-image: image-url('/common/lib/gritter/error.png');
+      background-repeat: no-repeat;
+      background-size: 12px;
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      color: transparent;
+      margin-top: -4px;
+      vertical-align: middle;
+    }
+  }
+
+  .CodeMirror {
+    border-top: 1px solid #888;
+    border-bottom: 1px solid #888;
+  }
+
+  .CodeMirror-matchingtag {
+    background: $working;
+  }
+
+  .lint-error {
+    font-family: arial;
+    font-size: 90%;
+    background: $working;
+    color: #a00;
+    padding: 2px 5px 3px;
+  }
+
+  .lint-error-icon {
+    background-image: image-url('/common/lib/gritter/error.png');
+    background-repeat: no-repeat;
+    background-size: 12px;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    margin-top: -4px;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  span.lint-error-icon {
+    margin-left: 23px;
+    margin-right: 7px;
+  }
+
+  .errors {
+    width: 15px;
+  }
+
+  .cm-s-disabled {
+    background-color: #ccc;
+    opacity: 0.5;
+  }
+}

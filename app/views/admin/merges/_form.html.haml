@@ -1,0 +1,33 @@
+- content_for :sub_nav do
+  = render "admin/shared/nav_header"
+
+.section
+  %h3 #{@merge.name ? @merge.name : 'New Merge'}
+
+  = form_for([:admin, @merge], html: {multipart: true}) do |f|
+    = form_errors(@merge)
+    = f.label(:name, {class: 'req'})
+    = f.text_field :name
+    = f.label(:join_key, {class: 'req'})
+    = f.text_field :join_key, {placeholder: "postcode.electorates.where('jurisdiction_id = 9').first.name"}
+    .info The join key is used to connect the member to the relevant merge data
+    = f.label(:join_cache_key, 'Cache Key')
+    = f.text_field :join_cache_key, {placeholder: "postcode_id"}
+    = f.label(:join_field_name, {class: 'req'})
+    = f.text_field :join_field_name
+    = f.label(:description)
+    = f.text_field :description
+    = f.label('upload_file', 'Merge File', @merge.new_record? ? {class: 'req'} : {} )
+    = file_field_tag('upload_file')
+    .buttonbar
+      = f.submit @merge.new_record? ? "Create merge" : "Save merge",  :disable_with => "Saving…"
+      = link_to "Cancel", admin_merges_path
+
+    .info 
+      You can access your merge data using the following merge tag: 
+      %code 
+        {MERGE:merge('[name]','[merge_column_name]')|This text shown when no merge record found}
+
+  - unless @merge.new_record?
+    %p.warning
+      NOTE: If you choose to upload a new merge file, you will DELETE all existing records for this merge.

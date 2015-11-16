@@ -1,0 +1,11 @@
+%br
+- content_module.default_number_of_talking_points(5)
+- content_module.talking_points.each_with_index do |talking_point, index|
+  = f.fields_for :talking_points, talking_point do |tp_fields|
+    %p.talking-point-form-heading
+      Talking point #{index + 1}
+    = form_errors(talking_point)
+    = tp_fields.label :short_description
+    = tp_fields.text_field :short_description
+    = tp_fields.label :long_description
+    = tp_fields.text_area :long_description, rows: 2

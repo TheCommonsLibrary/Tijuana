@@ -1,0 +1,16 @@
+= f.label :schedule_calls
+= f.check_box :schedule_calls
+
+#schedule
+  = f.label :schedule_start
+  = f.text_field :schedule_start, :class => 'date', :value => f.object.schedule_start.try(:strftime, "%d-%m-%Y")
+  = f.label :schedule_end
+  = f.text_field :schedule_end, :class => 'date', :value => f.object.schedule_end.try(:strftime, "%d-%m-%Y")
+  = f.label :schedule_frequency
+  = f.select :schedule_frequency, [['Every hour', '60'], ['Every 1/2 hour', '30']]
+  
+:javascript
+  $(function() {
+    $.datepicker.setDefaults({dateFormat: 'dd-mm-yy'});
+    $('#schedule .date').datepicker();
+  });

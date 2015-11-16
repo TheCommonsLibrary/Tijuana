@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+<body>
+  <%=raw @body_text[:html].html_linebreaks %>
+  
+  <% unless @footer == "none" %>
+    <hr>
+    <%= render "blast_#{@footer}_footer" %>
+  <% end %>
+  
+  <img src="http://<%= AppConstants.host %>/beacon.gif?t={TRACKING_HASH|NOT_AVAILABLE}">
+</body>
+</html>

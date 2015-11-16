@@ -1,0 +1,48 @@
+- title "Transaction ##{@transaction.id}"
+- donation = @transaction.donation
+- user = donation.user
+- offline_payment_method = ["cheque", "eftpos", "cash", "money_order", "bank_cheque"]
+- if offline_payment_method.include? donation.payment_method
+  = render :partial => 'admin/shared/transactions_table', :locals => {:transactions => [@transaction], :offline_payment => "offline_payment", :action_link => Proc.new { |donation| link_to "Edit", edit_offline_donation_admin_donation_path(donation) }}
+- elsif donation.frequency == "one_off" and @transaction.less_than_one_month
+  = render :partial => 'admin/shared/transactions_table', :locals => {:transactions => [@transaction], :oneoff_payment => "one_off", :action_link => Proc.new { |donation| link_to "Edit", edit_oneoff_donation_admin_donation_path(donation) }}
+- else
+  = render :partial => 'admin/shared/transactions_table', :locals => {:transactions => [@transaction]}
+
+.section
+  %h4 Additional Details
+  User: #{link_to "#{user.full_name} (#{user.email})", edit_admin_user_path(user)}
+- unless @transaction.successful?
+  .section
+    %h4 Failed Transaction
+    Failure reason:
+    %em= @transaction.message
+
+.section
+  %h4 Refunds
+  - if !@transaction.successful?
+    Failed transactions cannot be refunded.
+  - elsif @transaction.refund?
+    This transaction is a refund
+    of #{link_to "another transaction", admin_transaction_path(@transaction.refund_of)}.
+  - elsif @transaction.refunded?
+    This transaction was refunded
+    by #{link_to "another transaction", admin_transaction_path(@transaction.refunded_by)}
+    at #{@transaction.refunded_by.created_at}.
+  - elsif donation.payment_method == "credit_card"
+    = render :partial => "refund"
+  - else
+    Only credit card payments can be refunded through this interface.
+
+- if @transaction.donation.recurring?
+  .section
+    %h4 Recurring donation
+    = render partial: 'admin/donations/cancel', locals: {donation: @transaction.donation, redirect_to: admin_transaction_path(@transaction.donation.transactions.first)}
+
+    %h4 Other transactions for this recurring donation
+    = render :partial => 'admin/shared/transactions_table', :locals => {:transactions => donation.transactions - [@transaction], :action_link => Proc.new { |transaction| link_to "Manage", admin_transaction_path(transaction) }}
+- elsif donation.transactions.count > 1
+  .section
+    %h4 Other attempted transactions for this donation
+    = render :partial => 'admin/shared/transactions_table', :locals => {:transactions => donation.transactions - [@transaction], :action_link => Proc.new { |transaction| link_to "Manage", admin_transaction_path(transaction) }}
+

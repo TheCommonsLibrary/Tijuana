@@ -1,0 +1,13 @@
+= render :partial => "layouts/add_this_config"
+
+= render :partial => "common/analytics"
+
+= include_addthis
+= javascript_include_tag 'public'
+
+= yield :footer_js
+
+= render :partial => "common/facebook_tracking"
+= render :partial => "common/target_tracking"
+= render :partial => "common/vanity"
+= render :partial => "common/accessibility_tracking"

@@ -1,0 +1,102 @@
+- email_body_errors = ''
+= form_for([:admin, @email]) do |f|
+  - email_body_errors = f.object.errors.messages[:body].present? ? %W/#{f.object.errors.messages[:body]}/[0] : nil.to_json
+  - if @blast.has_pending_jobs? && !@email.delayed_job_id.blank?
+    %p.warning.full.top This email is scheduled for delivery. Changes made will not apply to blasts already scheduled.
+  = form_errors(@email)
+  %input{name: "blast_id", type: "hidden", value: @blast.id}
+  = f.label :name, :class => "req"
+  = f.text_field :name
+
+  .info
+    Name is for internal reference only and will not be visible to the public. Please use the format "name - subject" e.g.
+    %strong TPP Fundraiser - Two-faced on the TPP
+  #email-details-group.layout-container
+    %h3 Email details
+    .module
+      = f.label :from_name, :class => "req"
+      = f.text_field :from_name
+      = f.label :from_address, :class => "req"
+      = f.text_field :from_address
+      = f.label :reply_to_address, :class => "req"
+      = f.text_field :reply_to_address
+      = f.label :subject, :class => "req"
+      = f.text_field :subject
+      .code-mirror-plugin
+        = f.label :body, :class => "req"
+        = f.text_area :body, :size => 6
+      %p#tags_validation_result.error
+      = f.label :footer, :class => "req"
+      = f.select :footer, options_for_select([["GetUp", "getup"], ["GetUp with Crew ask", "new_getup"], ["GetUp Action For Australia", "getup_action_for_australia"], ["CommunityRun","communityrun"], ["None", "none"]], :selected => @email[:footer])
+      = f.label :get_together_id, 'Get Together ID'
+      = f.text_field :get_together_id
+      = f.label :body_is_html_document, "HTML document (for graphic emails)"
+      = f.check_box :body_is_html_document
+      = f.label :secure_links, "Recurring Donor Upgrade"
+      .donor-upgrade
+        = f.check_box :secure_links
+        %span.upgrade-notice{style: 'display:none'}='NOTE: ensure your list is for recurring donors!'
+
+    .buttonbar
+      #emailSalutationStatus Warning: You are missing a NAME token at the beginning of your email.
+      %span.status
+      = f.submit @email.new_record? ? "Create & Validate" : "Save & Validate", :name => 'submit',  :disable_with => "Please wait…", :id => 'save_and_validate'
+      = f.submit @email.new_record? ? "Create email" : "Save email", :name => 'submit',  :disable_with => "Please wait…", :id => "save_or_create_email"
+      = link_to "Cancel", admin_push_path(@blast.push)
+  - if @blast.has_pending_jobs? && !@email.delayed_job_id.blank?
+    %p.warning.full.bottom This email is scheduled for delivery. Changes made will not apply to blasts already scheduled.
+  #email-test-group.layout-container
+    %h3 Send proof
+    .module
+      %label.req{for: "test_recipients"} Recipients
+      %input#test_recipients{name: "test_recipients", type: "text"}
+    .buttonbar
+      %span.status
+      = f.submit "Send Proof", :name => 'submit', :id=>'send-test', :disable_with => "Please wait…"
+
+
+:javascript
+  $(function() {
+    codeMirrorPlugin("#email_body", #{email_body_errors});
+    validateEmailSalutation('#emailSalutationStatus');
+
+    $("#main form #email-details-group").dirty_form({
+      notify: {
+        selector: ".buttonbar .status",
+        message: "You have unsaved changes"
+      },
+      unless: {
+        action: "click",
+        selector: ".buttonbar input[type=submit]"
+      },
+      callback: function (is_dirty) {
+        if (is_dirty) {
+          $("#send-test").val("Save and Send Proof");
+        } else {
+          $("#send-test").val("Send test");
+        }
+      }
+    });
+
+    var alreadySubmittedProof = false;
+    $("#test_recipients").keypress(function(e){
+      if(!alreadySubmittedProof && e.keyCode == 13){
+        alreadySubmittedProof = true;
+        $("#send-test").click();
+        return false;
+      }
+    });
+
+    validateHtmlTags("#save_or_create_email, #send-test, #save_and_validate");
+
+    $('#email_secure_links').change(function() {
+      if (this.checked) {
+        $('.upgrade-notice').show();
+      } else {
+        $('.upgrade-notice').hide();
+      }
+    });
+    if ($('#email_secure_links').prop('checked')) {
+      $('.upgrade-notice').show();
+    }
+  });

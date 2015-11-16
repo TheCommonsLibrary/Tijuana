@@ -1,0 +1,15 @@
+#action .modal-well { display: none; }
+.modal-well { margin-bottom: 0; }
+.modal-body {
+  padding: 0;
+  max-height: 100%;
+}
+.modal-backdrop { background-color: white; }
+.modal-backdrop, .modal-backdrop.fade.in { opacity: 0.95; }
+.modal {
+  position: absolute;
+  top: 10%;
+  margin-top: 0;
+}
+.confirmation-btn { margin: 0 20px; }
+@media(min-width: 1200px) { .confirmation-btn { margin: 0 40px; } }

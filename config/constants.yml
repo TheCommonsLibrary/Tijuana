@@ -1,0 +1,104 @@
+development: &default
+  host: "localhost"
+  link_shortener_domain: ""
+  blast_job_delay: <%= 30.seconds %>
+  membership_contact_name: ""
+  financial_contact_name: ""
+  financial_contact_number: "(02) 0000 0000"
+  legal_disclosure_amount: $13,500
+  general_contact_number: "(02) 0000 0000"
+  google_maps_api_key: ""
+  paypal_post_url: "https://www.sandbox.paypal.com/cgi-bin/webscr"
+  paypal_ipn_url: "http://httpresponder.com/tijuana-paypal-debug?%{page_id}-%{module_id}-%{token}-%{vanity_identity}-%{vanity_experiments}" #goto: http://httpresponder.com/tijuana-paypal-debug?view
+  paypal_business_id: ""
+  paypal_receiver_domain: "@example.com"
+  default_cache_timeout: <%= 5.minutes %>
+  default_page_title: "My Campaign Org"
+  default_page_description: "A movement to save the world."
+  umbrella_user_email_address: "umbrella@example.com"
+  facebook_admin_id: 
+  facebook_sign_petition_module_app_id: ""
+  facebook_image_share_app_id: ""
+  facebook_sign_petition_module_app_secret: ""
+  credentials_repository: 
+  cloaked_domains: { content.example.org: {campaign: campaign-cr-content, homepage_url: "http://www.example.org"},
+                     donate.example.org: {campaign: campaign-cr-donate, homepage_url: "http://www.example.org"},
+                   }
+  tech_mail_from: '"Tijuana development" <dev@example.com>'
+  tech_mail_to: <%= %w{dev@example.com} %>
+  tech_mail_prefix: "[development] "
+  facebook_page_link: "https://www.facebook.com/_campaign-org_"
+  low_volume_enabled: false
+  user_import_csv_headers: "identifier,first_name,last_name,mobile_number,home_number,street_address,suburb,country_iso,postcode"
+  invalid_email_from_domains: ["yahoo.com", "aol.com"]
+  link_shortener_salt: ""
+  email_token_salt: ""
+  nationbuilder_sync_user_after_save: false
+  nationbuilder_admin_email: "nationbuilder-admins@example.com"
+  authorised_by: ""
+  office_address: "Level 1, 123 Fake Street, Fakesville FKV 9999"
+  secure_link_salt: ""
+  gmail_account: "info-dev"
+  volunteer_gmail_account: "info-dev"
+  govt_ips: ""
+  merge_tokens_password: ""
+  election_google_sheet: ""
+  daisy_chain_prefix: "[Daisy Chain]"
+  max_make_recurring_amount: 60
+  webhook_token: "aaa"
+  mautic_domain: "click.example.com"
+
+production:
+  <<: *default
+  host: "www.example.com"
+  redirect_domains: ["example.com", "example.org", "www.example.org", "example.to", "www.example.to"]
+  blast_job_delay: <%= 2.minutes %>
+  google_maps_api_key: ""
+  paypal_post_url: "https://www.paypal.com/cgi-bin/webscr"
+  paypal_ipn_url: "https://www.example.com/paypal/ipn/%{page_id}-%{module_id}-%{token}-%{vanity_identity}-%{vanity_experiments}"
+  paypal_business_id: ""
+  paypal_receiver_domain: "@example.com"
+  facebook_image_share_app_id: ""
+  cloaked_domains: { content.example.org: {campaign: CommunityRun_Content, homepage_url: 'http://www.example.org'},
+                     example.example.com: {campaign: CommunityRun_Content, homepage_url: 'http://www.example.org'},
+                   }
+  tech_mail_from: '"Tijuana production" <info@example.com>'
+  tech_mail_prefix: "[production] "
+  link_shortener_salt: ""
+  email_token_salt: ""
+  facebook_tracking_id: 
+  ga_wid: ""
+  nationbuilder_sync_user_after_save: false
+  secure_link_salt: ""
+  gmail_account: "info"
+  volunteer_gmail_account: "takeaction"
+  merge_tokens_password: ""
+  webhook_token: ""
+  mautic_auth: ""
+
+test:
+  <<: *default
+  host: "localhost"
+  blast_job_delay: <%= 0 %>
+  google_maps_api_key: ""
+  cloaked_domains: { content.example.org: {campaign: community-run-content, homepage_url: 'http://www.example.org'} }
+  ga_wid: "dummy"
+
+showcase:
+  <<: *default
+  host: "showcase.example.com"
+  link_shortener_domain: 'oldshowcase.example.com'
+  redirect_domains: ["oldshowcase.example.com"]
+  google_maps_api_key: ""
+  facebook_image_share_app_id: ""
+  paypal_ipn_url: "https://showcase.example.com/paypal/ipn/%{page_id}-%{module_id}-%{token}-%{vanity_identity}-%{vanity_experiments}"
+  cloaked_domains: { showcase.example.org: {campaign: campaign-cr-content, homepage_url: "http://www.example.org"},
+                     cloakeddomain.example.com: {campaign: campaign-cr-content, homepage_url: "http://www.example.org"},
+                   }
+  tech_mail_from: '"Tijuana showcase" <info@example.com>'
+  tech_mail_prefix: "[showcase] "
+  link_shortener_salt: ""
+  email_token_salt: ""
+  facebook_tracking_id: 
+  ga_wid: ""
+  nationbuilder_sync_user_after_save: false

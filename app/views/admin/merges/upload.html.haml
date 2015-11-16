@@ -1,0 +1,34 @@
+- title "Merge Data"
+- content_for :sub_nav do
+  = render "admin/shared/nav_header"
+
+.section
+  %h3 Merge Data Upload
+
+  = form_tag(upload_merge_data_admin_merges_path, method: :put, multipart: true) do
+
+    - if @errors
+      - @errors.each do |error|
+        %p.error
+          = error
+
+    = label_tag('merge_dataset_name', 'Merge Dataset Name', {class: 'req'})
+    = text_field_tag 'merge_dataset_name', params[:merge_dataset_name]
+    = label_tag('merge_join_key', 'Merge Join Key', {class: 'req'})
+    = text_field_tag 'merge_join_key', params[:merge_join_key], {placeholder: "postcode.electorates.where('jurisdiction_id = 9').first.name"}
+    = label_tag('merge_join_cache_key', 'Merge Cache Key')
+    = text_field_tag 'merge_join_cache_key', params[:merge_join_cache_key], {placeholder: "postcode_id"}
+    .info The join key is used to connect the member to the relevant merge data
+    = label_tag('merge_join_field_name', 'Merge Join Field', {class: 'req'})
+    = text_field_tag 'merge_join_field_name', params[:merge_join_field_name]
+    = label_tag('merge_description', 'Merge Description')
+    = text_field_tag 'merge_description', params[:merge_description]
+    = label_tag('upload_file', 'Merge File', {class: 'req'})
+    = file_field_tag('upload_file')
+    #merge-tokens-submit.clear= submit_tag 'submit'
+    .info 
+      You can access your merge data using the following merge tag: 
+      %code 
+        {MERGE:merge('[merge_dataset_name]', '[merge_column_name]')}
+    %p
+      NOTE: uploading to the same dataset name will DELETE all existing records for that dataset.

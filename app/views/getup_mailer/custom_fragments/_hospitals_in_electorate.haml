@@ -1,0 +1,7 @@
+- if hospital = user.merge.hospitals_in_electorates
+
+-  merge = Merge.where('name = "hospitals_in_merge"')
+- name = MergeRecord.where('merge_id = ? AND name = ? and join_id = ?', merge, 'name', user[merge.join_key])
+
+- else
+

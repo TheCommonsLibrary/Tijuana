@@ -1,0 +1,40 @@
+<% title @page.name %>
+
+<% is_single_column = @page.sidebar_content_modules.empty? %>
+<% container_class = is_single_column ? 'single-column' : (@page.has_an_ask? ? 'with-ask' : 'without-ask') %>
+
+<% unless @page.valid_header_content_modules.empty? %>
+ <div id="header-content-modules">
+   <% @page.valid_header_content_modules.each do |content_module| %>
+     <%= render :partial => content_module_partial(content_module), :locals => {:content_module => content_module, :section => :header} %>
+   <% end %>
+ </div>
+<% end %>
+<% unless @page.main_content_modules.empty? %>
+<div id="main-content-modules" class="<%= is_single_column ? '' : 'left' %>">
+  <div class="inner">
+    <%  @valid_main_content_modules.each do |content_module| %>
+      <%= render :partial => content_module_partial(content_module), :locals => {:content_module => content_module, :section=>:main} %>
+    <% end %>
+  </div>
+</div><!-- // #main-content-modules -->
+<% end %>
+<% unless is_single_column %>
+  <div id="sidebar-content-modules">
+    <div class="inner">
+      <%  @page.sidebar_content_modules.select(&:valid?).each do |content_module| %>
+          <% if @email.nil? or content_module.class.name != "DirectLandingHtmlModule" %>
+              <div class="module <%= content_module.class.name.underscore %>">
+                <%= render :partial => content_module_partial(content_module), :locals => {:content_module => content_module, :section=>:sidebar} %>
+                  <div class="content-end"></div>
+              </div>
+           <% end %>
+      <% end %>
+    </div>
+  </div><!-- // #sidebar-content-modules -->
+<% end %>
+  
+  <div class="content-end"></div>
+</div></div>
+
+<%= include_facebook_like_from_theme(@page.page_sequence.theme, 'dark', 'standard') %>

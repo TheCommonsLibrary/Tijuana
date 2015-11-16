@@ -1,0 +1,24 @@
+.row
+  .col-sm-6
+    %h1
+      = state
+  .col-sm-6
+    .pull-right-768
+      %table.table.key.bordered-table
+        %tbody
+          %tr
+            %td.score.good-bad
+              %i.icon-star.good
+              %span.description
+                Good Policy
+
+            %td.score.unclear(rowspan=2)
+              %p.description
+                %i.icon-circle-blank
+                Unclear
+              %small.elaboration We couldn't find a clear policy on our benchmarks
+          %tr
+            %td.score
+              %i.icon-star.bad
+              %span.description
+                Bad Policy

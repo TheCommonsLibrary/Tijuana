@@ -1,0 +1,22 @@
+.container.top-block
+  - if @page.valid_header_content_modules.present?
+    - @page.valid_header_content_modules.each do |content_module|
+      = render :partial => content_module_partial(content_module), :locals => {:content_module => content_module, :section => :header}
+  #action
+    - @page.sidebar_content_modules.select(&:valid?).each do |content_module|
+      - if @email.nil? || content_module.class.name != "DirectLandingHtmlModule"
+        = render :partial => content_module_partial(content_module), :locals => {:content_module => content_module, :section => :sidebar}
+
+  %section#our-pledge
+    .pledge-title
+      .pledge-line
+      %h1="Our Pledge:"
+      .pledge-line
+
+    - if @page.valid_aside_content_modules.present?
+      %aside
+        = render partial: 'content_module', collection: @valid_aside_content_modules, locals: {email: @email}
+      
+    - @page.main_content_modules.select(&:valid?).each_with_index do |content_module, index|
+      %div{class: "pledge-container #{index.odd? ? 'odd' : ''}"}
+        = render :partial => content_module_partial(content_module), :locals => {:content_module => content_module, :section => :main_content}

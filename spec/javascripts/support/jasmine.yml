@@ -1,0 +1,5 @@
+helpers:
+  - "helpers/**/*.{js.coffee,js,coffee}"
+
+spec_files:
+  - "**/*[Ss]pec.{js.coffee,js,coffee}"

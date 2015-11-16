@@ -1,0 +1,31 @@
+<% title "Flagged Donations" %>
+
+<div class="searchbar">
+  <%= form_tag(flagged_admin_donations_path, :method => :get) do %>
+    <p>
+        <%= select_tag :search, options_for_select([["All", ''],["Assigned", :assigned] , ["Unassigned", :unassigned]], params[:search]) %>
+        <%= submit_tag "Filter" %>
+    </p>
+  <% end %>
+</div>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#recurring-donation">Recurring Donations</a></li>
+    <li><a href="#new-donations">New Donations</a></li>
+  </ul>
+
+  <div id="recurring-donation">
+    <%= render :partial => "flagged_recurring_donations" %>
+  </div>
+
+  <div id="new-donations">
+    <%= render :partial => "failed_new_donations" %>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $("#tabs").tabs({selected: <%= params['selected'].to_i %>});
+    });
+</script>

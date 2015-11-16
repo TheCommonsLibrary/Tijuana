@@ -1,0 +1,167 @@
+= form_for @event, :html => {:id => "event-form"} do |f|
+  = hidden_field_tag :t, params[:t] # tracking token
+  .well
+    = form_errors(@event)
+    = form_errors(@event.host) unless @event.host.nil?
+    = hidden_field_tag :get_together_id, @event.get_together.id
+    #errors{:style => "display: none;"}
+    #step-1-content
+      %fieldset.event-location
+        %legend Event location
+        #address-container
+          .new-location
+            != @event.get_together.event_new_location_html
+          .left.event-decorate-text
+            %b= f.label :address, 'Location', :class => "req"
+            = f.text_area :address, :rows => 3, :cols => 40, :class => "required", :placeholder => "E.g. 3/1 Flinders St Melbourne VIC 3000 or a landmark name"
+          #lookup-button-location
+        = f.hidden_field :suburb_latitude
+        = f.hidden_field :suburb_longitude
+        = f.hidden_field :address_latitude
+        = f.hidden_field :address_longitude
+        = f.hidden_field :postcode
+        = f.hidden_field :street
+        = f.hidden_field :suburb
+        #event-location-text
+        .clear
+        .buttons
+          #verify-button-location.right
+        .clearfix
+    #step-2-content
+      %fieldset.event-details
+        .left
+          .event-time-date-instructions
+            =raw @event.get_together.event_time_date_instructions
+          %h3 Event Date
+          - if @event.date
+            = f.hidden_field :date, :value => @event.date.strftime("%d-%b-%Y"), :class => "required"
+          - else
+            = f.hidden_field :date, :value => @event.get_together.recommended_date.blank? ? nil : l(@event.get_together.recommended_date, format: "%d-%b-%Y"), :class => "required"
+          #event-calendar
+        .right
+          %h3 Event details
+          %ul#event-details.event-decorate-text
+            %li
+              - if can?(:update_host, @event)
+                = label :host, :email, "Your email", :class => "req"
+                = text_field :host, :email, {:placeholder => "Host email address", :class => "required email"}
+              - else
+                #host_email= @host.email    
+
+            %li
+              .event-form-name
+              %label.tooltipped.event-label-with-tooltip{:for => 'event_name', :rel => 'tooltip', 'data-placement' => 'right', 'data-original-title' => @event.get_together.event_name_tooltip_html}
+                Event name*
+                %i.icon-info-sign
+              = f.text_field :name, :placeholder => "Event name", :class => "required"
+            %li
+              = f.label :time, "Time", :class => "req"
+              - if @event.time
+                = f.hidden_field :time, :value => @event.time, :class => "required"
+                = select_tag :event_hour, options_for_select(GetTogether.hour_select_options, event_hour_formatted(@event.time)), :class => "time"
+                = select_tag :event_minute, options_for_select(GetTogether.minute_select_options, event_minute_formatted(@event.time)), :class => "time"
+              - else
+                = f.hidden_field :time, :value => @event.get_together.recommended_time || 0, :class => "required"
+                = select_tag :event_hour, options_for_select(GetTogether.hour_select_options, event_hour_formatted(@event.get_together.recommended_time)), :class => "time"
+                = select_tag :event_minute, options_for_select(GetTogether.minute_select_options, event_minute_formatted(@event.get_together.recommended_time)), :class => "time"
+            %li
+              = label :event, :phone, "Contact phone number", :class => "req"
+              = f.text_field :phone, :placeholder => "Contact phone number", :class => "required"
+            %li
+              -if @event.get_together.capacity_enabled?
+                = label :event, :capacity, "Capacity", :class => "req"
+                - if @event.capacity.present?
+                  = f.text_field :capacity, :placeholder => "Capacity", :class => "required"
+                - else
+                  = f.text_field :capacity, :placeholder => "Capacity", :class => "required", :value => 10
+        .clear
+        .host-notes
+          %label.tooltipped.event-label-with-tooltip{:for => 'event_host_notes', :rel => 'tooltip', 'data-placement' => 'right', 'data-original-title' => @event.get_together.event_host_notes_tooltip_html}
+            Details of your event
+            %i.icon-info-sign
+          = f.text_area :host_notes, :rows => 5, :class => "ignore", :placeholder => "These are the details GetUp members will see about your event before they sign up."
+        .buttons
+          .left
+            %input.btn.btn-primary.btn-large.back-button{:type => "button", :value => "<< Previous"}/
+          .right
+            %input#go-to-step-3.btn.btn-primary.btn-large{:type => "button", :value => "Next >>"}/
+          .clearfix
+    #step-3-content
+      %span.event-decorate-text Please review that the following information about your event is correct
+      .event-summary
+        .address-summary
+          %span Address:
+          %span#confirm-address This should be the real address
+        .details-summary
+          .left
+            %span Date:
+            %span#confirm-date Real/date/2011
+            %br
+            %span Host:
+            %span#confirm-email Im@the.host
+            %br
+            %span Event name:
+            %span#confirm-name Im@the.host
+          .right
+            %span Time:
+            %span#confirm-time REAL:TIMEam
+            %br
+            %span Contact phone number:
+            %span#confirm-phone 6666 666 666
+            %br
+            - if @event.get_together.capacity_enabled?
+              %span Capacity:
+              %span#confirm-capacity Infinity
+          .clear
+          .host-notes-summary
+            %span Host Notes:
+            %span#confirm-notes These are my awesome notes
+      .confirm-details
+        != @event.get_together.event_confirmation_html
+      .buttons
+        .left
+          %input.btn.btn-primary.btn-large.back-button{:type => "button", :value => "<< Previous"}/
+        .right
+          = f.submit :class => "btn btn-primary btn-large"
+        .clearfix
+:javascript
+  $(document).ready(function (){
+    $('.tooltipped').tooltip();
+    var eventFromDate = '#{l([@event.get_together.from_date, Date.today].max, format: "%d-%b-%Y")}';
+    var eventToDate = '#{l(@event.get_together.to_date, format: "%d-%b-%Y")}';
+    $.datepicker.setDefaults({dateFormat:'dd-M-yy'});
+    $("#event-calendar").datepicker({
+      minDate:eventFromDate,
+      maxDate:eventToDate,
+      defaultDate:$('#event_date').val(),
+      onSelect:function (dateText, inst) {
+        $('#event_date').val(dateText);
+        $('#event_date').valid();
+      }
+    });
+  });
+:javascript
+  $(function () {
+    setupTabs('#creation-steps');
+    setupHourOptions({
+      inputSelector:'#event_hour',
+      fromHour: #{event_hour_formatted(@event.get_together.from_time).to_i},
+      toHour: #{event_hour_formatted(@event.get_together.to_time).to_i},
+      hasTimeRestriction: #{@event.get_together.has_time_restriction?}
+    });
+    $('.toc-link').click(function () {
+      $("#toc-text").dialog({
+        modal:true
+      });
+    });
+
+    $('#event_hour, #event_minute').change(function () {
+      $('#event_time').val($('#event_hour').val() + $('#event_minute').val());
+    });
+    $('#go-to-step-3').click(function () {
+      $('#creation-steps').tabs('select', 2);
+    });
+    $('.back-button').click(function () {
+      $('#creation-steps').tabs('select', $('#creation-steps').tabs('option', 'selected') - 1);
+    });
+  });

@@ -1,0 +1,17 @@
+%fieldset.postcode-within
+  = f.select(:postcode_ids, postcode_options, {}, {:multiple => true, :class => "required-if-present"})
+  .within-km
+    %span And optionally within
+    = f.text_field :within, :value => rule.within
+    %strong km
+  .tooltip.postcode-tip{"data-tip" => "postcode-tip"}
+.or-connector OR
+.unknown-postcode
+  %span Unknown postcode
+  = f.check_box :no_postcode, checked: rule.no_postcode?
+.tooltip.unknown-postcode-tip{"data-tip" => "unknown-postcode-tip"}
+
+= javascript_tag do
+  $("#rules_postcode_within_rule_postcode_ids").val(#{(rule.postcode_ids || []).map(&:to_i)}).select2({
+  placeholder: "Enter postcodes"
+  });

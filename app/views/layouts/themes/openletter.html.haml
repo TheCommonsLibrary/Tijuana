@@ -1,0 +1,6 @@
+= render partial: "layouts/themes/openletter_head" 
+%body{:id => @body_id, :class => @body_class}
+  = render partial: "layouts/themes/openletter_header"  
+  = yield
+  = render partial: "layouts/themes/openletter_footer"
+  = render partial: "layouts/themes/openletter_footer_js"

@@ -1,0 +1,692 @@
+.multistep-required::after {
+  content: "*";
+}
+
+// Multistep Styles
+// ----------------------
+
+@mixin donateModulePadding($module-padding: 20px) {
+  #action{
+    .donate-well {
+      .top-section {
+        h2 { padding: 20px ($module-padding) 0 ($module-padding); }
+        .intro { padding: 0 ($module-padding); }
+      }
+      form { padding: 0 $module-padding; }
+      .bottom-section { padding: 0 $module-padding; }
+      .credit-secure-icon { margin-right: $module-padding; }
+    }
+  }
+}
+
+@include donateModulePadding();
+@media (min-width: $break-xl-min) { @include donateModulePadding(40px); }
+@media (max-width: $break-xs-max) { @include donateModulePadding(20px); }
+
+// General typography and spacing
+#action {
+  .donate-well {
+    padding: 0;
+    
+    h2 {
+      text-align: center;
+      font-style: normal;
+    }
+    
+    h4 {
+      font-style: normal;
+    }
+    
+    label {
+      padding: 0 0 2px 0;
+    }
+    
+    * {
+      margin-bottom: 0;
+    }
+    
+    input, select, .btn, table, p, ul, h2, .alert-error {
+      margin-bottom: 20px;
+      &.parsley-error {
+        margin-bottom: 0;
+      }
+    }
+    
+    input:not([type="checkbox"]) {
+      width: 100%;
+      padding: 0 0.5em;
+      height: 2.5em;
+
+      &.input-mini {
+        width: 60px;
+      }
+    }
+
+    .top-section {
+      padding-bottom: 10px;
+      margin-bottom: 50px;
+      margin-top: -10px;
+      background-color: #2D2D2D;
+      .intro {
+        line-height: 1.4;
+        color: #D6D6D6;
+        margin-bottom: 30px;
+      }
+      .credit-secure-icon {
+        margin-bottom: -40px;
+        text-align: right;
+      }
+    }
+    form {
+      box-sizing: border-box;
+      .alert-error {
+        background: #BC0018;
+        color: white;
+        text-shadow: none;
+        font-weight: normal;
+        a { color: white; text-decoration: underline; }
+      }
+      .btn-primary {
+        text-decoration: none !important;
+        &:hover {
+          -webkit-box-shadow: none;
+          -moz-box-shadow: none;
+          box-shadow: none;
+        }
+      }
+    }
+    .bottom-section {
+      text-align: center;
+      p { font-size: 0.8em; }
+      .donate-cheque-link { font-size: 0.9em; }
+    }
+  }
+}
+
+// Screen Progress
+.screen-nav {
+  text-align: center;
+  margin: 0;
+  height: 100px;
+  display: none;
+  
+  .js & { display: block; }
+  @media (max-width: $break-sm-max) { display: none !important; }
+
+  li {
+    list-style: none;
+    display: inline;
+    margin: 0 52px 0;
+    @media (max-width: $break-md-max) { margin: 0 25px 0; }
+    position: relative;
+    z-index: 2;
+    &:first-child { margin-left: 0; }
+    &:last-child { margin-right: 0; }
+    a {
+      color: #707070;
+      text-decoration: none !important;
+      text-transform: uppercase;
+      position: relative;
+      font-size: 1em;
+      padding: 0 0 30px;
+
+      &:after {
+        font-size: 1.6em;
+        content: '2';
+        color: white;
+        width: 45px;
+        height: 45px;
+        background: #707070;
+        border-radius: 25px;
+        display: block;
+        position: absolute;
+        left: 50%;
+        bottom: -25px;
+        margin-left: -22px;
+        line-height: 45px;
+        z-index: 1;
+      }
+
+      // active
+      &.active {
+        color: white;
+        &:after {
+          background: #51AFF7;
+          border-color: white;
+        }
+      }
+      // error
+      &.error:after {
+        background: #BC0018;
+        border-color: lighten(#BC0018, 10%);
+      }
+    }
+    &:first-child {
+      a:after{
+        content: '1';
+      }
+    }
+    &:last-child {
+      a:after{
+        content: '3';
+      }
+    }
+
+    // borders
+    &.middle-tab {
+      z-index: 1;
+      &:before,
+      &:after {
+        content: '';
+        height: 1px;
+        width: 135px;
+        @media (max-width: $break-md-max) {
+          width: 95px;
+        }
+        position: absolute;
+        background: lighten(#363636, 20%);
+        bottom: -32px;
+      }
+      &:before {
+        margin-right: 11px;
+        right: 50%;
+      }
+      &:after {
+        margin-left: 18px;
+        left: 50%;
+      }
+    }
+  }
+}
+
+// Screens
+.screens {
+  .screen-wrap {
+    width: 100%;
+    .screen {
+    }
+    .screen-content {
+      position: relative;
+      overflow: hidden;
+    }
+    .alert-error {
+      padding: 5px 10px;
+      clear: both;
+      font-size: 0.8em;
+    }
+    .btn-next {
+      display: none;
+    }
+  }
+
+  .js & {
+    .screen-wrap {
+      .screen {
+        &:first-child {
+          display: block;
+        }
+        &.hide-in-multistep{
+          display: none;
+        }
+        .btn-next {
+          display: block;
+        }
+      }
+    }
+  }
+
+  @media (max-width: $break-sm-max) {
+    .article & {
+      .screen-content {
+        width: 100%;
+      }
+      .screen-wrap {
+        width: 100%;
+        display: block;
+
+        .screen {
+          width: 100%;
+          display: block;
+          clear: both;
+          float: left;
+          &.hide-in-multistep {
+            display: block;
+          }
+          .btn-next {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+#step-1-amount {
+  .donation {
+    overflow: hidden;
+    margin-bottom: 20px;
+    .btn {
+      display: none;
+      font-weight: 500;
+      margin: 0 2% 0.35em 0;
+      outline: none;
+      float: left;
+      padding: 0px 0px;
+      font-size: 1.4em;
+      height: 55px;
+      width: 23%;
+      &:nth-child(4) {
+        margin-right: 0;
+      }
+      @media (max-width: $break-md-max){
+        width: 31%;
+        height: 50px;
+        font-size: 1.25em;
+        &:nth-child(4) {
+          margin-right: 2%;
+        }
+      }
+    }
+  
+    .input-prepend.other-prepend {
+      display: inline-block;
+      width: 23%;
+      @media (max-width: $break-md-max) {
+        width: 31%;
+      }
+    
+      .add-on {
+        vertical-align: middle;
+        height: 40px;
+        font-size: 18px;
+        box-sizing: border-box;
+        padding-top: 8px;
+        width: 30%;
+        margin: 0;
+        border-color: rgb(204, 204, 204) !important;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        color: #363636;
+      }
+
+      input {
+        display: inline-block;
+        float: none;
+        width: 70%;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        padding: 0 3px;
+        line-height: 2.1;
+        margin-bottom: 0;
+        font-size: 16px;
+        height: 40px;
+      }
+    
+      .js & {
+        .add-on {
+          height: 55px;
+          font-size: 24px;
+          padding-top: 16px;
+          @media (max-width: $break-md-max){
+            padding-top: 14px;
+            font-size: 20px;
+            height: 50px;
+          }
+          &.active {
+            background-color: #51aff7;
+            border-color: #51aff7 !important;
+            color: white;
+          }
+        }
+      
+        input {
+          height: 55px;
+          font-size: 20px !important;
+          @media (max-width: $break-md-max){
+            height: 50px;
+            font-size: 16px !important;
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .amount-fields {
+    input, label {
+      float: left;
+      clear: none;
+    }
+    label {
+      margin-right: 20px;
+      margin-left: 5px;
+      input {
+        height: auto;
+        margin-right: 8px;
+      }
+    }
+  }
+  .js & {
+    .other-wrap {
+      display: none;
+    }
+    .donation .btn {
+      display: inline-block;
+    }
+    .donation .amount-fields {
+      display: none;
+    }
+    .other-radio {
+      display: none;
+    }
+  }
+  .btn-and-frequency-container{
+    .frequency-option {
+      width: auto;
+      margin-right: 0.5em;
+    }
+    .frequency-label {
+      text-align: center;
+      background-color: #2D2D2D;
+      font-size: 1.1em;
+      padding: 10px 0 10px 10px;
+      margin: 10px 0;
+    }
+    .make-recurring-checkbox {
+      text-transform: none;
+      input[type=checkbox] {
+        float: none;
+        font-size: 180%;
+        display: inline;
+        margin-left: 8px;
+        margin-bottom: 5px;
+      }
+    }
+    .half-width {
+      width: 50%;
+    }
+  }
+}
+
+
+#step-2-name {
+  .email-wrap {
+    overflow: hidden;
+    position: relative;
+    &:after {
+      background: image-url('public/donation-loader.png') no-repeat top left;
+      display: none;
+      content: '';
+      width: 20px;
+      height: 20px;
+      z-index: 1;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      -webkit-animation-name: loader;
+      -webkit-animation-duration: 2s;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-timing-function: linear;
+      -webkit-transform-origin: 55% 50%;
+
+      -moz-animation-name: loader;
+      -moz-animation-duration: 2s;
+      -moz-animation-iteration-count: infinite;
+      -moz-animation-timing-function: linear;
+      -moz-transform-origin: 55% 50%;
+
+      -ms-animation-name: loader;
+      -ms-animation-duration: 2s;
+      -ms-animation-iteration-count: infinite;
+      -ms-animation-timing-function: linear;
+      -ms-transform-origin: 55% 50%;
+
+      animation-name: loader;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      transform-origin: 55% 50%;
+    }
+    &.loading:after {
+      display: block;
+    }
+  }
+  #ask-specific-user-details {
+    margin-top: -15px;
+    .user-lookup-message {
+      padding-bottom: 25px;
+    }
+    .user-field-container {
+      clear: both;
+      float: left;
+      width: 100%;
+    }
+    #become-member-checkbox {
+      margin-left: 0;
+      margin-right: 6px;
+    }
+  }
+}
+
+#step-3-payment {
+  label[for=donation_card_number], label[for=donation_name_on_card] {
+    display: none;
+  }
+  .ie & {
+    label[for=donation_card_number], label[for=donation_name_on_card] {
+      display: block;
+    }
+  }
+  
+  .card-types {
+    position: relative;
+    bottom: 10px;
+    img {
+      max-width: 30px;
+      height: auto;
+      &.inactive {
+        opacity: 0.2;
+      }
+    }
+  }
+  .cvc {
+    label {
+      width: 196px;
+    }
+    input {
+      width: 70px;
+    }
+  }
+  .paypal-donation {
+    float: right;
+    font-size: 0.9em;
+  }
+  .processing {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(54, 54, 54, 0.45);
+    top: 0;
+    left: 0;
+    display: none;
+  }
+}
+
+.quick-donate-disabled {
+  .quick-donate-intro, .not-you-button, .not-you {
+    display: none;
+  }
+}
+
+.quick-donate-enabled {
+  .screen-nav {
+    display: none;
+  }
+  .screens {
+    margin-bottom: -25px;
+    .screen-wrap .screen-content .btn-next {
+      display: none;
+    }
+    .screen {
+      margin-bottom: 20px;
+    }
+  }
+  #step-3-payment {
+    display: block;
+    h4, input, label, img, select, a {
+      display: none !important;
+    }
+  }
+  .quick-donate-intro {
+    font-size: 0.9em !important;
+    display: block;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .donate-cheque-link, #step-2-name, .not-you {
+    display: none;
+  }
+  .no-js & {
+    .btn-payment {
+      margin-top: 10px !important;
+    }
+  }
+  .js & {
+    .not-you {
+      margin: 5px 0 25px 0 !important;
+      font-size: 0.9em;
+      display: block;
+      text-align: right;
+    }
+    .not-you-button {
+      display: none;
+    }
+  }
+  #quick-donate {
+    border: 1px solid #616162;
+    border-radius: 5px;
+    position: relative;
+    margin-top: 20px;
+    padding: 15px;
+    h4 {
+      background-color: #363636;
+      display: inline-block;
+      position: absolute;
+      top: -26px;
+      padding: 5px;
+      color: #616162;
+      font-size: 1em;
+    }
+    .name {
+      margin: 5px 0 0 0;
+    }
+    .card {
+      margin: 0;
+    }
+  }
+}
+
+/* Loading spinner icon (throbber) */
+
+@-webkit-keyframes loader {
+  from {
+    -webkit-transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg)
+  }
+}
+@-moz-keyframes loader {
+  from {
+    -webkit-transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg)
+  }
+}
+
+@-ms-keyframes loader {
+  from {
+    -webkit-transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg)
+  }
+}
+@keyframes loader {
+  from {
+    -webkit-transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg)
+  }
+}
+
+// Tooltips
+// ----------------
+
+label.cvv {
+  position: relative;
+  height: 100%;
+  cursor: pointer;
+
+  &:before,
+  &:after {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+  }
+
+  &:before {
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 7px solid #285679;
+    content: '';
+    top: 0;
+    left: 50%;
+    margin-left: -3.25px;
+    z-index: 10001;
+    bottom: -10px;
+  }
+  &:after {
+    content: '';
+    border-radius: 3px;
+    font-size: 0.95em;
+    z-index: 10000;
+    left: 50%;
+    bottom: 100%;
+    margin-left: -20px;
+    margin-top: 0;
+    width: 236px;
+    height: 140px;
+    display: block;
+    background: image-url('public/cvc-info.main.jpg') #285679 no-repeat center;
+  }
+  &:hover:before,
+  &:hover:after {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &[data-card="american_express"] {
+    &:after {
+      background: image-url('public/cvc-info.amex.jpg') #285679 no-repeat center;
+    }
+  }
+
+}
+
+.emergency-paypal-enabled {
+  ul.screen-nav { display: none; }
+  #step-1-amount .btn-next { display: none; }
+  #step-2-name { display: none; }
+  #step-3-payment { display: none; }
+}

@@ -1,0 +1,16 @@
+<% if @images.size > 0 %>
+<p>Last <%= pluralize(@images.size, 'image') %> uploaded:</p>
+<ul class="image-gallery">
+  <% for image in @images %>
+    <li>
+    <% if image && image.attachment? %>
+     <%= link_to(image_tag(substitute_real_cdn_url(token_image_url(image, :thumbnail))), admin_image_path(image)) %>
+    <% elsif image %>
+      [Image missing]
+    <% end %>
+    </li>
+  <% end %>
+</ul>
+<% else %>
+<p>No images have been uploaded yet.</p>
+<% end %>

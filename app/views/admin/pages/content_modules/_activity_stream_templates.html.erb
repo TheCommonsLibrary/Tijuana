@@ -1,0 +1,8 @@
+<%= f.label :public_activity_stream_template, 'Public activity stream', :class => "req" %>
+<%= f.text_field :public_activity_stream_template %>
+<div class="info">
+  Used on the homepage. [Text in square brackets] will become a link back to the start of this page sequence.
+</div>
+<%= render :layout => "admin/shared/token_replacement_help" do %>
+  <br/>{NAME|Someone} will be replaced with the user's first name or 'Someone' if we do not know their name.
+<% end %>

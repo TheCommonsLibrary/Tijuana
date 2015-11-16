@@ -1,0 +1,3 @@
+<%= f.select :campaigns, options_for_select(Campaign.select_options.sort, rule.campaigns), {}, {:multiple => true, :class => "required-if-present"} %>
+<div class="tooltip list-cutter-tip" data-tip="campaign-tip">
+</div>

@@ -1,0 +1,16 @@
+Dear Friend,
+
+The event "<%= @event.name %>" you had registered to go to has changed.
+Please note the new details:
+
+EVENT NAME:    <%= @event.name %>
+DATE: **<%= I18n.localize(@event.date).to_date.to_s(:long) %>**
+TIME: **<%= @event.time_str %>**
+EVENT ADDRESS: <%= @event.address %>
+NOTES: <%= @event.host_notes %>
+
+You can view all the details of your event on the following link: <%= event_url(@event.friendly_id) %>. 
+
+
+Thanks for all you do,
+The GetUp! team

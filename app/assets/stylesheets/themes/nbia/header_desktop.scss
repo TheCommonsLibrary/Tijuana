@@ -1,0 +1,14 @@
+@media (min-width: 768px) {
+  #brandbar {
+    #tinybrand {
+      font-size: 2em;
+      &:hover {
+        color: $black;
+        text-decoration: none;
+      }
+      img {
+        width: 140px;
+      }
+    }
+  }
+}

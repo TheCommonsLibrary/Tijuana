@@ -1,0 +1,13 @@
+- title "Unsubscribe"
+%article
+  .container
+    %section
+      %article
+        #unsubscribe
+          %h1
+            Unsubscribe
+            = @community_run ? 'from CommunityRun' : ''
+          %hr
+          %p
+            = @msg
+

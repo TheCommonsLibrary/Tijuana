@@ -1,0 +1,31 @@
+%header
+  .container
+    %section
+      .verbose
+        %a{:href => "http://www.communityrun.org"}
+          .logo
+      #brandbar.curt
+        .container
+          %section
+            %a#tinybrand{:href => "http://www.communityrun.org"}
+              .logo
+      %nav
+        .container
+          %section
+            .navbar
+              .navbar-inner
+                .container
+                  %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+                    %span.icon-bar
+                    %span.icon-bar
+                    %span.icon-bar
+                  .nav-collapse.collapse
+                    %ul.nav.pull-right
+                      %li
+                        %a#nav-start-petition{:href => "http://www.communityrun.org/petition/new"} Start a campaign
+                      %li
+                        %a#nav-login{:href => "http://www.communityrun.org/users/sign_in"} Log in
+
+
+= render :partial => "common/flash_notifications"
+= render :partial => "common/no_script"

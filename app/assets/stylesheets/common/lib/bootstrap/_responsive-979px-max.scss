@@ -1,0 +1,15 @@
+//
+// Responsive: Tablet to desktop
+// --------------------------------------------------
+
+@media (max-width: 979px) {
+
+  // Short Footer Menu
+  footer .menu .nav li {
+    display:none
+    &.nav-header {
+      display:block;
+    }
+  } 
+
+}

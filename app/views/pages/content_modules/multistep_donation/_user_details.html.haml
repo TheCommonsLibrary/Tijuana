@@ -1,0 +1,10 @@
+= render :partial => "pages/user_details", locals: {:user_details_requirements => @page}
+
+- if content_module.has_custom? :form_fields
+  .custom-fields.custom-fields-above
+    = fields_for content_module.donation do |f|
+      = render_custom_form_fields f, content_module.custom(:form_fields), content_module
+  .clearfix
+
+.to-payment-options
+  = button_tag("Next &rsaquo;".html_safe, "class" => "btn btn-#{button_style} btn-next btn-large btn-full", 'data-step' => '3')

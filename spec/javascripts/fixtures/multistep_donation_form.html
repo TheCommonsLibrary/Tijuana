@@ -1,0 +1,47 @@
+<style>
+  .processing {
+    display: none;
+  }
+</style>
+
+<ul class="screen-nav">
+  <li class="js-tab"><a class="active" data-step="1" href="#step-1-amount">Amount</a></li>
+  <li class="js-tab middle-tab"><a data-step="2" href="#step-2-name">Name</a></li>
+  <li class="js-tab"><a data-step="3" href="#step-3-payment">Payment</a></li>
+</ul>
+
+<form class="auto-submittable" id="action-form">
+  <div class="screens">
+    <div class="screen amount-screen active" data-step="1" id="step-1-amount">
+      <div class="donation">
+        <div class="button-amount-fields clearfix">
+          <button class="btn" data-amount="100" name="button" type="button" value="100*">$100</button>
+          <div class="input-prepend other-prepend">
+            <label class="add-on" for="donation_custom_amount_in_dollars">$</label>
+            <input class="otheramount js-amount-other payment-input" data-amount="other" placeholder="Other" type="tel" name="donation[custom_amount_in_dollars]" id="donation_custom_amount_in_dollars">
+          </div>
+        </div>
+        <div class="amount-fields clearfix">
+          <label>$100 <input class="payment-input" data-amount="100" name="donation[amount_in_dollars]" type="radio" value="100.0"></label>
+          <label>Other Amount <input class="payment-input other-radio" data-amount="other" name="donation[amount_in_dollars]" type="radio" value="other"></label>
+        </div>
+      </div>
+      <a class="btn btn-primary btn-next btn-amounts" data-step="2" href="#step-2-name">Next ›</a>
+    </div>
+
+    <div class="screen hide-in-multistep" data-step="2">
+      <input id="user_email" name="user[email]" placeholder="you@email.com" type="email" autocomplete="off">
+    </div>
+
+    <div class="screen hide-in-multistep" data-step="3">
+      <div class="card-types">
+        <img class="visa inactive" src="/assets/public/card-types.visa.png">
+      </div>
+      <input id="donation_card_number" name="donation[card_number]" placeholder="Card Number" size="30" type="tel">
+      <label class="cvv" for="donation_card_cvv">Security Code</label>
+      <input id="donation_card_cvv" maxlength="4" name="donation[card_cvv]" placeholder="###" size="4" type="tel">
+      <div class="processing"></div>
+      <button class="btn btn-primary btn-large btn-full btn-payment" data-disable-with="Please wait..." name="button" type="submit">DONATE $10</button>
+    </div>
+  </div>
+</form>

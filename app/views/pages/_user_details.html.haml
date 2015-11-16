@@ -1,0 +1,37 @@
+- if defined?(content_module) && content_module.show_steps?
+  %label.mp-steps{:for => 'user_email'}
+    %span.badge.step-number-label
+      Step 1
+    - unless @secure_user
+      Email Address
+- else
+  - unless @secure_user
+    %label.multistep-required{:for => 'user_email'}<
+      Email Address
+
+- if @secure_user
+  = hidden_field_tag :use_cookie, 1
+  %p.one-click-sign
+    %i.icon-check{:"aria-hidden" => "true"}
+    %span.name=@secure_user.name
+    %small
+      %a{href: '#', class: 'not-you-user'} Not you?
+    :javascript
+      $(function() {
+        notYou('.not-you-user', "#{not_you_users_path}", "#{@page.id}", "#{params[:t]}");
+      });
+
+- else
+  = fields_for :user do |f|
+    .email-wrap
+      - user_email = params[:user][:email] if params[:user]
+      = f.text_field :email, :placeholder => "you@email.com", :value => @clear_user_details_form ? nil : user_email, :type => 'email'
+  #ask-specific-user-details{@user.persisted? ? {:class => 'user-found'} : {}}
+    = field_errors(@user, :email)
+    .user-lookup-message{valid_email_format?(@user.email) ? {} : {style: 'display:none'}}
+      Thanks for entering your email.
+    = render :partial => "pages/ask_specific_user_details", locals: {user_details_requirements: user_details_requirements}
+    = render :partial => "pages/subscription_checkbox"
+
+    -# this ensures #ask-specific-user-details contains all floated inputs
+    %br

@@ -1,0 +1,18 @@
+<% parties = @electorate.issue && @electorate.issue.party_order.split(',') %>
+
+<% if !@embed.present? && parties.present? %>
+    <%= render 'header', electorate: @electorate, parties: parties %>
+<% end %>
+
+
+<% if parties.present? && !@senate_only %>
+  <%= render 'ballots', electorate: @electorate, parties: parties %>
+<% end %>
+
+<% if @embed.present? && @senate_only %>
+<%= render 'senate', electorate: @electorate %>
+<% end %>
+
+<% unless @embed.present? %>
+    <%= render 'footer' %>
+<% end %>

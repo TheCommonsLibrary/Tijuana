@@ -1,0 +1,17 @@
+= fields_for :user do |f|
+  - [:first_name, :last_name, :mobile_number, :home_number, :street_address, :suburb, :postcode_number].each do |field|
+    %div.user-field-container{user_details_requirements.required_user_details[field] != :hidden && ask_for_user_field?(field) ? {} : {style: 'display:none'}}
+      = f.label field, display_name(user_details_requirements, field)
+      - if field == :mobile_number || field == :home_number || field ==:postcode_number
+        = f.telephone_field field, :placeholder => display_name(user_details_requirements, field, false), :value => unsaved_user_value(field), :class => user_details_class(user_details_requirements, field, 'user-field'), :disabled => !ask_for_user_field?(field), 'data-user-field' => field
+      - else
+        = f.text_field field, :placeholder => display_name(user_details_requirements, field, false), :value => unsaved_user_value(field), :class => user_details_class(user_details_requirements, field, 'user-field'), :disabled => !ask_for_user_field?(field), 'data-user-field' => field
+      = field_errors(@user, field)
+
+  %div.user-field-container{user_details_requirements.required_user_details[:country_iso] != :hidden && ask_for_user_field?(:country_iso) ? {} : {style: 'display:none'}}
+    = f.label :country_iso, display_name(user_details_requirements, :country_iso, true, 'Country')
+    = f.select :country_iso, Country.select_options, {:selected => unsaved_user_value(:country_iso)}, :class => user_details_class(user_details_requirements, :country_iso, 'user-field'), :disabled => !ask_for_user_field?(:country_iso) , 'data-user-field' => :country_iso
+
+- if @user.new_record?
+  :javascript
+    $('.user-field-container').hide();

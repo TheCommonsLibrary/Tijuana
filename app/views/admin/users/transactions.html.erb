@@ -1,0 +1,10 @@
+<% title "#{@user.full_name}'s Transactions" %>
+
+<%= render :partial => 'admin/shared/transactions_table', :locals => {:transactions => @transactions , :action_link => Proc.new { |transaction| link_to "Manage", admin_transaction_path(transaction)}} %>
+<%= will_paginate @transactions %>
+
+<% if can? :export, TransactionsTable %>
+  <div class="button-links">
+    <%= link_to "Download CSV", transaction_report_admin_user_path(@user), :class=>'download-csv' %>
+  </div>
+<% end %>

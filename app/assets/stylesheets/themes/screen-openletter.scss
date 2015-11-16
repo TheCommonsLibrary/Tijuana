@@ -1,0 +1,722 @@
+@import "../public";
+
+// Variables
+$ca_pink: #F6354A !default;
+$ca_blue: #08416F !default;
+$ca_black: #1E1E1E !default;
+$ca_grey: #e6e7e8 !default;
+
+$slab: "museo-slab", 'Roboto Slab', serif !default;
+$sans: "museo-sans", Helvetica, sans-serif !default;
+
+// Typesetting
+
+h1,
+h2,
+h3 {
+  font-family: $slab;
+  font-weight: 500;
+  font-style: normal;
+}
+
+body {
+	color: $ca_black;
+	font-family: $sans;
+}
+
+body > article {
+	overflow: visible;
+}
+
+p,
+article article p {
+	font-size: 1.2em;
+	line-height: 1.4;
+}
+
+header.primary {
+	position: relative;
+	background: $ca_black;
+	color: white;
+	text-align: center;
+	padding: 0;
+	h1 {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		z-index: 10;
+		width: 100%;
+		height: 150px;
+		background: image-url('themes/openletter/logo.png') center 45% no-repeat white;
+		text-indent: -99999px;
+		margin-top: -100px!important;
+	}
+}
+
+.large {
+	font-size: 1.5em;
+	font-family: $slab;
+}
+
+label.error {
+	background: none;
+	margin: 0 0 0;
+	padding: 0;
+	font-weight: normal;
+	color: $ca_pink;
+	top: -7px;
+	position: relative;
+}
+
+section.endorsement {
+	background: $ca_black;
+	h3 {
+		display: none;
+	}
+	blockquote {
+		padding: 1em;
+		margin: 0;
+		font-weight: 300;
+		color: white;
+		font-family: $slab;
+		line-height: 1.2;
+		border: none;
+		font-style: italic;
+	}
+
+	.profile {
+		background: white;
+		padding: 0.75em 1em;
+		display: inline-block;
+		zoom: 1;
+		line-height: 1.2;
+		margin: 0 1em 1em 1em;
+		*display: inline;
+		color: lighten($ca_black,20%);
+		.name {
+			font-family: $slab;
+		}
+		.title {
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-weight: 700;
+			font-size: .65em;
+		}
+	}
+
+}
+
+// Layout
+
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.clear {
+	clear: both;
+}
+body {
+	margin: 0;
+}
+#main {
+	position: relative;
+	background: white;
+}
+#australians, .content-module #ambassadors {
+	display: none;
+}
+.ambassadors-wrap {
+	overflow: hidden;
+	height: 100%;
+	position: absolute;
+	width: 100%;
+}
+#ambassadors {
+	text-align: right;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	.ambassador {
+		width: 12.5%;
+		display: inline-block;
+		position: relative;
+		img {
+			width: 100%;
+		}
+		.overlay {
+			line-height: 1.3em;
+			opacity: 0;
+            display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			color: white;
+			font-family: $slab;
+			font-style: italic;
+			background: $ca_pink;
+			text-align: center;
+			span {
+				display: block;
+				position: absolute;
+				width: 100%;
+				left: 0;
+			}
+			.ambassador-title {
+				bottom: 53%;
+				font-size: 1.5em;
+			}
+			.ambassador-role {
+				top: 50%;
+			}
+			&:hover {
+				opacity: .9;
+				display: block;
+                visibility: visible;
+			}
+		}
+	}
+}
+#action {
+	display: none;
+}
+
+.petitionmodule #action {
+	display: block;
+}
+
+article #action {
+
+	h2 {
+		font-size: 2em;
+	}
+
+	.well {
+		border: none;
+		background: none;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		padding: 0;
+		&> h2,
+		&> p,
+		hr {
+			display: none;
+		}
+		form {
+			background: $ca_grey;
+			padding: 1em;
+			color: $ca_black;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+		}
+		label {
+			color: $ca_black;
+		}
+		label[for="become-member-checkbox"] {
+			color: $ca_black;
+		}
+		#ask-specific-user-details {
+			margin-bottom: 20px;
+		}
+		.user-lookup-message {
+			margin: 0 0 20px;
+			color: lighten($ca_black, 20%);
+		}
+		button {
+			filter: none;
+			outline: none;
+			display: inline-block;
+			zoom: 1;
+			*display: inline;
+			border-radius: 5px;
+			width: 100%;
+			padding: 0.6em 1.5em;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-weight: 300;
+			text-decoration: none;
+			background: $ca_pink;
+			color: white;
+			-webkit-appearance: none;
+			border: none;
+			font-size: 17px;
+			text-shadow: none;
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+			box-shadow: none;
+			&:hover {
+				background: lighten($ca_pink,3%);
+				box-shadow: none;
+				-webkit-box-shadow: none;
+				-moz-box-shadow: none;
+				text-shadow: none;
+			}
+			&.fb-button {
+				background-image: image-url('themes/openletter/icon-facebook.png');
+	        	background-repeat: no-repeat;
+				background-color: $ca_blue;
+				background-position: 10px center;
+				
+				padding-left: 50px;
+				margin: 10px 0 7px;
+				&:hover {
+					background-color: lighten($ca_blue,5%);
+				}
+				span {
+					color: white;
+				}
+				.icon-facebook-sign {
+					display: none;
+				}
+
+			}
+			&.email {
+				clear: right;
+				background: $ca_grey;
+				color: $ca_black;
+				&:hover {
+					color: lighten($ca_black,10%);
+					background-color: lighten($ca_grey,3%);
+				}
+			}
+		}
+	}
+	
+	h3 {
+		font-family: $slab;
+		color: $ca_pink;
+		font-size: 5em;
+		padding: .5em 0 .2em 0;
+		margin: 0;
+		text-align: center;
+		font-size: 50px;
+        &:after {
+          display: block;
+          content: 'Australians';
+          font-size: 17px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-top: 18px;
+        }
+	}
+	input[type="text"],
+	input[type="email"] {
+		text-indent: 0;
+		padding: 0.5em 1em;
+		height: auto;
+		font-size: 1.1em;
+		line-height: 1.4;
+		margin-bottom: 10px;
+		width: 100%;
+		box-shadow: none;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		border: 1px solid transparent;
+		&:focus {
+			border: 1px solid darken($ca_grey, 10%);
+		}
+	}
+	.become-member-checkbox {
+		padding-top: 0;
+	}
+	&.action-top-fixed form {
+		bottom: auto!important;
+		top: 106px;
+		border-radius: 5px;
+	}
+	.progress {
+		clear: both;
+		filter: none;
+		height: 10px;
+		margin-bottom: 0;
+		padding-bottom: 0;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		.bar {
+			background: $ca_pink;
+		}
+	}
+}
+
+// Footer
+
+footer {
+	padding: 0 0 20px;
+}
+
+section.graphics {
+	ul {
+		padding: 0;
+		margin: 0;
+		li {
+			list-style-type: none;
+			width: 100%;
+			float: left;
+			font-family: $slab;
+			color: $ca_black;
+			font-size: 1.1em;
+			line-height: 1.2;
+			margin-top: 1em;
+			img {
+				width: 40px;
+				float: left;
+			}
+			span {
+				display: block;
+				padding: .5em;
+				margin-left: 60px;
+			}
+		}
+	}
+}
+
+
+section.timeline {
+	position: relative;
+	background-color: white;
+	padding-top: 10%;
+	.container {
+		margin-left: 10%;
+		margin: 0;
+		position: absolute;
+		top: 10%;
+		left: 10%;
+		width: 70%;
+	}
+}
+
+section.notes {
+  text-align: center;
+  padding: 1em 0;
+  background: #fff;
+  color: $ca_grey;
+  .tickercontainer {
+    width: 100%;
+    overflow: hidden;
+  }
+  #partners{
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    float: left;
+    position: relative;
+    a {
+      display: inline;
+      &:hover {
+        text-decoration: none;
+      }
+      img {
+        max-width: 150px;
+        margin: 0 30px;
+      }
+    }
+  }
+}
+
+.petition-content {
+	display: none;
+	position: absolute;
+	left: 310px;
+	right: 310px;
+	height: 10px;
+	top: 20px;
+	color: black;
+	text-align: center;
+	opacity: 1;
+	transition: opacity .2s linear;
+	-webkit-transition: opacity .2s linear;
+	-moz-transition: opacity .2s linear;
+	h2 {
+		display: none;
+	}
+	p span {
+		font-size: 2em;
+		font-family: $slab;
+		font-weight: 600;
+		display: block;
+		margin: 13px 0;
+	}
+}
+.action-scrolling .petition-content {
+	opacity: 0;
+}
+.action-top-fixed .petition-content {
+	opacity: 1;	
+}
+
+body footer {
+	padding: 0;
+}
+
+
+// Chrome background fix
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.overlay {
+
+	}
+	.reverse {
+		.overlay {
+			
+		}
+	}
+}
+
+
+// Screen Sizes
+
+// Flex
+@media (max-width: 1070px) {
+	header.primary h1 {
+		background-size: 85% auto;
+		height: 110px;
+	}
+}
+
+// Mobile
+@media (max-width: 919px) {
+	form label {
+		display: none;
+		color: $ca_black;
+	}
+	header.primary h1 {
+		height: 60px;
+	}
+	#ambassadors {
+		.ambassador {
+			width: 25%
+		}
+	}
+}
+
+// Desktop Enhancement
+@media (min-width: 920px) {
+
+	header.primary {
+		overflow: hidden;
+		h1.h1-fixed {
+			position: fixed;
+		}
+	}
+
+    #ambassadors .ambassador .overlay {
+      display: block;
+    }
+
+	#action {
+		&.action-bottom-fixed {
+			position: fixed;
+			top: auto;
+			bottom: 0;
+			//background: transparent;
+		}
+		&.action-top-fixed {
+			position: fixed;
+			top: 0;
+			bottom: auto;
+			background: white;
+		}
+		&.action-bottom-scroll {
+			position: absolute;
+			top: auto;
+			bottom: 0;
+			background: transparent;
+		}
+		&.action-top-scroll {
+			position: absolute;
+			top: 0;
+			bottom: auto;
+			background: transparent;
+		}
+	}
+		
+	#main {
+		article {
+			margin: 0 300px;
+			padding: 25px 0;
+		}
+		&.petitionmodule article {
+			padding: 150px 0;	
+		}
+	}
+
+	article #action {
+		position: absolute;
+		z-index: 100;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 140px;
+		.well {
+			float: right;
+			width: 100%;
+			//max-width: 1170px;
+			height: 100%;
+			position: relative;
+			bottom: 0;
+			margin-bottom: 0;
+
+			form {
+				z-index:100;
+				width: 350px;
+				// display: none;
+				right: 66px;
+				margin: 0;
+				position: absolute;
+				bottom: 66px;
+				label {
+					display: none;
+				}
+				a {
+					text-transform: uppercase;
+					font-weight: 700;
+					color: lighten($ca_black,10%);
+					margin-bottom: 5px;
+					&:hover {
+						text-decoration: none;
+						color: lighten($ca_black,30%);
+					}
+				}
+			}
+		}
+		h3 {
+			float: left;
+			width: 300px;
+			position: absolute;
+			top: 10px;
+			left: 0;
+			text-align: center;
+			font-size: 4.5em;
+		}
+		#sign-with-facebook {
+			margin-top: 10px;
+			.fb-error button.close {
+				display: none;
+			}
+			.fb-error {
+				position: absolute;
+				font-size: .8em;
+				line-height: 1.3em;
+				right: 30px;
+				width: 264px;
+				bottom: 110px;
+				.alert-error {
+					border-radius: 6px;
+				}
+			}
+		}
+		#sign-with-facebook,
+		button.email {
+			float: right;
+			margin-right: 30px;
+			width: auto;
+
+		}
+		button.email {
+			margin-right: 66px;
+			margin-bottom: 10px;
+		}
+
+	}
+
+
+	.container {
+		width: 100%;
+	}
+	
+	section.endorsement {
+		position: relative;
+		h3 {
+			display: none;
+		}
+		blockquote {
+            background: rgba(0,0,0,.4);
+            padding: 1em;
+			font-size: 1.75em;
+			width: 40%;
+		}
+		img {
+			width: 100%;
+			height: auto;
+			z-index: 0;
+		}
+
+		.container {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			margin: 0;
+			padding: 10%;
+		}
+
+		.profile {
+			margin: 0;
+			.name {
+				font-family: $slab;
+				font-size: 1.4em;
+			}
+			.title {
+				font-size: 1.2em;
+			}		
+		}
+
+	}
+	
+	.petition-content {
+		display: block;
+		position: absolute;
+		left: 310px;
+		right: 310px;
+		height: 10px;
+		top: 20px;
+		color: black;
+		text-align: center;
+		opacity: 1;
+		transition: opacity .2s linear;
+		-webkit-transition: opacity .2s linear;
+		-moz-transition: opacity .2s linear;
+	}
+
+}
+
+section {
+	margin-left: 0;
+}
+
+// Remove Typekit Colophon
+.typekit-badge {
+	display: none !important;
+}
+.hidden {
+
+}
+.slide {
+	position: relative;
+	img {
+		width: 100%;
+	}
+}
+
+#main.petitionmodule {
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; height: 0; overflow: hidden;
+  }
+
+  .video-container iframe,
+  .video-container object,
+  .video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

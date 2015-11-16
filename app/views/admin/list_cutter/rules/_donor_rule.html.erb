@@ -1,0 +1,35 @@
+<div class="donation-freq">
+
+  <div class="frequency">
+    <%= f.select :frequencies, options_for_select({ "One Off" => :one_off }.merge(DonationModule.frequency_select_options.slice!("Donate Once")), rule.frequencies), {}, {:multiple => true} %>
+  </div>
+
+  <div class="optional">
+
+    <div class='campaign-ids-field'>
+      <span class="connector"> for campaign ids </span>
+      <%= f.text_field :campaign_ids, :value => rule.campaign_ids, :placeholder => "Comma separated Campaign ids" %>
+    </div>
+
+    <div class="page-ids-field">
+      <span class="connector"> for page ids </span>
+      <%= f.text_field :page_ids, :value => rule.page_ids, :placeholder => "Comma separated Page ids" %>
+    </div>
+
+    <div class="active-field">
+      <label>for recurring:</label>
+      <div class="tooltip list-cutter-tip" data-tip="donation-recurring-donors-tip"></div>
+      <div>
+        <%= f.radio_button :active, 1, :checked => rule.active == '1' %>
+        <%= f.label :active_1, 'currently active donors' %>
+      </div>
+      <div>
+        <%= f.radio_button :active, 0, :checked => rule.active == '0' %>
+        <%= f.label :active_0, 'no longer active donors' %>
+      </div>
+    </div>
+
+  </div>
+  <div class="tooltip list-cutter-tip" data-tip="donation-frequency-tip"></div>
+</div>
+

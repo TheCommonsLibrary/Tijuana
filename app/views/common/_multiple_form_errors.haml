@@ -1,0 +1,10 @@
+- if subjects.reject(&:valid?).present?
+  .alert.alert-error
+    %button.close{"type" => "button", "data-dismiss" => "alert"}
+      &times;
+    - subjects.each do |s|
+      - s.errors.each do |field, value|
+        - unless field.to_s.include?(".") # Active record copies errors on nested_attributes to their parent - e.g. "content_modules.name" %>
+          = "#{field == :base ? "" : field.to_s.humanize} #{value}"
+          %br
+

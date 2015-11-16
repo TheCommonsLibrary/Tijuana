@@ -1,0 +1,57 @@
+<div class="info-block">
+  <h2>Search and view your donation history below.</h2>
+</div>
+
+
+<div class="donation-history-block" id="donations-details">
+  <div class="donation-history-box">
+
+
+    <%= form_tag "/dashboard/donation-history", :method => "GET", :id => "donation-history-form" do %>
+        <div class="row">
+          <div class="holder">
+            <input type="text" id="from" name="from" value="<%= 1.month.ago.strftime("%d-%m-%Y") %>" class="info small6"/>
+            <label for="from">From</label>
+          </div>
+          <div class="holder">
+            <input type="text" id="to" name="to" value="<%= Time.now.strftime("%d-%m-%Y") %>" class="info small6"/>
+            <label for="to">to</label>
+          </div>
+          <div class="holder">
+            <%= submit_tag "Search", :id => "donation-history-submit-button", :class => "save" %>
+          </div>
+        </div>
+
+    <% end %>
+
+    <%= render :partial => "transaction_list" %>
+
+  </div>
+</div>
+
+<script>
+    $(function () {
+        var dates = $("#from, #to").datepicker({
+            defaultDate:"+1w",
+            changeMonth:true,
+            changeYear:true,
+            numberOfMonths:1,
+            onSelect:function (selectedDate) {
+                var option = this.id == "from" ? "minDate" : "maxDate",
+                        instance = $(this).data("datepicker"),
+                        date = $.datepicker.parseDate(
+                                instance.settings.dateFormat ||
+                                        $.datepicker._defaults.dateFormat,
+                                selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            }
+        });
+
+        initDonationHistory({
+            formSelector:'#donation-history-form',
+            url:'/dashboard/donation-history',
+            resultsContainer:'#donation-history-results'
+        });
+
+    });
+</script>

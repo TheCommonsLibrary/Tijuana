@@ -1,0 +1,16 @@
+.attendee-details.table-box
+  %table.stripe-me
+    %tr
+      %th.clr-1='Name'
+      %th.clr-2='Email'
+      %th.clr-1='Mobile number'
+      %th.clr-2='Home number'
+      %th.clr-1='Cancellation'
+    - attendees.order("last_name ASC").each do |attendee|
+      %tr
+        %td="#{attendee.full_name}"
+        %td="#{attendee.email}"
+        %td="#{attendee.mobile_number}"
+        %td="#{attendee.home_number}"
+        %td
+          = link_to "Cancel attendance", "#{dashboard_cancel_event_attendee_path(event)}?user[email]=#{attendee.email}", method: :post, class: "cancel-attendance", data: { confirm: "Clicking OK will permanently remove this member from your event. Please click OK only if #{attendee.full_name} has confirmed they will not be coming." } if event.in_future?

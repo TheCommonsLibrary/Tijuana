@@ -1,0 +1,63 @@
+%p
+  Hi 
+  = "#{@user.greeting}," || "Friend,"
+
+- if @upgrade
+  %p
+    Thank you so much for increasing your GetUp Crew support. Your regular donation has been successfully updated and the new details are below.
+- else
+  %p
+    Thanks for being part of the GetUp Crew. 
+  %p
+    Your regular donation has been successfully updated. Your gift has been reduced to the amount you requested and the new details are below. 
+
+%p
+  Your Crew donations will continue to power GetUp's one million-strong community to have extraordinary impact on the issues that matter the most.
+
+%p
+  If you have any queries or feedback, please reply to this email or give us a call on #{AppConstants.financial_contact_number}.
+
+%p
+  Thanks,
+  %br
+  #{AppConstants.financial_contact_name} for the Getup Strategy Team
+  %br
+  National Director
+
+%br
+%p
+  YOUR AMENDMENT CONFIRMATION
+  %br
+  \---------------------------------------------------------------
+  %br
+  - if @user.first_name
+    To: 
+    = @user.first_name 
+    = @user.last_name
+    %br
+
+  Email: 
+  = @user.email
+  %br
+  \---------------------------------------------------------------
+
+%p
+  Your previous details:
+  = "#{number_to_currency(@old_amount_in_dollars)} #{@old_frequency}"
+
+%p
+  Your amended details will take effect from today:
+  = "#{number_to_currency(@new_amount_in_dollars)} #{@new_frequency}"
+
+%br
+%p
+  ************ IMPORTANT NOTE ************** 
+  %br
+  %br
+  Your credit card statement will show this charge as coming from GetUp Ltd.
+  %br
+  %br
+  Under current legislation donations to GetUp, like other political campaigning organisations, are not tax deductible. Donations of #{AppConstants.legal_disclosure_amount} or more (indexed annually) may be subject to disclosure to the Australian Electoral Commission under the Commonwealth Electoral Act 1918. We disclose donations that exceed $10,000 cumulatively in a financial year on our website.
+  %br
+  %br
+  If we raise more than is needed for the campaigning area you have supported, your donations will be diverted to other GetUp campaigns that have the same overarching purpose. 

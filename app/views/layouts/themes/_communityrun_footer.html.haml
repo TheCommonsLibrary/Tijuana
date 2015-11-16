@@ -1,0 +1,40 @@
+%footer
+  .container
+    %section
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header
+            = link_to("Terms & Conditions", "http://www.communityrun.org/tos", :title => "Make a donation")
+          
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header
+            = link_to("Community", "http://www.communityrun.org/community")
+        
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header
+            = link_to("Privacy", "http://www.communityrun.org/privacy_policy")
+         
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header
+            = link_to("About us", "http://www.communityrun.org/about_us")
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header
+            = link_to("Media", "http://www.communityrun.org/media")  
+
+      .menu
+        %ul.nav.nav-list
+          %li.nav-header
+            %a.follow.facebook.vmiddle.ml10{:href => "http://www.facebook.com/communityrun"}
+              %img{:alt => "Footer-icon-facebook", :src => image_path("themes/communityrun/footer-icon-facebook.png")}
+            %a.follow.twitter.vmiddle{:href => "http://www.twitter.com/communityrun"}
+              %img{:alt => "Footer-icon-twitter", :src => image_path("themes/communityrun/footer-icon-twitter.png")}
+      
+    %section
+      .copyright
+        &copy;
+        = Date.today.year
+        GetUp! All rights reserved. Authorised by #{AppConstants.authorised_by}, #{AppConstants.office_address}.

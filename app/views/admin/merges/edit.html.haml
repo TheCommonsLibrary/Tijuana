@@ -1,0 +1,12 @@
+- title "Merge"
+- content_for :breadcrumb_links do
+  - if can? :destroy, @merge
+    = link_to "Delete merge", admin_merge_path(@merge), :method => :delete, :confirm => "Delete '#{@merge.name}'?"
+
+= render :partial => "form"
+
+.record-count
+  Merge contains 
+  %strong=@merge.merge_records.count
+  records
+

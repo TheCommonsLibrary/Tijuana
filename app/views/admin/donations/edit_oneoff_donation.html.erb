@@ -1,0 +1,18 @@
+<p>
+  <%= "User Name：#{@user.full_name}, Amount in dollars : #{@donation.amount_in_dollars}"%>
+</p>
+
+<%= form_for([:admin, @donation]) do |f| %>
+    <%= form_errors(@donation) %>
+    <p>
+      <%= f.label :page_id, "Page ID" %>
+      <%= f.text_field :page_id %>
+    <div class="info">If Page ID is left blank the donation will be assigned to the <%= link_to "global donation page", "/donate" %></div>
+    </p>
+
+    <div class="buttonbar">
+      <%= f.submit @donation.new_record? ? "Create donation" : "save donation", :disable_with => "Saving…" %>
+      <%= link_to "Cancel", admin_transactions_path %>
+    </div>
+<% end %>
+

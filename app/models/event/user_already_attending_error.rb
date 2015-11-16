@@ -1,0 +1,1 @@
+class UserAlreadyAttendingError < StandardError; end

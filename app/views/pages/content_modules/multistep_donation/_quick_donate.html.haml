@@ -1,0 +1,11 @@
+= hidden_field_tag 'donation[quick_donation]', 1, :id => 'donation_quick_donation'
+
+#quick-donate
+  %h4
+    %i.icon-lock
+    Payment Information
+  %p.name #{last_quick_donation.name_on_card}
+  %p.card XXXX-XXXX-XXXX-#{last_quick_donation.card_last_four_digits} (#{"%02d" % last_quick_donation.card_expiry_month}/#{last_quick_donation.card_expiry_year})
+
+.not-you
+  = link_to "Not you or different card?", '#step-1-amount'

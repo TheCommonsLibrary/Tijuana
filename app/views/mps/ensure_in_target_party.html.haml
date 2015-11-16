@@ -1,0 +1,11 @@
+#evaluate-party-message{class: no_targets_alert_class(@target_options, @target, @user_postcode)}
+  = raw @msg
+- if @target
+  = hidden_field_tag :targets, @target.email
+  = render :partial => 'mps/schedule_call_field', :locals => { :call_mp_module => @mp_module, :targets => @target.email }
+  = raw evaluate_action_message(@mp_module, @target)
+- if @target_options != nil
+  - @target_options.each do |t|
+    %label.email-mp-option.radio{:for=>"fallback_option_#{t.id}"}
+      = radio_button_tag "fallback_option", t.id, false, :class => "fallback_option"
+      Senator #{t.first_name} #{t.last_name} (#{t.party.abbreviation})

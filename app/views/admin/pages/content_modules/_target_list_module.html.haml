@@ -1,0 +1,46 @@
+-# Explicit label text for helper options to avoid overriding index set by fields_for when using HTML attributes
+= f.label :title, 'Title', :class => "req"
+= f.text_field :title
+
+= f.label :content, 'Blurb'
+= f.text_area :content, :rows => 4
+
+= render :partial => "admin/pages/content_modules/email_module", :locals => {:f => f, :content_module => content_module}
+
+= f.label :target_placeholder, 'Target list placeholder', :class => 'req'
+= f.text_field :target_placeholder
+
+= f.label :target_email_list, 'Target emails', :class => 'req'
+= f.text_area :target_email_list, :rows => 8
+.info
+  List emails and separate them by commas, followed by the target on each line. Separate the emails from the target with a pipe (|).
+  %br
+  e.g. editorial@citynorthnews.com.au, info@citynorthnews.com.au | Brisbane North - City-North News
+
+%div{style: "position:relative;clear:both;"}
+  = f.label :delayed_end_date, "Progressively send until", :class => "date" 
+  = f.text_field :delayed_end_date, :class => "date" 
+  %span{id: "content_modules_#{ content_module.id }_delayed_end_date_clear", style: "position:absolute;right:30px;top:14px;font-weight:bold;text-transform:uppercase;"}
+    Clear
+
+= render :partial => "admin/pages/content_modules/activity_stream_templates", :locals => {:f => f} 
+
+= f.label :button_text, 'Button text', :class => "req" 
+= f.text_field :button_text 
+
+= render partial: 'admin/pages/content_modules/custom_fields_edit', locals: {f: f}
+
+:javascript
+  $(function() {
+    toggle_edit_custom_fields();
+
+    $.datepicker.setDefaults({dateFormat: 'dd-mm-yy'});
+
+    $("#content_modules_" + #{ content_module.id } + "_delayed_end_date").datepicker({minDate:0});
+    $("#content_modules_" + #{content_module.id } + " _delayed_end_date").keydown(function(event) {
+      event.preventDefault();
+    });
+    $("#content_modules_" + #{ content_module.id } + "_delayed_end_date_clear").click(function() {
+      $("#content_modules_" + #{ content_module.id } + "_delayed_end_date").val('');
+    });
+  });

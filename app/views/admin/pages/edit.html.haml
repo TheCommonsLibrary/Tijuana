@@ -1,0 +1,63 @@
+- title @page.name
+- content_for :breadcrumb_links do
+  - if can? :destroy, @page
+    = link_to "Delete page", admin_page_path(@page), :method => :delete, :data => { :confirm => "Delete '#{@page.name}'?" }
+
+= form_for([:admin, @page]) do |f|
+  = form_errors(@page)
+  %input{:name => "page_sequence_id", :type => "hidden", :value => @page_sequence.id}
+  = f.label :name, :class => "req"
+  = f.text_field :name
+  .info
+    Page title will be displayed to the public and will be used in the URL.
+  = f.label :no_wrapper
+  = f.check_box :no_wrapper
+  .info
+    Renders content only. Disables header and footer on page
+
+  .required-user-details.page-required-user-details
+    %h4 Required User Details for Asks
+    = f.fields_for :required_user_details do |user_details_fields|
+      = render :partial => "/admin/common/user_detail", :collection => UserDetailsRequirements::DEFAULT_REQUIRED_USER_DETAILS, :locals => {:f => user_details_fields, :user_details_requirements => @page}
+  #thankyou-email
+    %h4 Thankyou Email after Ask
+    = f.label :send_thankyou_email, "Send Email?"
+    = f.check_box :send_thankyou_email
+    #thankyou-email-details
+      = f.label :thankyou_email_subject, "Email Subject", :class => "tooltip", 'data-tip' => "thankyou-email-subject-tip"
+      = f.text_field :thankyou_email_subject, :value => @page.thankyou_email_subject
+      = f.label :thankyou_email_text, "Email Text", :class => "tooltip", 'data-tip' => "thankyou-email-body-tip"
+      = f.text_area :thankyou_email_text, :rows => 8, :value => @page.thankyou_email_text
+    = render :partial => '/admin/pages/tooltips'
+  #tabs
+    = render :partial => "layout_container", :locals => {:layout_container => :header_content, :content_modules => @header_content_modules}
+    = render :partial => "layout_container", :locals => {:layout_container => :main_content, :content_modules => @main_content_modules, :outer_form => f}
+    = render :partial => "layout_container", :locals => {:layout_container => :aside_content, :content_modules => @aside_content_modules, :outer_form => f}
+    = render :partial => "layout_container", :locals => {:layout_container => :sidebar, :content_modules => @sidebar_content_modules}
+
+  .member-value
+    = f.label :member_value_type, "Ask Category"
+    = f.select :member_value_type, options_for_member_value, { :include_blank => 'N/A'}, {style: 'width: auto'}
+
+  .buttonbar
+    = f.submit "Save & Validate", :name => 'submit', :disable_with => "Please wait…", :class => "submitBtn"
+    = f.submit "Save page", :name => 'submit', :disable_with => "Please wait…", :class => "submitBtn"
+    = link_to "Cancel", admin_page_sequence_path(@page_sequence)
+  = render :partial => '/admin/shared/history', :locals => {:entity => @page}
+
+:javascript
+  $(function() {
+    pageEditing().setupEditPage();
+
+    // don't submit if there's a petition module with no member value type chosen
+    $('.submitBtn').click(function(e){
+      if($('#value_type_controls').length && !$('#value_type_controls').find('input:radio:checked').length) {
+        e.preventDefault();
+        $('#value_type_controls_error').removeClass('hidden');
+        $('#value_type_controls_error').effect('highlight');
+        $('#value_type_controls_error').effect('highlight');
+      }
+    })
+  });
+
+= yield :bookmark_forms

@@ -1,0 +1,50 @@
+- donation_module = content_module
+- campaign = @page.static? ? nil : @page.page_sequence.campaign
+.well
+  %h2
+    = donation_module.title.upcase
+  %hr
+
+  - if donation_module.content.present?
+    %p=raw render_html(donation_module.content)
+
+  = render :layout => "pages/form_with_user_lookup", :locals => {:content_module => content_module, :auto_submittable => true} do
+    .clearfix
+    %hr
+
+
+    = fields_for donation_module.donation do |f|
+      - remove_action_id_from_session
+      = render :partial => "pages/donation_form", :locals => {:f => f, :donation_module => donation_module }
+      %hr
+
+    = render :partial => address_validation_partial_name, :locals => {:content_module => content_module} if defined?(address_validation_partial_name)
+
+    = button_tag(donation_module.button_text.upcase, :class => "btn btn-primary-alternate btn-large btn-full ask-submit-button js-donate-button fb-like-above", :'data-payment_methods' => 'paypal credit_card', :disable_with => 'Please wait...')
+
+  %hr
+  - if donation_module.amount_raised_in_dollars >= donation_module.thermometer_threshold.to_i
+    .odomoeter-container
+      .odometer
+        %span $
+        #odometer
+          = donation_module.amount_raised_in_dollars.to_i
+    .odometer-text Raised Already!
+
+
+= paypal_form(@page, @token)
+
+:javascript
+  var clientIp = '#{request.remote_ip}';
+  $(function() {
+    spinningOdometer('#odometer', '#{"%07d" % donation_module.amount_raised_in_dollars.to_i}');
+    $('.tooltipped').tooltip();
+    donationForm('#occult-paypal-form', '#donation-frequency-paypal',
+      '#{AppConstants.paypal_business_id}',
+      '#{campaign.nil? ? 'Campaign General' : h(campaign.name)}',
+      '#{campaign.nil? ? nil : campaign.id}',
+      '#{paypal_completed_page_url(@campaign, @page_sequence, @page.next || @page)}',
+      '#{paypal_cancel_page_url(@campaign, @page_sequence, @page)}',
+      '#{paypal_ipn_url(@page,@token)}',
+      '#{image_path('common/lib/gritter/error.png')}');
+  });

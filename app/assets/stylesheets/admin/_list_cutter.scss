@@ -1,0 +1,362 @@
+dl#list-cutter-name {
+  dt {
+    label {
+      font-size:1em;
+      width:75px;
+      text-align:left;
+      padding: 1em 1em 1em 12px;
+    }
+  }
+  label.error {
+    float:left;
+    text-align:left;
+    display:block;
+    clear:left;
+    margin-left:108px;
+    width: 300px;
+  }
+}
+
+fieldset.list-cutter {
+  clear:left;
+  margin: 0 0 1em;
+  width: $page-width;
+
+  .global-control {
+    display: inline;
+    margin-top: 5px;
+    margin-right: 10px;
+    width: 200px;
+    label {
+      float: none;
+    }
+  }
+}
+
+.list-cutter-errors {
+  .error {
+    word-wrap:break-word;
+  }
+}
+
+div.filter-values {
+  visibility:hidden;
+  overflow:hidden;
+  height:0;
+  width:0;
+}
+
+input#rules_email_action_rule_email_id {
+  width: 60em;
+}
+
+select#rules_email_action_rule_action {
+  width: 8em;
+}
+
+ul.list-cutter-filters {
+	margin-top: 1em;
+  li {
+    padding:1em 1em 0.8em 1em;
+    overflow:hidden;
+    span.list-cutter-filter-type {
+      display:block;
+      clear:left;
+      float:left;
+      select {
+       margin:0 2em 0 0.5em;
+       width:20em;
+      }
+    }
+    ul.list-cutter-filter-value {
+      float:left;
+        display:block;
+    	input, select, .select2-container {
+      	width:40em;
+    	}
+    	select.filter-negate {
+     	 width:8em;
+       margin:0 2em 0 0;
+      }
+      li {
+        padding: 0;
+        dl {
+          select#rules_member_value_time_rule_not,
+          select#rules_member_value_money_rule_not,
+          select#rules_member_value_voice_rule_not,
+          select#rules_no_email_sent_today_rule_not,
+          select#rules_email_frequency_rule_not  {
+            display: none;
+          }
+          dt {
+            float:left;
+            display:none;
+          }
+          select {
+            float:left;
+          }
+          dd {
+            float:left;
+            input#rules_postcode_within_rule_postcode,
+            input#rules_postcode_within_rule_within {
+              width:8em;
+            }
+            input#rules_action_taken_rule_page_ids {
+              width: 20em;
+            }
+            input#rules_action_taken_rule_greater_than {
+              width: 2em;
+            }
+            input.inline-number {
+              width: 60px;
+            }
+          }
+          label.error {
+            display:block;
+            clear:left;
+            width:400px;
+            margin-left:109px;
+            text-align:left;
+            padding:0;
+          }
+          .active-field {
+            margin-left: 20px;
+            input{
+              width: 2em;
+              margin-top: 15px;
+            }
+            label{
+              float: none;
+              font-size: 100%;
+            }
+          }
+        }
+      }
+      li.enabled {
+        display:block;
+      }
+    }
+  }
+}
+
+span.email-frequency-is {
+  float: left;
+  margin-right: 20px;
+  margin-top: 2px;
+}
+
+//member value rules
+.choose-member_value_time_rule, .choose-member_value_voice_rule, .choose-member_value_money_rule {
+  .within-value {
+    border: 1px dashed gray;
+    padding: 20px 10px;
+    vertical-align: top;
+    margin-bottom: 10px;
+
+    .select-member-value-range {
+      display: inline-block;
+    }
+    .member-value-range-select {
+      width: 130px;
+    }
+    span.member-value-or {
+      margin: 10px;
+      font-weight: bold;
+      display: block;
+    }
+    .value-limits {
+      input {
+        width: 40px;
+        margin: 0 8px 8px 0;
+      }
+    }
+  }
+}
+
+.member-value-conditions {
+  margin-left: 10px;
+  float: left;
+}
+
+.member-value-is {
+  float: left;
+  vertical-align: top;
+}
+.within-time-frame {
+  margin-right: 5px;
+  display: inline;
+  input {
+    margin: 0 5px;
+  }
+}
+
+.list-cutter-filter-value .choose-state_territory_rule .or-connector{
+    width: 1em;
+    padding: 0;
+ }
+
+// states and territories rule
+.choose-state_territory_rule{
+  .state-options {
+    border: 1px dashed gray;
+    padding: 8px 10px;
+    vertical-align: top;
+    margin-bottom: 10px;
+  }
+  .no-state{
+    width: 17em;
+    padding-top: 1em;
+    float: none;
+    margin-right: 0;
+  }
+  #rules_state_territory_rule_no_state{
+    width: 1em;
+    margin-top: 1em;
+  }
+}
+
+ul.list-cutter-filters, .filter-actions {
+  .add-filter {
+    @include add-series();
+    float: none;
+  }
+  .remove-filter {
+    @include remove-series();
+  }
+}
+
+#list-cutter-results {
+  display:none;
+  margin: 0 0 10px 0;
+  h3.processing {
+    padding:0 0 0 10px;
+    height:36px;
+    line-height:36px;
+  }
+  img.loading {
+    float:left;
+  }
+  #sql-wrapper {
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      background:white;
+      border:1px solid $subtle;
+      margin:1em 0;
+      padding:1em;
+      @include rounded-corners(3px);
+    }
+  }
+  .error {
+    color: $error;
+  }
+}
+
+label.button {
+    clear:left;
+    float:left;
+    margin:0 0 20px 0;
+    width:auto;
+    input {
+	float:right;
+    }
+}
+
+// postcode within rule
+.choose-postcode_within_rule{
+  .postcode-within{
+    border: 1px dashed gray;
+    padding: 20px 15px 10px 15px;
+    vertical-align: top;
+    margin-bottom: 10px;
+    float: left;
+  }
+  .unknown-postcode {
+    float:left;
+  }
+  .within-km {
+    padding-top: 10px;
+  }
+}
+
+ul.list-cutter-filters li.choose-postcode_within_rule #rules_postcode_within_rule_no_postcode {
+  width: 27px;
+}
+
+ul.list-cutter-filters {
+  ul.list-cutter-filter-value {
+    li.choose-action_taken_rule {
+      dl {
+        dd {
+          label.error {
+            margin-left: 236px;
+          }
+        }
+      }
+    }
+
+    .donation-freq {
+      input[type='text'] {
+        width: 16em;
+      }
+      .frequency {
+        select {
+          width: 9.5em;
+        }
+      }
+      input[type='checkbox'] {
+        width: auto;
+      }
+      .active-field {
+        margin-top: 5px;
+        #active-label {
+          margin-left: 10px;
+          width: 105px;
+          padding-top:0px;
+          text-align: right;
+        }
+      }
+
+      .optional {
+        width: 340px;
+        float: left;
+      }
+
+      .campaign-ids-field, .page-ids-field {
+        .connector {
+          float: left;
+          width: 105px;
+          line-height: 2.3;
+          text-align: right;
+        }
+      }
+    }
+    li.choose-action_taken_rule {
+      dl {
+        dd {
+          label.error {
+            margin-left: 236px;
+          }
+        }
+      }
+    }
+  }
+
+  .or-connector {
+    padding: 12px 0 12px 0;
+    font-weight: bold;
+  }
+}
+
+ul.list-cutter-filters .list-cutter-filter-value .choose-electorate_rule .no-postcode {
+  label, input {
+    width: inherit;
+  }
+  input {
+    margin-top: 13px;
+  }
+}
+
+.mode-toggles {
+  margin-top: 10px;
+}

@@ -1,0 +1,16 @@
+%article
+  .container
+    %section
+      %article
+        .login#reset-password.span7
+          %h2 Create or Reset your password
+          %hr
+          = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+            = form_errors(resource)
+
+            = f.label :email
+            = f.text_field :email
+
+            = f.submit "Email me instructions", :class => "btn btn-primary"
+
+          = render :partial => "devise/shared/links"

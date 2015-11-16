@@ -1,0 +1,40 @@
+<div id="failed-new-donations">
+<% if @failed_new_donations.blank? %>
+    <div class="section">
+      There are no failed new donations at this time.
+    </div>
+<% else %>
+    <%= form_tag dismiss_failed_new_donations_admin_donations_path(:selected => "1", :page => params[:page]), method: "PUT", id: "dismiss-new-donations-form" do %>
+        <table class="donations">
+          <tr>
+            <th>Dismiss</th>
+            <th>Assigned To</th>
+            <th>Assigned Date</th>
+            <th>Donation ID</th>
+            <th>Page Sequence name</th>
+            <th>User</th>
+            <th>Amount</th>
+            <th>Frequency</th>
+            <th>Donation Fail Time</th>
+            <th>Failed Reason</th>
+          </tr>
+          <% @failed_new_donations.each do |donation| %>
+              <tr>
+                <td class="dismiss"><%= check_box_tag "donations[#{donation.id}][dismissed]" %></td>
+                <td class="Assigned_to"> <%= donation.assigned_to.nil? ? "" : "#{donation.assigned_to}" %></td>
+                <td class="Assigned_date"><%= donation.assigned_date.nil? ? "" : "#{remove_second_and_time_zone donation.assigned_date}" %></td>
+                <td class="Donation_id"><%= "#{donation.id}"%></td>
+                <td class="page-sequence-id"><%= donation.page.page_sequence.name %></td>
+                <td class="user"><%= link_to donation.user.nil? ? "" : "#{donation.user.full_name} (#{donation.user.email})", assign_flagged_donation_admin_donation_path(donation), :method => :put %></td>
+                <td class="amount"><%= number_to_currency(donation.amount_in_dollars) %></td>
+                <td class="frequency"><%= donation.frequency %></td>
+                <td class="donation-time"><%= remove_second_and_time_zone donation.created_at %></td>
+                <td class="failed-reason"><%= donation.transactions.empty? || donation.transactions.last.message.nil? ? "Unknown" : donation.transactions.last.message %></td>
+              </tr>
+          <% end %>
+        </table>
+        <%= submit_tag "Dismiss selected" %>
+        <%= will_paginate @failed_new_donations, :params => { :selected => "1" } %>
+    <% end %>
+<% end %>
+</div>

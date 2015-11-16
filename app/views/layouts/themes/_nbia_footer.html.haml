@@ -1,0 +1,24 @@
+- domain = "https://www.nobusinessinabuse.org"
+- strapline = "Companies are making billions profiting from the pain of asylum seekers."
+- email_body = "Check out #{domain} for ways to help end the abuse."
+- tweet_text = "Help stop corporations profiting from the abuse of people seeking asylum #NoBusinessInAbuse #{domain}"
+
+%footer
+  %section.notes
+    .container
+      = image_tag "themes/nbia/footer_logo_w_name.svg", alt: "No business in abuse"
+
+      .buttons
+        = link_to "https://www.facebook.com/sharer/sharer.php?u=#{CGI.escape domain}", target: "_blank" do
+          %i.icon-large.icon-facebook
+        = link_to "https://twitter.com/home?status=#{CGI.escape tweet_text}", target: "_blank" do
+          %i.icon-large.icon-twitter
+        = link_to "mailto:?subject=#{strapline}&body=#{email_body}" do
+          %i.icon-large.icon-pencil
+
+      .copyright
+        &copy;
+        = Date.today.year
+        GetUp! All rights reserved.
+        Authorised by #{AppConstants.authorised_by},
+        #{AppConstants.office_address}.

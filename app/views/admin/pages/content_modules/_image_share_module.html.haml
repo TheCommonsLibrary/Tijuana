@@ -1,0 +1,47 @@
+%div
+  = f.label :title, 'Title', :class => "req"
+  = f.text_field :title
+  = f.label :content, 'Blurb'
+  = f.text_area :content, :rows => 4
+  = f.label :image_src, 'Image Source URL', :class => "req"
+  = f.text_field :image_src, class: 'image-src'
+  .info
+    e.g. https://www.getup.org.au/assets/public/image-share/tax-dodgers.png
+  
+  = field_set_tag 'Caption' do
+    = f.label :caption_default, 'Default Text'
+    = f.text_field :caption_default
+    = f.label :caption_max_length, 'Max length'
+    = f.text_field :caption_max_length
+    = f.label :caption_x, 'X position'
+    = f.text_field :caption_x
+    = f.label :caption_y, 'Y position'
+    = f.text_field :caption_y
+    = f.label :caption_right_padding, 'Right padding'
+    = f.text_field :caption_right_padding
+    = f.label :font_url, 'Font URL'
+    = f.text_field :font_url
+    = f.label :font_size_px, 'Font Size (pixels)'
+    = f.text_field :font_size_px
+    = f.label :font_family, 'Font Family'
+    = f.text_field :font_family
+    = f.label :font_colour, 'Font Colour (RGBHEX)'
+    = f.text_field :font_colour
+    = f.label :caption_uppercase, 'Make text all caps?'
+    = f.check_box :caption_uppercase
+
+  = field_set_tag 'Facebook metadata' do
+    = f.label :fb_page_name, 'FB Page Name'
+    = f.text_field :fb_page_name
+    = f.label :fb_page_description, 'FB Page Description'
+    = f.text_field :fb_page_description
+    = f.label :fb_page_caption, 'FB Page Caption'
+    = f.text_field :fb_page_caption
+
+  = f.label :disable_user_details, 'Disable user details'
+  = f.check_box :disable_user_details
+  = f.label :facebook_app_id, 'Facebook App ID'
+  = f.text_field :facebook_app_id
+  .info
+    If empty, will use the default GetUp! Image Share App ID: #{AppConstants.facebook_image_share_app_id}
+  = render :partial => "admin/pages/content_modules/activity_stream_templates", :locals => {:f => f}

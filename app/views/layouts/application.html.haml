@@ -1,0 +1,12 @@
+= render :partial => "layouts/head"
+%body{:id => body_id, :class => body_class, 'data-environment' => Rails.env}
+  #skip-to-main-content
+    %a{href:"#content"}Skip to main content
+  = render :partial => "layouts/header"
+  #content
+  = yield
+  = render :partial => "layouts/footer"
+  .device-phone.visible-phone
+  .device-tablet.visible-tablet
+  .device-desktop.visible-desktop
+  = render :partial => "layouts/footer_js"

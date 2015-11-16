@@ -1,0 +1,13 @@
+- if call_mp_module.respond_to?(:schedule_calls?) && call_mp_module.schedule_calls?
+  = fields_for :mp do |f|
+    = f.label :start_time, "When will you call?"
+    %select{:id => "#{f.object_name}_start_time", :name => "#{f.object_name}[start_time]"}
+      %option
+      - call_mp_module.time_slices.in_groups_of(call_mp_module.time_slices_in_a_day).each_with_index do |slices, index|
+        - if index != 0
+          %optgroup{label: "----------"}
+        - slices.each do |slice_from, slice_to|
+          %option{disabled: !call_mp_module.slice_available?(targets, slice_from), :value => slice_from, :'data-call-reminder' => format_call_reminder(slice_from)}
+            #{format_time_slice slice_from}
+            - if user = call_mp_module.slice_taken_by(targets, slice_from)
+              &#x260E #{user.greeting}

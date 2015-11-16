@@ -1,0 +1,125 @@
+<div id="state-territory-tip" style="display:none;">
+  <p><strong>Select one or more State or Territory</strong> to filter members who live in one of those selected States/Territories.</p>
+  <p><strong>OR Tick Unknown State or Territory</strong> to filter members who have no postcode records.</p>
+  <p>By selecting the <i>"is not"</i> you will filter members who do not live in any of the selected States/Territories OR all members who have postcode records.</p>
+</div>
+
+<div id="domain-tip" style="display:none;">
+  <p>Enter <strong>only 1 domain</strong> (@ is optional)</p>
+</div>
+
+<div id="donation-frequency-tip" style="display:none;">
+  <p>This filter will select members who are currently active donors at the time of cutting the list. You can select multiple frequencies (ie. 'monthly' and 'weekly').</p>
+  <p>The <i>"is not"</i> option will filter members who are not active donors for selected frequencies (ie. 'is not' and 'one off' will give you all current recurring donors).</p>
+  <p>Campaign ids and Page ids are an optional additional filter. Multiple ids can be entered, separated by commas. When Page ids and Campaign ids are both entered, this filter will find donors to both lists.</p>
+  <p>You can also select users who are currently <b>active recurring donors.</b> If <b>One Off Donation</b> is selected, this option is ignored.</p>
+</div>
+
+<div id="donation-recurring-donors-tip" style="display:none;">
+  <p><strong>Choose one of following options</strong></p>
+  <p><strong>currently active donors:</strong> donors who currently have a recurring donation.</p>
+  <p><strong>no longer active donors:</strong> donors who had a recurring donation previously, but no longer recurring donors.</p>
+</div>
+
+<div id="electorate-tip" style="display:none;">
+  <p>Type one or more electorates to filter members who live in one of those electorates.</p>
+  <p>Members without postcodes are excluded regardless of whether you're using an 'is' or 'is not' rule. Include them in your list by checking the check box.</p>
+</div>
+
+<div id="page-id-tip" style="display:none;">
+  <p>Enter page ids of action pages <strong>separated by a comma</strong>.</p>
+  <p>This filter will select members who took more than the entered number of action <strong>on any of those pages</strong>(eg. members that have taken 3 actions out of 5 pages.)</p>
+  <p>The <i>"is not"</i> option combined with a series of page ids will filter members who did not take that number of actions across those pages. This needs to
+  be combined with an email status filter that selects relevant members (ie. those that have viewed the emails regarding these pages), otherwise the full list will be returned</p>
+</div>
+
+<div id="email-id-tip" style="display:none;">
+  <p>Enter a list of email ids <strong>separated by a comma</strong>.</p>
+  <p>This filter will select the users that have <strong>any</strong> of the emails in the selected state.</p>
+  <p>The <i>"is not"</i> option combined with a series of emails ids will select those users that have <strong>none</strong> of the emails in the selected state.</p>
+</div>
+
+<div id="tag-tip" style="display:none;">
+  <p>Enter tags separated by a comma.</p>
+  <p>This filter will select members who are tagged with <strong>all</strong> comma separated tags</p>
+</div>
+
+<div id="emailaddress-tip" style="display:none;">
+  <p>Enter one email address per line</p>
+</div>
+
+<div id="email-frequency-tip" style="display:none;">
+  <p>Filter members depending on the number of recent emails they have received.</p>
+  <p><strong>Note:</strong> number of recent emails is calculated from the time of send.</p>
+</div>
+
+<div id="no-email-sent-today-tip" style="display:none;">
+  <p>Only include members who have not received any emails since 12:00am this morning.</p>
+</div>
+
+<div id="tokens-tip" style="display:none;">
+  <p>One token per line. Can copy token column from spreadsheet.</p>
+</div>
+
+<div id="campaign-tip" style="display:none;">
+  <p>Filter members who took actions on any page of the selected campaign(s).</p>
+  <p><strong>Select 1 or more campaign(s)</strong></p>
+  <p>By selecting the <i><strong>"is not"</strong></i> you will filter members who did not take action on any of the selected campaigns.</p>
+  <p>By selecting the <i><strong>"is"</strong></i> you will filter members who took action on any of the selected campaigns.</p>
+</div>
+
+<div id="pillar-tip" style="display:none;">
+  <p>Filter members who took actions on any page of the campaigns in the selected pillar(s).</p>
+  <p><strong>Select 1 or more pillar(s)</strong></p>
+  <p>By selecting the <em><strong>"is not"</strong></em> you will filter members who did not take action on any of the selected pillars' campaigns.</p>
+  <p>By selecting the <em><strong>"is"</strong></em> you will filter members who took action on any of the selected pillars' campaigns.</p>
+</div>
+
+<div id="custom-sql-tip" style="display:none;">
+  <p>Custom SQL query must begin with a SQL 'SELECT' statement. It must not end with a ';' character.</p>
+  <p>The query MUST return user ids (I.e. SELECT u.id from users u) </p>
+</div>
+
+<div id="low-volume-tip" style="display:none;">
+  <p>Low volume members have indicated a desire to receive less email from GetUp.</p>
+  <p>Please respect this by only including low volume users in lists for the most important emails.</p>
+</div>
+
+<div id="money-member-value-tip" style="display:none;">
+  <p>Filter member by the Money Member Value.</p>
+  <p>This can be done by either:</p>
+  <p>a) Filter members who had a member value type within the given range.</p>
+  <p>b) Filter members who had a member value type by setting a custom range. You can enter a lower limit and/or an upper limit.</p>
+  <p>By selecting the <i><strong>"is not"</strong></i> you will filter members who do not have a member value in the selected range.</p>
+  <p>By selecting the <i><strong>"is"</strong></i> you will filter members who do have a member value in the selected range.</p>
+</div>
+
+<div id="time-member-value-tip" style="display:none;">
+  <p>Filter member by the Time Member Value.</p>
+  <p>This can be done by either:</p>
+  <p>a) Filter members who had a member value type within the given range.</p>
+  <p>b) Filter members who had a member value type by setting a custom range. You can enter a lower limit and/or an upper limit.</p>
+  <p>By selecting the <i><strong>"is not"</strong></i> you will filter members who do not have a member value in the selected range.</p>
+  <p>By selecting the <i><strong>"is"</strong></i> you will filter members who do have a member value in the selected range.</p>
+</div>
+
+<div id="voice-member-value-tip" style="display:none;">
+  <p>Filter member by the Voice Member Value.</p>
+  <p>This can be done by either:</p>
+  <p>a) Filter members who had a member value type within the given range.</p>
+  <p>b) Filter members who had a member value type by setting a custom range. You can enter a lower limit and/or an upper limit.</p>
+  <p>By selecting the <i><strong>"is not"</strong></i> you will filter members who do not have a member value in the selected range.</p>
+  <p>By selecting the <i><strong>"is"</strong></i> you will filter members who do have a member value in the selected range.</p>
+</div>
+
+<div id="postcode-tip" style="display: none">
+  <p>Type one or more postcodes to filter members who live in one of those postcodes.<p>
+  <p>Add within kms to filter members who live within the specified kms of the postcodes entered.</p>
+</div>
+
+<div id="unknown-postcode-tip" style="display: none">
+  <p>Tick Unknown postcode to filter members who have no postcode records.</p>
+</div>
+<div id="quarantine-tip" style="display: none">
+  <p>Tick to include members who are currently quarantined.</p>
+</div>

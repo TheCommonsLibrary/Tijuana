@@ -1,0 +1,33 @@
+#lookup-button-location input.lookup {
+  text-align: left;
+
+}
+
+.newlook {
+  input:focus, select:focus{
+    outline: none;
+  }
+
+  .details-box, .content-box, .donation-history-box {
+    .small1 {
+      width: 162px;
+    }
+    .small2 {
+      width: 201px;
+    }
+    .small3 {
+      width: 150px;
+    }
+    .small4 {
+      width: 65px;
+    }
+    .small5 {
+      width: 80px;
+    }
+    .select {
+    }
+  }
+  .details-box .info, .content-box .info, .donation-history-box .info {
+    padding: 3px 0 3px 8px;
+  }
+}

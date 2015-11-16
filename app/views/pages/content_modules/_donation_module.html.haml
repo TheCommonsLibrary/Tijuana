@@ -1,0 +1,14 @@
+- # VANITY: personalised_amounts
+- @identified_user_from_token_or_cookie = @token_user || user_from_cookie
+- if content_module.include_in_relative_amounts_ab_test?(@identified_user_from_token_or_cookie)
+  - ab_test :personalised_amounts_v4
+
+- track_analytics_dimension 'Donation Mode', 5, content_module.last_quick_donation ? 'Quick Donate' : 'Full Donate'
+
+- if content_module.multistep_form_shown?
+  = render partial: "/pages/content_modules/multistep_donation/form", :locals => {:content_module => content_module}
+- else
+  - if defined?(address_validation_partial_name)
+    = render partial: "/pages/content_modules/conventional_donation_form", :locals => {:content_module => content_module, :section => section, :address_validation_partial_name => address_validation_partial_name}
+  - else
+    = render partial: "/pages/content_modules/conventional_donation_form", :locals => {:content_module => content_module, :section => section}

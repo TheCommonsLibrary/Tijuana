@@ -1,0 +1,52 @@
+- target_list_module = content_module
+.well
+  %h2
+    = target_list_module.title.upcase
+  =raw render_html(target_list_module.content)
+  %hr
+
+  = form_errors(target_list_module.user_email)
+
+  = form_tag(take_action_path(@campaign, @page_sequence, @page), :id => "action-form", :validate => true) do
+    = hidden_field_tag :module_id, content_module.id
+    = email_tracking_field
+
+    .row
+      .narrow-details
+        = label_tag "list_target", "To"
+        = select_tag "list_target", options_from_collection_for_select(target_list_module.list_emails, :first, :first, target_list_module.list_target), { :prompt => "--#{target_list_module.target_placeholder}--" }
+        = field_errors(target_list_module.user_email, :list_target)
+    %hr
+    = render :layout => "pages/form_with_user_lookup", :locals => {:content_module => content_module} do
+      = fields_for target_list_module.user_email do |m|
+        %label= 'Subject'
+        = m.text_field :subject, :placeholder => EmailModuleHelper.subject_placeholder(content_module), maxlength: '255'
+
+        = render :partial => "pages/email_talking_points", :locals => {:content_module => content_module}
+
+        %label= 'Email Body'
+        = m.text_area :body, :placeholder => EmailModuleHelper.body_placeholder(content_module)
+
+        %span.help-block
+          NB: Your details will be added to the bottom of the email sent.
+
+        = m.label :cc_me, {class: 'checkbox send-copy', for: "user_email_cc_me"} do
+          = m.check_box :cc_me, {class: 'full'}
+          Send me a copy
+
+        - if target_list_module.has_custom? :form_fields
+          .custom-fields.custom-fields-above
+            = fields_for target_list_module.user_email do |f|
+              = render_custom_form_fields f, target_list_module.custom(:form_fields), target_list_module
+          .clearfix
+
+      %hr
+      = button_tag target_list_module.button_text, :class => "btn btn-primary btn-large btn-full fb-like-above", :disable_with => 'Please Wait...'
+      %hr
+
+:javascript
+  $(function() {
+    $('#action-form').attachAlertValidation(emailFormValidation({ placeholders: #{content_module.prompt_as_placeholder?}}));
+    TalkingPoints().enable('textarea[name="user_email[body]"]');
+  });
+

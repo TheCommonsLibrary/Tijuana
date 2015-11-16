@@ -1,0 +1,102 @@
+= form_errors(f.object)
+= f.hidden_field :id if f.object.persisted?
+= f.hidden_field :payment_method, :class => 'payment-method'
+
+- if donation_module.has_custom? :form_fields
+  .custom-fields.custom-fields-above
+    = fields_for donation_module.donation do |f|
+      = render_custom_form_fields f, donation_module.custom(:form_fields), donation_module
+  .clearfix
+.tabbable
+  %ul.nav.nav-tabs
+    %li.active
+      = donation_method_tab_link('credit', 'Credit Card', :class => 'donation-verbose')
+      = donation_method_tab_link('credit', 'Card', :class => 'donation-curt')
+    - unless donation_module.paypal_disabled?
+      %li.js-tab.hide
+        = donation_method_tab_link('paypal', 'Paypal')
+    %li.js-tab.hide#cheque-tab
+      = donation_method_tab_link('cheque', 'Cheque')
+    - if donation_module.quick_donate_enabled?
+      %li.js-tab.hide
+        = donation_method_tab_link('quick-donate', 'Quick Donate', :class => 'donation-verbose')
+        = donation_method_tab_link('quick-donate', 'Quick', :class => 'donation-curt')
+    - if !donation_module.paypal_disabled?
+      %li.no-js-tab
+        = link_to "PayPal", paypal_page_path(@campaign, @page_sequence, @page), :"data-payment-method" => "paypal"
+    %li.no-js-tab
+      = link_to "Cheque", cheque_page_path(@campaign, @page_sequence, @page), :"data-payment-method" => "cheque"
+  .tab-content
+    #credit.tab-pane.active
+      .tab-content-wrap
+        %label.pull-right.credit-secure-icon
+          %i.icon-lock
+          SECURE
+        .input-append
+          = render :partial => 'donation_amounts', :locals => {:f => f, :donation_module => donation_module, :suffix => 'credit', :disabled => f.object.quick_donation?}
+        %label Credit Card Number
+        = f.text_field :card_number, :placeholder => "Credit Card Number"
+        = field_errors(f.object, :card_number)
+
+        .clearfix
+        .verbose.card-types
+          - Donation::CREDIT_CARD_TYPES.each do |card_type|
+            %img{ :class => card_type, :src => image_path("public/card-types.#{card_type}.png") }
+        %label Name on Credit Card
+        = f.text_field :name_on_card, :placeholder => "Name on Credit Card"
+        = field_errors(f.object, :name_on_card)
+
+        .controls.controls-row.expiry
+          %label Expiry
+          = f.select(:card_expiry_month, (01..12).to_a.map { |i| i.to_s.rjust(2, '0') }.insert(0, 'Month'), :selected => f.object.card_expiry_month.to_s.rjust(2, '0'))
+          = f.select(:card_expiry_year, ((Date.today.year..Date.today.year + 7).to_a.insert(0, 'Year')), :selected => f.object.card_expiry_year)
+          = field_errors(f.object, :card_expiry_month)
+          = field_errors(f.object, :card_expiry_year)
+
+        %label.cvv.tooltipped{ :rel => 'tooltip', 'data-placement' => 'right', 'data-original-title' => 'The three digit code on the back of your card' }
+          CVV
+          %i.icon-info-sign
+        = f.text_field(:card_cvv, :maxlength => 4, :placeholder => "CVV", :class => 'input-mini')
+        = field_errors(f.object, :card_cvv)
+    #paypal.tab-pane
+      .tab-content-wrap
+        %div.paypal-secure-icon
+          %label.pull-right
+            %i.icon-lock
+            SECURE
+        %p
+          How much would you like to contribute?
+        .input-append
+          = render :partial => 'donation_amounts', :locals => {:f => f, :donation_module => donation_module, :suffix => "paypal", :disabled => true }
+
+
+    #cheque.tab-pane
+      .tab-content-wrap
+        = render :partial => 'pages/pay_by_cheque'
+
+    #quick-donate.tab-pane
+      .tab-content-wrap
+        = f.hidden_field :quick_donation, value: f.object.quick_donation
+        .invitation{ !quick_donate_card_info_if_quickdonate_cookie_for_user(@user).present? ? {} : {:style=>"display:none"}}
+          To use quick donate, you need to first save your payment information. You will be given an opportunity to do this after making a credit card donation.
+        .quick-donate-form.active{ quick_donate_card_info_if_quickdonate_cookie_for_user(@user).present? ? {} : {:style=>"display:none"}}
+          %div.quick-donate-secure-icon
+            %label.pull-right
+              %i.icon-lock
+              SECURE
+          .input-append
+            = render :partial => 'donation_amounts', :locals => {:f => f, :donation_module => donation_module, :suffix => 'quick_donate', :disabled => !f.object.quick_donation? }
+          %label Payment Information
+          %p
+            %span.card-info
+              = quick_donate_card_info_if_quickdonate_cookie_for_user(@user)
+            = donation_method_tab_link('credit', 'Wrong name or card? Click here to reset', :class => 'quickdonate-control reset-quick-donate')
+
+.electoral-act
+  Donations of #{AppConstants.legal_disclosure_amount} or more (indexed annually) may be subject to disclosure to the Australian Electoral Commission under the Commonwealth Electoral Act 1918.
+
+:javascript
+  $(function() {
+    var actionForm = $('#action-form');
+    tijuana.enableConventionalQuickDonateLogout(actionForm);
+  });

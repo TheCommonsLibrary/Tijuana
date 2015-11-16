@@ -1,0 +1,35 @@
+common: &common
+  adapter: mysql2
+  encoding: utf8
+  pool: 10
+  url: <%= ENV['DATABASE_URL'] %>
+
+development: &development
+  <<: *common
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+  database: tijuana_development
+development_readonly:
+  <<: *development
+  username: getup_readonly
+
+test: &test
+  <<: *development
+  database: tijuana_test
+test_readonly:
+  <<: *test
+cucumber:
+  <<: *test
+
+showcase: &showcase
+  <<: *common
+showcase_readonly:
+  <<: *showcase
+  url: <%= ENV['READONLY_DATABASE_URL'] %>
+
+production: &production
+  <<: *common
+production_readonly:
+  <<: *production
+  url: <%= ENV['READONLY_DATABASE_URL'] %>

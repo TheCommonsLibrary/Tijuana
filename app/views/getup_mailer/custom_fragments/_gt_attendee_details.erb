@@ -1,0 +1,35 @@
+<% event = Event.all(:joins => :attendees, :conditions => {:events_attendees => { :attendee_id => user.id }}).first %>
+<% if !event.blank? %>
+<table>
+  <tr>
+    <td>Event Name</td>
+    <td><%= event.name %></td>
+  </tr>
+  <tr>
+    <td>Host</td>
+    <td><%= event.host.name %></td>
+  </tr>
+  <tr>
+    <td>Host Phone</td>
+    <td><%= event.phone %></td>
+  </tr>
+  <tr>
+    <td>Host Email</td>
+    <td><%= event.host.email %></td>
+  </tr>
+  <tr>
+    <td>Time</td>
+    <td><%= event.time_str %> on Thursday 21st March 2013</td>
+  </tr>
+  <tr>
+    <td>Address</td>
+    <td><%= event.address %></td>
+  </tr>
+  <tr>
+    <td colspan="2">Notes</td>
+  </tr>
+  <tr>
+    <td colspan="2"><%= event.host_notes %></td>
+  </tr>
+</table>
+<% end %>

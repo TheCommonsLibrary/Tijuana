@@ -1,0 +1,19 @@
+#donation-buttons.clearfix
+  - amounts.each_with_index do |amount, i|
+    - checked = i == 1
+    - amount_as_currency = "+#{number_to_currency(amount.to_f, strip_insignificant_zeros: true)}"
+    .amount-buttons
+      = radio_button_tag amount_attribute, amount, checked
+      = label_tag "#{amount_attribute}_#{amount}", amount_as_currency
+
+  #other-amount.amount-buttons
+    = radio_button_tag amount_attribute, "other"
+    = label_tag "#{amount_attribute}_other", "+$"
+    = telephone_field_tag :custom_amount_in_dollars, "", placeholder: "Other"
+
+:javascript
+  jQuery(function() {
+    var $donationButtons = $("#donation-buttons");
+    var $otherButton = $donationButtons.find("#other-amount");
+    tijuana.donationButtons($donationButtons, $otherButton);
+  });

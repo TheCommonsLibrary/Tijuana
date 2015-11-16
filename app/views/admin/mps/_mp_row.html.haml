@@ -1,0 +1,9 @@
+%tr
+  - mp_attributes.each do |key|
+    %td
+      - if key == 'party_id'
+        = @parties[mp.electorate.jurisdiction.id].detect{|entry| mp[key] == entry.first}.try(:second)
+      - elsif key == 'electorate_id'
+        = "#{mp.electorate.jurisdiction} - #{mp.electorate}"
+      - else
+        = mp[key]

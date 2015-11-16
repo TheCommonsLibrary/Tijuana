@@ -1,0 +1,10 @@
+- @user.emails_received_from_trigger_service.each do |email|
+  - Donation.where(id: email.triggered_by_id).each do |donation|
+    %li
+      = remove_second_and_time_zone email.sent_date
+      |
+      = email.key.humanize
+      = "-"
+      #{number_to_currency(donation.amount_in_dollars)} #{donation.frequency} for #{get_campaign_name_by_donation(donation)}
+      |
+      = link_to "Update Card", dashboard_update_card_url(email.triggered_by_id)

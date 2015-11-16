@@ -1,0 +1,10 @@
+- content_for :extra_js do
+  = javascript_include_tag 'https://d68ej2dhhub09.cloudfront.net/scripts/iframeResizer.contentWindow.min.js'
+  = javascript_include_tag 'embedded'
+= render 'layouts/themes/getup2018/head'
+= render 'common/flash_notifications'
+= render 'common/no_script'
+
+%body{id: body_id, class: body_class(['embed'])}
+  = yield
+  = render "layouts/footer_js"

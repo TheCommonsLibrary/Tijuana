@@ -1,0 +1,93 @@
+var GetUp = GetUp || {};
+GetUp.Dashboard = GetUp.Dashboard || {};
+
+GetUp.Dashboard.UserForm = (function ($) {
+
+    function UserForm(options) {
+        this.formSelector = options.formSelector;
+        this.url = options.url;
+        this.ajaxDataType = options.ajaxDataType || "text";
+        this.submitText = options.submitText || "Save";
+        this.processingText = options.processingText || "Saving...";
+    }
+
+    UserForm.prototype.init = function () {
+        $(this.formSelector).submit(function (e) {
+            e.preventDefault();
+            return false;
+        });
+        this._setupSubmitHandler();
+    };
+
+    UserForm.prototype._setupSubmitHandler = function () {
+        var self = this;
+        $(this.formSelector + ' input[type=submit]').click(function (e) {
+            var form = $(self.formSelector);
+            $(self.formSelector + ' input[type=submit]').val(self.processingText);
+            $.ajax({
+                type:'PUT',
+                url:self.url,
+                data:form.serialize(),
+                success:self._successHandler(),
+                error:self._errorHandler(),
+                dataType:self.ajaxDataType
+            });
+        });
+    };
+
+    UserForm.prototype._successHandler = function () {
+        var self = this;
+        return function (data) {
+            $(self.formSelector + ' input[type=submit]').val(self.submitText);
+            self._gritter_success('Your personal details have been updated!');
+        };
+    };
+
+    UserForm.prototype._errorHandler = function () {
+        var self = this;
+        return function (request, error) {
+            $(self.formSelector + ' input[type=submit]').val(self.submitText);
+            try{
+                self._gritter_error(self._formatErrors($.parseJSON(request.responseText)));
+            }catch(e){
+                self._gritter_error("Oops!! Something went wrong while trying to make a request. Request aborted!");
+            }
+        };
+    };
+
+    UserForm.prototype._formatErrors = function(thisError) {
+        var errorString = '';
+        $.each(thisError, function (key, value) {
+            errorString += key + " " + value + ". ";
+        });
+        return errorString;
+    };
+
+    UserForm.prototype._gritter_error = function(errors){
+        $.gritter.add({image:"<%= asset_path('common/lib/gritter/error.png') %>", sticky:true, title:'Error', text: errors});
+    };
+
+    UserForm.prototype._gritter_success = function(msg){
+        $.gritter.add({image:"<%= asset_path('common/lib/gritter/success.png') %>", sticky:true, title:'Success', text: msg});
+    };
+
+    return UserForm;
+})($);
+
+function selectOverlay(overlayDiv, selectOption) {
+    $(overlayDiv).text($(selectOption + " option:selected").text());
+
+    $(selectOption).change(function () {
+        var str = $(selectOption + " option:selected").text();
+        $(overlayDiv).text(str);
+    });
+}
+
+function hide_show_postcode() {
+    var str = $("#user_country_iso option:selected").val();
+    if (str === 'AU') {
+        $('#postcode_holder').show('slow');
+    } else {
+        $('#postcode_holder').hide('slow');
+    }
+}

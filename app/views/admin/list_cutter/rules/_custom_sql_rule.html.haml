@@ -1,0 +1,2 @@
+.tooltip{"data-tip" => "custom-sql-tip"}
+  = f.text_area :custom_sql, :value => rule.custom_sql || "SELECT u.id \nFROM users u", :size => "40x8"

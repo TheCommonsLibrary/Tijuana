@@ -1,0 +1,9 @@
+- if event
+  What: #{event.name}
+  When: #{format_event_date_time(event)}
+  Where: #{event.address}
+  Wear: Bright heatwave coloured clothing - reds, oranges, yellows
+  Bring: A hat, water bottle and lots of friends! 
+  RSVP and map: #{add_tracking_hash_to_links(event_url(event), user, email, recipients_for_test)}
+- else
+  != add_tracking_hash_to_links(default_value, user, email, recipients_for_test)

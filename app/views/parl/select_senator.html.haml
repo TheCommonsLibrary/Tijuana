@@ -1,0 +1,7 @@
+#select-senator-message
+  - if @target
+    = hidden_field_tag :targets, @target.email
+    = render :partial => 'mps/schedule_call_field', :locals => { :call_mp_module => @mp_module, :targets => @target.email }
+    = raw evaluate_action_message(@mp_module, @target)
+  - else
+    = raw @msg

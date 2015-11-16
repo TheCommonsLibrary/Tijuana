@@ -1,0 +1,8 @@
+- self.flash_notifications.each do |key, msg|
+  .flash
+    = js "$(function() {" + gritter_message(key, msg) + "});"
+
+- f = flash[:notify_user]
+- if f
+  .flash
+    = js "$(function() {" + add_gritter(f[:message], :image=>asset_path("common/lib/gritter/#{f[:image].to_s}.png"), :sticky=>true, :title=>f[:title]) + "});"

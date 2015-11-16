@@ -1,0 +1,277 @@
+// These are repeated here as this is a standalone css that is server as part of scorecards
+$getup_orange: #FE3C1F;
+$getup_orange_light: #FF6F52;
+$getup_orange_lighter: #FFECE9;
+$getup_orange_pale: #f06822;
+$getup_dark_grey: #4a4c4c;
+$getup_light_grey: #b4b4b4;
+$getup_blue: #2098f5;
+$getup_grey: #b1b6b9;
+
+#scorecard-explanation{
+  line-height:1.2;
+}
+
+.scorecard {
+  color: $getup_dark_grey;
+
+  .navbar-brand {
+    padding-top: 5px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  
+  #policy-brand {
+    padding-top: 15px;
+    margin-left: 10px;
+  }
+
+  .navbar-toggle {
+    margin-right: 0px;
+  }
+
+  h1 {
+    font-family: "Adelle", serif;
+  }
+
+  strong {
+    font-weight: normal;
+  }
+  font-size: 17px;
+
+  table {
+    margin: 0px;
+    td {
+      padding: 6px !important;
+      &.score {
+        color: black;
+      }
+    }
+  }
+
+  padding-bottom: 50px;
+
+  @media (min-width: 768px) {
+    .col-md-2 {
+      width: 18.666667%;
+    }
+    .col-sm-2 {
+      &.no-width {
+        width: 0;
+      }
+      width: 18.666667%;
+    }
+
+    .pull-right-768 {
+      float: right;
+    }
+  }
+
+  .key {
+    max-width: 350px;
+    td.score {
+      color: $getup_dark_grey;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .good-bad {
+      width: 47%;
+      border-bottom: 2px solid grey;
+      letter-spacing: normal;
+    }
+
+    .unclear {
+      width: 53%;
+      border-left: 2px solid grey;
+      letter-spacing: normal;
+    }
+
+    .description {
+      text-transform: uppercase;
+      line-height: 1;
+      font-weight: bold;
+      letter-spacing: normal;
+    }
+
+    .elaboration {
+      text-transform: none;
+      line-height: 1;
+      letter-spacing: normal;
+    }
+
+    &.bordered-table {
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      border: 2px solid grey;
+      border-collapse: separate;
+      margin-bottom: 0px;
+      margin-top: 10px;
+      td {
+        border-top: none;
+      }
+    }
+  }
+
+  h5 {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 15px;
+  }
+
+  .topic-header {
+    background-color: $getup_dark_grey;
+    color: white;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 10px;
+
+    .quote {
+      line-height: 20px;
+      font-size: 16px;
+    }
+    .table-height {
+      display: table;
+      height: 40px;
+    }
+
+    .middle-cell {
+      vertical-align: middle;
+      display: table-cell;
+    }
+
+    h3 {
+      font-family: "Adelle", "Bookman Old Style", "Serifa BT", "URW Bookman L", "itc bookman", times, serif;
+      font-size: 22px;
+      position: relative;
+      div {
+        position: absolute;
+        top: -70px;
+      }
+    }
+
+    p {
+      margin: 0px;
+    }
+  }
+
+  h5 {
+    font-size: 15px;
+  }
+
+  .party, .no-policy {
+    color: grey;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .rating {
+    color: $getup_orange_pale;
+    font-size: 17px;
+  }
+
+  .no-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .score {
+    letter-spacing: 2px;
+    font-size: 17px;
+
+    div {
+      float:left;
+    }
+
+    .good {
+      color: $getup_orange_pale;
+    }
+
+    .bad, .icon-circle-blank {
+      color: $getup_grey;
+    }
+
+    .score-icon {
+      display: inline;
+    }
+
+    .icon-flip-horizontal {
+      margin-right: 2px;
+    }
+
+    .right {
+      margin-right: -6px;
+    }
+
+    .score-half-left {
+      overflow: hidden;
+      width: 8px;
+    }
+
+    .none {
+      width: 18px;
+    }
+
+    .score-half-right {
+      overflow: hidden;
+      margin-right: 1px;
+      width: 10px;
+      .good {
+        color: $getup-orange-pale;
+      }
+
+      .icon-circle-blank, .icon-star-empty, .icon-star {
+        position: relative;
+        left: -6px;
+      }
+    }
+  }
+
+  .footer {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: grey;
+  }
+
+  .nav > li > a:hover, .nav > li > a:focus {
+    background-color: $getup-orange-light;
+  }
+}
+
+.ie8 {
+  .icon-flip-horizontal {
+    FILTER: progid:DXImageTransform.Microsoft.BasicImage(mirror=1);
+    display: inline-block;
+  }
+}
+
+/* responsive */
+/* Landscape phone to portrait tablet */
+@media (min-width: 768px) and (max-width: 979px) {
+  .scorecard .score {
+    letter-spacing: 0px;
+    .right {
+      margin-right: -2px;
+    }
+    .none {
+      width: 16px;
+    }
+    .score-half-right {
+      margin-right: 0px;
+      width: 8px;
+    }
+    .icon-circle-blank {
+      left: -7px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .score {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,42 @@
+<div id="flagged-recurring-donations">
+<% if @flagged_donations.blank? %>
+    <div class="section">
+      There are no flagged recurring donations at this time.
+    </div>
+<% else %>
+    <%= form_tag dismiss_recurring_donations_admin_donations_path(:page => params[:page]), method: "PUT", id: "recurring-donations-form" do %>
+        <table class="donations">
+          <tr>
+            <th>Dismiss</th>
+            <th>Assigned To</th>
+            <th>Assigned Date</th>
+            <th>Donation ID</th>
+            <th>User</th>
+            <th>Amount</th>
+            <th>Frequency</th>
+            <th>Flagged since</th>
+            <th>Reason</th>
+          </tr>
+          <% @flagged_donations.each do |donation| %>
+              <tr>
+                <td class="dismiss"><%= check_box_tag "donations[#{donation.id}][dismissed]" %></td>
+                <td class="Assigned_to"> <%= donation.assigned_to.nil? ? "" : "#{donation.assigned_to}" %></td>
+                <td class="Assigned_date"><%= donation.assigned_date.nil? ? "" : "#{remove_second_and_time_zone donation.assigned_date}" %></td>
+                <td class="Donation_id"><%= "#{donation.id}"%></td>
+                <td class="user">
+                    <%= link_to donation.user.nil? ? "" : "#{donation.user.full_name} (#{donation.user.email})", assign_flagged_donation_admin_donation_path(donation), :method => :put %>
+                </td>
+                <td class="amount"><%= number_to_currency(donation.amount_in_dollars) %></td>
+                <td class="frequency"><%= donation.frequency %></td>
+                <td class="date"><%= remove_second_and_time_zone donation.flagged_since%></td>
+                <td class="reason"><%= donation.flagged_because%></td>
+              </tr>
+          <% end %>
+        </table>
+        <%= submit_tag "Dismiss selected" %>
+        <%= will_paginate @flagged_donations, :params => { :selected => "0" } %>
+    <% end %>
+
+<% end %>
+</div>
+

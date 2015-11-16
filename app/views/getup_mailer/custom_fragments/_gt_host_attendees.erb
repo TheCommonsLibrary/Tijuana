@@ -1,0 +1,16 @@
+<%= event = Event.where(:get_together_id => 9, :host_id => user.id).first %>
+<% if !event.blank? %>
+<p>There are <%= event.attendees.count %> guests registered to attend your event.</p>
+<% if event.attendees.count > 0 %>
+<p>There names are:</p>
+<ul>
+  <% event.attendees.each do |attendee| %>
+    <li><%= attendee.name %> <a href="mailto:<%= attendee.email %>"><%= attendee.email %></a></li>
+  <% end %>
+</ul>
+<p><i>This list reflects only those guests who have registered for your event through the GetUp website. Guests you have invited yourself may not appear in this list.</i></p>
+<% else %>
+<p><i>Your event has no attendees registered through the GetUp website. Please give us a call on <%= AppConstants.general_contact_number %> if you would like to cancel or merge your event with another GetTogether.</p>
+<p><i>This list reflects only those guests who have registered for your event through the GetUp website. Guests you have invited yourself may not appear in this list.</i></p>
+<% end %>
+<% end %>

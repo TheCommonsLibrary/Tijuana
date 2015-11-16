@@ -1,0 +1,11 @@
+- title "Record Actions / Tag"
+= render :partial => "admin/list_cutter/form", :locals => {:show_save_button => false, :count_complete_function => "listCutterCountComplete" }
+
+= render :partial => "add_external_action"
+
+= render :partial => "add_tag"
+:javascript
+  function listCutterCountComplete() {
+    $("#add-tags form, #add-actions form").append($("#list_id"));
+    $("#add-tags, #add-actions").slideDown();
+  }

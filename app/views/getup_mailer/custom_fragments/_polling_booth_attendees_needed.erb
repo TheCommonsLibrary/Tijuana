@@ -1,0 +1,35 @@
+<% query = %Q{
+select e.id, e.name, e.capacity, count.attendee_count FROM events e
+	JOIN events_attendees ea ON e.id = ea.event_id
+	JOIN users u ON ea.attendee_id = u.id
+	JOIN (
+		SELECT e.id, COUNT(u.id) As attendee_count
+		FROM events e
+		JOIN events_attendees ea ON e.id = ea.event_id
+		JOIN users u ON ea.attendee_id = u.id
+		WHERE e.get_together_id = 13
+		GROUP BY e.id) count ON count.id = e.id
+	WHERE u.id = #{user.id}
+}
+
+ hash = ActiveRecord::Base.connection.select_all(query)[0]
+
+ attendees_needed = (hash['capacity'] - hash['attendee_count'])
+%>
+<% if attendees_needed > 3 %>
+  Can you help? There are just <%= attendees_needed %> more volunteers needed at <%= hash['name'] %>.
+  Please invite your friends to come and join you at <%= hash['name'] %> on Facebook and Twitter and by email:
+  <br/><br/>
+  <a href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.getup.org.au%2Fevents%2F<%= hash['id'] %>" style="margin: 12px; display:inline-block;">
+    <span style="background-color:#3b5998;        -moz-border-radius:8px;-webkit-border-radius:8px;        border-radius:8px;border:2px solid #2b4978;display:inline-block; color:#fff;        font-family:arial;font-size:21px;font-weight:bold;padding:8px 35px;        text-decoration:none; text-align: center;">SHARE ON FACEBOOK</span>
+  </a>
+  <br/>
+  <a href="https://twitter.com/intent/tweet?text=I'm%20helping%20out%20GetUp%20on%20election%20day.%20Can%20you%20join%20me%20at%20<%=url_encode(hash['name'])%>%3F%20https%3A%2F%2Fwww.getup.org.au%2Fevents%2F<%=hash['id']%>" style="margin: 12px; display:inline-block;">
+    <span style="background-color:#56BBFF;        b-moz-border-radius:8px;-webkit-border-radius:8px;        border-radius:8px;border:2px solid #8bb0ef;display:inline-block; color:#fff;        font-family:arial;font-size:21px;font-weight:bold;padding:8px 35px;        text-decoration:none;text-align: center;">SHARE ON TWITTER</span>
+  </a>
+<br/>
+<% else %>
+  Can you help? There are still  more volunteers needed at nearby polling booths. Please invite your friends to volunteer as well on election day:<br /><br />
+  <a href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.getup.org.au%2Fget_togethers%2Fvolunteer-for-getup-on-election-day" style="margin: 12px; display:inline-block;"><span style="background-color:#3b5998;        -moz-border-radius:8px;-webkit-border-radius:8px;        border-radius:8px;border:2px solid #2b4978;display:inline-block; color:#fff;        font-family:arial;font-size:21px;font-weight:bold;padding:8px 35px;        text-decoration:none; text-align: center;">SHARE ON FACEBOOK</span></a> <br />
+  <a href="https://twitter.com/intent/tweet?text=I'm%20helping%20out%20GetUp%20on%20election%20day.%20Can%20you%20join%20me%3F%20https%3A%2F%2Fwww.getup.org.au%2Fget_togethers%2Fvolunteer-for-getup-on-election-day" style="margin: 12px; display:inline-block;"> <span style="background-color:#56BBFF;        b-moz-border-radius:8px;-webkit-border-radius:8px;        border-radius:8px;border:2px solid #8bb0ef;display:inline-block; color:#fff;        font-family:arial;font-size:21px;font-weight:bold;padding:8px 35px;        text-decoration:none;text-align: center;">SHARE ON TWITTER</span></a> <br />
+<% end %>

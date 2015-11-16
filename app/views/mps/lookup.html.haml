@@ -1,0 +1,21 @@
+#mp-lookup-message{class: no_targets_alert_class(@target_options, @target, @user_postcode)}
+  %p= raw @msg
+  - if @target
+    = hidden_field_tag :targets, @target.email
+    = render :partial => 'mps/schedule_call_field', :locals => { :call_mp_module => @mp_module, :targets => @target.email }
+    = raw evaluate_action_message(@mp_module, @target)
+
+- if @target_options != nil
+  %fieldset
+    %legend.screen-reader-only="Please select your representative"
+    - @target_options.each do |t|
+      .email-mp-option
+        %label{:for=>"target_option_#{t.id}", :class=>"radio"}
+          - if t.is_a?(Senator)
+            = radio_button_tag "target_option", t.id, false, :class => "fallback_option"
+            %strong Senator #{t.first_name} #{t.last_name} 
+            (#{t.party.abbreviation})
+          - else
+            = radio_button_tag "target_option", t.id, false, :class => "mp_option"
+            %strong #{t.first_name} #{t.last_name} MP 
+            (#{t.party.abbreviation}) - #{t.electorate.name}

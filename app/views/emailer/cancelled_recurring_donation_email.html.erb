@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <br/>Hi <%= @greeting %>, 
+    <br/>
+    <br/>Thanks for your past support of GetUp.
+    <br/>
+    <br/>Your <%= @frequency %> GetUp Crew donation of  <%= number_to_currency(@donation.amount_in_dollars) %> has been successfully cancelled.
+    <br/>
+    <br/>Your regular donations have powered GetUp’s one million-strong community to have extraordinary impact on the issues that matter the most. 
+    <br/>
+    <br/>From driving rapid-response tactics to building strategic long-term campaigns, you've helped make the GetUp movement a resilient and powerful force to be reckoned with.
+    <br/>
+    <br/>If you have any feedback or questions you can reply to this email or call us on <%= AppConstants.financial_contact_number %>.
+    <br/>
+    <br/>We hope that you can join us again in the future as we can continue to build a more fair, flourishing and just Australia.
+    <br/>
+    <br/>
+    <br/>Thanks again,
+    <br/><%= AppConstants.financial_contact_name %> for the GetUp Strategy Team 
+    <br/>National Director
+  </body>
+</html>

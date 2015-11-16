@@ -1,0 +1,62 @@
+//
+// Responsive: Tablet to desktop
+// --------------------------------------------------
+
+@media (max-width: 979px) {
+
+  .verbose-min-980 {
+    display:none !important;
+  }
+
+  .article.action,
+  .article.aside.action, .article.aside.action#donation {
+    article {
+      article   { @include makeResponsiveColumn(6); }
+      #action   { @include makeResponsiveColumn(6); }
+    }
+  }
+
+  article #standfirst-section {
+    display: none;
+  }
+
+  article #content-modules-section {
+    display: block;
+  }
+  // Short Footer Menu
+  footer .menu .nav li {
+    display:none
+    &.nav-header {
+      display:block;
+    }
+  } 
+
+  .navbar  {
+    margin-bottom:0;
+    .navbar-inner { 
+      min-height:0px;
+    }
+    .btn-navbar {
+    float:none;
+    position:absolute;
+    top:80px;
+    left:20px;
+    }
+  }
+
+  #home {
+    #stories {
+      .storyblurb {
+        h2 {
+          font-size:27px;
+        }
+      }
+      .pillar.first {
+        margin-left:115px;
+      }
+    }
+    .storybox {
+      height:350px;
+    }
+  }
+}

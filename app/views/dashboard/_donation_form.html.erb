@@ -1,0 +1,105 @@
+<div class="content-box">
+  <div class="title-row">
+
+    <div class="title">
+      <h3><%= truncate(recurring_donation.made_to, :length => 50) %></h3>
+    </div>
+
+  </div>
+
+  <% if recurring_donation.payment_method == 'paypal' %>
+      <div class="row">
+        <a href="https://www.paypal.com"><h2>Your <%= recurring_donation.frequency.capitalize %> Paypal donation of $<%= recurring_donation.amount_in_dollars %> can be managed via the Paypal website</h2></a>
+      </div>
+  <% end %>
+
+  <% if recurring_donation.payment_method == 'credit_card' %>
+
+      <%= form_for recurring_donation, :index => recurring_donation.id, :method => 'PUT', :html => {:id => "update-donation-form-#{recurring_donation.id}"} do |f| %>
+
+          <div class="content-row">
+
+            <div class="col1">
+              <div class="holder">
+                <%= f.text_field :amount_in_dollars, :class => "number info small1" %>
+                <label>Amount</label>
+              </div>
+            </div>
+            <div class="col2">
+              <div class="holder">
+                <%= f.select :frequency, options_for_select([["Weekly", :weekly], ["Monthly", :monthly], ["Yearly", :annual]], recurring_donation.frequency), {}, :class => "select small5" %>
+                <label>Frequency</label>
+              </div>
+
+            </div>
+            <div class="col3">
+              <div class="row">
+                <div class="holder card-types">
+                  <% Donation::CREDIT_CARD_TYPES.each do |card_type| %>
+                      <img class=card_type, src='<%= image_path("public/card-types.#{card_type}.png") %>'/>
+                  <% end %>
+                </div>
+
+              </div>
+              <div class="row">
+
+                <div class="holder">
+                  <%= f.text_field :card_number, :value => mask_card_number(recurring_donation.card_last_four_digits), :class => "info small3" %>
+                  <label>Credit Card Number</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="holder">
+                  <%= f.text_field :name_on_card, :class => "info small2" %>
+                  <label>Name</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="holder">
+                  <%= f.select :card_expiry_month, options_for_select(month_options, recurring_donation.card_expiry_month), {}, :class => "select small4" %>
+                  <label>Month</label>
+                </div>
+                <div class="holder">
+                  <%= f.select :card_expiry_year, options_for_select(year_options, recurring_donation.card_expiry_year), {}, :class => "select small4" %>
+                  <label>Year</label>
+
+                </div>
+                <div class="holder">
+                  <%= f.text_field :card_cvv, :value => "XXX", :class => "info small7" %>
+                  <label>CVV</label>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="col4">
+              <div class="holder">
+                <%= submit_tag "Save", :class => "save", :id => "update-donation-#{recurring_donation.id}-submit-button" %>
+              </div>
+
+            </div>
+
+
+          </div>
+
+      <% end %>
+  <% end %>
+
+
+  <% if show_divider %>
+      <hr class="donation-divider"/>
+  <% end %>
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        new GetUp.Dashboard.DonationsForm({
+            formSelector: '#update-donation-form-<%= recurring_donation.id %>',
+            inlineEditingSelector: '#update-donation-form-<%= recurring_donation.id %> input, #update-donation-form-<%= recurring_donation.id %> select',
+            url: '<%= recurring_donation.blank? ? "" : donation_path(recurring_donation)%>',
+            ajaxDataType: 'json',
+            validate: true,
+            donationId: <%= recurring_donation.id %>
+        }).init();
+    });
+</script>

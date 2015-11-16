@@ -1,0 +1,54 @@
+-title "Edit donation"
+.section
+  -if @donation.payment_method == 'paypal'
+    %h3.tooltip{'data-tip' => "paypal-donation-tip"}
+      Paypal Donation Details
+    #paypal-donation-tip{style: "display:none"}
+      %p
+        Paypal donations can only be edited by the user via Paypal.
+    %table
+      %tr
+        %td Frequency
+        %td
+          = @donation.frequency
+      %tr
+        %td Amount
+        %td
+          = @donation.amount_in_dollars
+      %tr
+        %td Paypal Subscription ID
+        %td
+          = @donation.paypal_subscr_id
+      %tr
+  - else
+    %h3.tooltip{'data-tip' => "edit-donation-tip" }
+      Donation Details
+    = form_for([:admin, @donation], :url => {:action => 'update_credit_card_identifiers'}) do |f|
+      = form_errors @donation
+      .edit-donation
+        = f.label :frequency, "Frequency"
+        = f.select :frequency, DonationModule.frequency_select_options.slice!("Donate Once")
+      .edit-donation
+        = f.label :amount_in_dollars, "Amount"
+        = f.text_field :amount_in_dollars
+      .alert.alert-error
+        Editing the credit card last four digits and expiry fields will only update our system. Please also update SecurePay accordingly.
+      .edit-donation
+        = f.label :card_last_four_digits, "Last four digits of Credit Card"
+        = f.text_field :card_last_four_digits, :placeholder => "DDDD", :style => 'width: 85px;'
+      .edit-donation.expiry
+        = f.label :card_expiry_month, 'Expiry month'
+        = f.select(:card_expiry_month, (01..12).to_a.map { |i| i.to_s.rjust(2, '0') }.insert(0, 'Month'), :selected => f.object.card_expiry_month.to_s.rjust(2, '0'))
+        = field_errors(f.object, :card_expiry_month)
+      .edit-donation.expiry
+        = f.label :card_expiry_year, 'Expiry year'
+        = f.select(:card_expiry_year, ((Date.today.year-5..Date.today.year+7).to_a.insert(0, 'Year')), :selected => f.object.card_expiry_year)
+        = field_errors(f.object, :card_expiry_year)
+      .clear#edit-donation-submit
+        = f.submit "Save"
+    #edit-donation-tip{style: "display:none"}
+      %p Edit recurring donation detail for this donation.
+
+#cancel-donation.section
+  %h3 Cancel Donation
+  = render partial: 'cancel', locals: {donation: @donation}

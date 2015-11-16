@@ -1,0 +1,7 @@
+- past_campaign = content_module
+%hr
+.content-module.past-campaign
+  %h2
+    = past_campaign.title
+
+  =raw render_html(past_campaign.content)

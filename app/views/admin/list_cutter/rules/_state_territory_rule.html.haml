@@ -1,0 +1,7 @@
+%fieldset.state-options
+  %legend="Value"
+  = f.select :states_territories, options_for_select(Jurisdiction.select_options_for_states, rule.states_territories), {}, {:multiple => true}
+  .tooltip.list-cutter-tip{"data-tip" => "state-territory-tip"}
+  .or-connector OR
+  = f.label :no_state, "Unknown States and Territories", class: "no-state"
+  = f.check_box :no_state, checked: rule.no_state?

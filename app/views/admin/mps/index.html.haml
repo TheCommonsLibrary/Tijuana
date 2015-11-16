@@ -1,0 +1,21 @@
+- title "MP Editor"
+- content_for :sub_nav do
+  = render "admin/shared/nav_header"
+
+= will_paginate @mps
+
+%table.mp-list
+  %tr
+    - mp_attributes.each do |column|
+      %th= column.humanize
+  - @mps.each do |mp|
+    = render partial: 'mp_row', locals: {mp: mp}
+
+= will_paginate @mps
+
+:javascript
+  $(function() {
+    var gritterSuccessImagePath = '#{image_path('common/lib/gritter/success.png')}';
+    var gritterErrorImagePath = '#{image_path('common/lib/gritter/error.png')}';
+    mpEditor(gritterSuccessImagePath, gritterErrorImagePath);
+  });

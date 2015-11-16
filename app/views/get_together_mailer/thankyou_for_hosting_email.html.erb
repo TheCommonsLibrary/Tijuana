@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+<body>
+  Dear <%= @event.host.first_name ? @event.host.first_name : "Friend" %>,
+  <br><br>
+  Congratulations in creating your GetTogether!
+  <br>
+  You have done 99% of the work. <br><br>Now you simply have to <span style="text-decoration:underline;"><strong><%= link_to "confirm your event by clicking here", confirm_events_url(:cd => @event.confirmation_code) %></strong></span>, which will make your newly created event public to other GetUp members!<br><br>
+
+<br><br><br>
+Thank you for all you do,
+<br>
+The GetUp team
+</body>
+</html>

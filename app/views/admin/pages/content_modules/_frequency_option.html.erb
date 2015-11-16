@@ -1,0 +1,5 @@
+<div class="frequency-option">
+  <%= f.label frequency_option, DonationModule::FREQUENCY_LABELS[frequency_option] %>
+  <%  options = [["Default", :default], ["Optional", :optional], ["Hidden", :hidden]] %>
+  <%= f.select frequency_option, options, {:selected => donation_module.frequency_options[frequency_option.to_s]}, {:size => options.size} %>
+</div>

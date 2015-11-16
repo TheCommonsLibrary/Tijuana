@@ -1,0 +1,18 @@
+= form_for([:admin, donation], {:url => cancel_recurring_admin_donation_path(donation), html: { onsubmit: "javascript:return confirm('Are you sure you want to cancel all future donations? This cannot be undone!');" }}) do |f|
+  - if defined?(redirect_to)
+    = hidden_field_tag :redirect_to, redirect_to
+  %p
+    = "This #{donation.frequency} donation was last processed at #{donation.last_donated_at}."
+  %p
+    -if donation.active?
+      - if donation.payment_method == 'credit_card'
+        %p
+          = f.label :cancel_reason
+          = f.select :cancel_reason, options_for_select(Donation::CANCEL_REASONS)
+        = f.submit "Cancel all future payments"
+    -else
+      %p
+        This donation was cancelled on: #{donation.cancelled_at.try(:strftime, '%e %b %Y %H:%M:%S%p')} 
+      %p
+        due to:
+        %span.cancel-reason<= donation.cancel_reason

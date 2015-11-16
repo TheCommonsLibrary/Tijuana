@@ -1,0 +1,150 @@
+- content_for :extra_css do 
+  - stylesheet_link_tag 'public/email_pledges'
+
+- email_pledges_module = content_module
+.well
+  %h2= email_pledges_module.title
+  != render_html(email_pledges_module.content)
+  = render :layout => "pages/form_with_user_lookup", :locals => {:content_module => content_module} do
+    = fields_for email_pledges_module.user_email do |m|
+      = form_errors(m.object)
+      %hr
+
+      %label= 'Details of friends and family to switch'
+      - target_index = 0
+      #target-details-grid
+        - email_pledges_module.target_details_or_default.each do |email, name|
+          .target-details
+            .target-label
+              = label_tag 'Name'
+            = text_field_tag :'target_names[]', name, id: "target_name_#{target_index}", :placeholder => 'Name', length: 15, class: 'target_name'
+            .target-label
+              = label_tag 'Email'
+            = text_field_tag :'target_emails[]', email, id: "target_email_#{target_index}", :placeholder => 'Email', length: 15, class: 'target_email', type: 'email'
+          - target_index += 1
+      %button.btn#add-extra-pledge Add another person
+
+      %hr
+
+      %label
+        Subject
+      .subject
+        = content_module.default_subject
+      = render :partial => "pages/email_talking_points", :locals => {:content_module => content_module}
+      %label= 'Email Body'
+      - unless content_module.pro_forma_prefix.blank?
+        .pro-forma
+          != render_html(content_module.pro_forma_prefix)
+      = m.text_area :body, :placeholder => EmailModuleHelper.body_placeholder(content_module)
+      - unless content_module.pro_forma_suffix.blank?
+        .pro-forma
+          != render_html(content_module.pro_forma_suffix)
+      %span.help-block
+        NB: Your details will be added to the bottom of the email sent.
+
+      - if email_pledges_module.has_custom? :form_fields
+        .custom-fields.custom-fields-above
+          = fields_for email_pledges_module.user_email do |f|
+            = render_custom_form_fields f, email_pledges_module.custom(:form_fields), email_pledges_module
+        .clearfix
+
+      %hr
+    = button_tag email_pledges_module.button_text, :class => "btn btn-primary btn-large btn-full fb-like-above", :disable_with => 'Please Wait...'
+    %hr
+
+:javascript
+  $(function() {
+    TalkingPoints().enable('textarea[name="user_email[body]"]');
+    $('#add-extra-pledge').click(function(e){
+      e.preventDefault();
+      var $details = $('#target-details-grid .target-details');
+      if ($details.length >= 30) {
+        alert("You can send to up to 30 recipients at a time. If you wish to send to more than 30 people, simply send this message and start a new one afterwards.");
+      } else {
+        var $newTarget = $details.last().clone();
+        $newTarget.find('.target_email').attr('id', 'target_email_' + $details.length);
+        $newTarget.find('.target_email').val('');
+        $newTarget.find('.target_name').attr('id', 'target_name_' + $details.length);
+        $newTarget.find('.target_name').val('');
+        $('#target-details-grid').append($newTarget);
+      }
+    });
+
+    function displayValidationError(msg) {
+      var errorHtml = '<div class="alert alert-error"> <button class="close" data-dismiss="alert" type="button"> × </button> <strong> Hmmm. That doesn\'t look right..  </strong> <ul> <li> ' + msg + ' </li> </ul> </div>';
+      $('.alert.alert-error').remove();
+      $('form hr:first-of-type').before(errorHtml);
+    }
+
+    function validateEmailsAndNames() {
+      var $targetNames = $('.target_name');
+      var $targetEmails = $('.target_email');
+      var valid = true;
+      for(var i = 0; i < $targetNames.length; i++) {
+        if ($targetNames[i].value === "" && $targetEmails[i].value !== "") {
+          displayValidationError("Please enter name for '" + escapeHtml($targetEmails[i].value) + "'");
+          valid = false;
+        } else if ($targetNames[i].value !== "" && $targetEmails[i].value === "") {
+          displayValidationError("Please enter email for '" + escapeHtml($targetNames[i].value) + "'");
+          valid = false;
+        }
+      }
+      return valid;
+    }
+
+    function validateEmailPresent() {
+      var valid = false;
+      $('.target_email').each(function (index) {
+        valid = valid || $.trim(this.value) !== "";
+      });
+      if (!valid) {
+        displayValidationError("Please enter at least one email.");
+      }
+      return valid;
+    }
+
+    function scrollIntoView(selector) {
+        var topOffset = $(selector).offset().top;
+        if(topOffset < $(window).scrollTop()) {
+            $('html, body').animate({ scrollTop: topOffset });
+        }
+    }
+
+    function isValidEmailAddress(arg) {
+      var validEmailRegex = /^([^@\s]+)@((?:[\-a-z0-9]+\.)+[a-z]{2,})$/i;
+      return validEmailRegex.test(arg);
+    }
+
+    function escapeHtml(val) {
+      return $("<div>").text(val).html();
+    }
+
+    function validateEmailFormat() {
+      var valid = true;
+      $('.target_email').each(function (index) {
+        if ($.trim(this.value) !== "" && !isValidEmailAddress(this.value)) {
+          displayValidationError("Email address: " + escapeHtml(this.value) + " is invalid.");
+          valid = false;
+          return false;
+        }
+      });
+      return valid;
+    }
+
+    $("#action-form").submit(function(e) {
+      var valid = validateEmailPresent();
+      if (valid) {
+        valid = validateEmailFormat();
+      }
+      if (valid) {
+        valid = validateEmailsAndNames();
+      }
+
+      if (valid) {
+        $('.alert.alert-error').remove();
+      } else {
+        scrollIntoView('.alert.alert-error');
+        return false;
+      }
+    });
+  });

@@ -1,0 +1,30 @@
+# this is just a source file. compile here: https://mjml.io/try-it-live/
+# remove everything but the outermost `div` in the body tag
+# then remove any references to 600px (mjml hard-coded max-width) [`max-width:600px;`]
+# then remove all IE specific commented bits (they break all the Outlooks) [use this regex: `(?s)<!--.+?-->\n`]
+
+<mjml>
+  <mj-body>
+    <mj-container>
+      <mj-section full-width="full-width" background-color="#f1f2f2" padding="0">
+        <mj-image alt="" src="https://d68ej2dhhub09.cloudfront.net/top_left.png" align="left" width="62" />
+        <mj-section padding="0 30px">
+          <mj-text color="#444444" font-size="15px" line-height="19px">
+            GetUp is a powerful campaigning community made up of everyday Australians like you -- fighting for a more fair, flourishing and just Australia. Help keep GetUp strong by becoming part of the GetUp Crew by making a regular donation.
+          </mj-text>
+          <mj-spacer height="10px" />
+          <mj-text>
+            <a href="https://<%= AppConstants.host %>/regular-donation?t={TRACKING_HASH|NOT_AVAILABLE}" style="color:#ff671f;font-size:17px;font-weight:700;text-decoration:underline;">Become a GetUp Crew Member >></a>
+          </mj-text>
+          <mj-spacer height="20px" />
+          <mj-text color="#7c7c7c" font-size="12px" line-height="16px">We acknowledge the Aboriginal and Torres Strait Islander peoples as the traditional custodians of the lands where we live, learn and work, and pay our respect to their Elders, past and present.</mj-text>
+          <mj-spacer height="10px" />
+          <mj-text>
+            <a href="http://<%= AppConstants.host %>/unsubscribe?t={TRACKING_HASH|NOT_AVAILABLE}" style="color:#7c7c7c;font-size:10px;text-decoration:underline;">unsubscribe</a>
+          </mj-text>
+        </mj-section>
+        <mj-image alt="" src="https://d68ej2dhhub09.cloudfront.net/bottom_right.png" align="right" width="62" />
+      </mj-section>
+    </mj-container>
+  </mj-body>
+</mjml>

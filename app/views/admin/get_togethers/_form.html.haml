@@ -1,0 +1,138 @@
+= form_for([:admin, @get_together]) do |f|
+  %input{name: "campaign_id", type: "hidden", value: @campaign.id}/
+  = form_errors(@get_together)
+  - if !@get_together.errors[:"content_module.content"].blank?
+    %p.error= "Content #{@get_together.errors[:"content_module.content"].first}"
+  = f.label :name, :class => "req"
+  = f.text_field :name
+  %label Required User Details
+  .required-user-details
+    = f.fields_for :required_user_details do |user_details_fields|
+      = render :partial => "/admin/common/user_detail", :collection => UserDetailsRequirements::DEFAULT_REQUIRED_USER_DETAILS, :locals => {:f => user_details_fields, :user_details_requirements => @get_together}
+  = field_set_tag 'Public Event View', :class => 'get-together-events' do
+    = f.label :event_header_html, 'Header'
+    = f.text_area :event_header_html, rows: 8
+    = f.label :event_content_html, 'Content'
+    = f.text_area :event_content_html, rows: 8
+    = f.label :description, 'Sidebar Content', class: 'req'
+    = f.text_area :description, rows: 8
+  = field_set_tag 'Create Event View', :class => 'get-together-events' do
+    = f.label :event_new_location_html, 'Location Content'
+    = f.text_area :event_new_location_html, rows: 8
+    = f.label :event_time_date_instructions, 'Event Time/Date Instructions'
+    = f.text_area :event_time_date_instructions, rows: 8
+    = f.label :event_name_tooltip_html, 'Name Tooltip'
+    = f.text_field :event_name_tooltip_html
+    = f.label :capacity_enabled, 'Enable Event Capacity'
+    .events-capacity-enabled
+      = f.check_box :capacity_enabled, capacity_enabled_attributes(@get_together)
+    = f.label :event_host_notes_tooltip_html, 'Event Details Tooltip'
+    = f.text_field :event_host_notes_tooltip_html
+    = f.label :event_confirmation_html, 'Confirmation Content'
+    = f.text_area :event_confirmation_html, rows: 8
+    = f.label :event_thank_you_html, 'Thank you page content'
+    = f.text_area :event_thank_you_html, rows: 8
+  = f.label :header_html, 'Header'
+  = f.text_area :header_html, rows: 8
+  = f.label :map_footer_html, 'Map Footer'
+  = f.text_area :map_footer_html, rows: 8
+  = f.fields_for :content_module do |content_module_f|
+    = content_module_f.label :content, :class => "req"
+    = content_module_f.text_area :content, :rows => 8
+    = content_module_f.hidden_field :id
+  %label{for: "get_together_host_greeting_email", title: ""}
+    .tooltip{"data-tip" => "tokens-hint"} Host greeting email
+  = f.text_area :host_greeting_email, :rows => 8
+  %label{for: "get_together_attendee_greeting_email", title: ""}
+    .tooltip{"data-tip" => "tokens-hint"} Attendee greeting email
+  = f.text_area :attendee_greeting_email, :rows => 8
+  .clear
+    = f.label :theme_id, :class => "req"
+    = f.select :theme_id, options_for_select(Theme.select_options, @get_together.theme ? @get_together.theme.id : Theme.first.id), {}, :style => "width: 100px;"
+  / <br>
+  %ul.group.get-together-management
+    - if f.object.community_get_together.present?
+      %li
+        = f.label :is_admin_managed, :class => "tooltip", :data => {:tip => 'admin-managed-tooltip'}
+        = f.check_box :is_admin_managed, {:style => "margin-top: 15px", :disabled => 'disabled' }
+      %li
+        .managed-get-together-id
+          = f.label  "Is managed get together for get together id"
+        %span= f.object.community_get_together.id
+    - else
+      %li
+        = f.label :is_admin_managed, :class => "tooltip", :data => {:tip => 'admin-managed-tooltip'}
+        = f.check_box :is_admin_managed, {:style => "margin-top: 15px" }
+      %li
+        .managed-get-together-id
+          = f.label :managed_get_together_id, "Managed get together id", :class => "tooltip", :data => {:tip => 'managed-get-together'}
+        = f.text_field :managed_get_together_id
+  .clear
+    = f.label :sidebar_content
+    = f.text_area :sidebar_content, :rows => 8
+  .clear
+    %label{for: "redirect_url", title: ""}
+      .tooltip{"data-tip" => "rsvp-url-hint"} After RSVP URL
+    = f.text_field :redirect_url
+  .clear
+    = f.label :action_button_text, :class => "req"
+    = f.text_field :action_button_text
+  .clear
+    = f.label :event_full_message, :class => "req"
+    = f.text_field :event_full_message
+  .clear
+    = f.label :event_closed_message, :class => "req"
+    = f.text_field :event_closed_message
+  .clear
+    = f.label :search_radius, 'Default search radius'
+    = f.select :search_radius,  search_radius_options_for_select(@get_together.search_radius)
+  %ul.group
+    %li
+      = f.label :from_date, "Date between", :class => "date req"
+      = f.text_field :from_date, :value => @get_together.from_date ? l(@get_together.from_date) : "", :class => "date"
+    %li
+      = f.label :to_date, "and", :class => "date req"
+      = f.text_field :to_date, :value => @get_together.to_date ? l(@get_together.to_date) : "", :class => "date"
+    %li
+      = f.label :recommended_date, :class => "date"
+      = f.text_field :recommended_date, :value => @get_together.recommended_date ? l(@get_together.recommended_date) : "", :class => "date"
+  %hr.clear/
+  %ul.group
+    %li
+      = f.label :from_time, "Time between", :class => "time"
+      = f.select :from_time, options_for_select(GetTogether.time_select_options, @get_together.from_time),{ :include_blank => true }, :class => "time"
+    %li
+      = f.label :to_time, "and", :class => "time"
+      = f.select :to_time, options_for_select(GetTogether.time_select_options, @get_together.to_time),{ :include_blank => true }, :class => "time"
+    %li
+      = f.label :recommended_time, :class => "time"
+      = f.select :recommended_time, options_for_select(GetTogether.time_select_options, @get_together.recommended_time),{ :include_blank => true }, :class => "time"
+  = render :partial => "admin/common/social_meta_data", :locals => {:f => f}
+  .buttonbar
+    = f.submit @get_together.new_record? ? "Create Get Together" : "Save Get Together", :disable_with => "Saving…"
+    = link_to "Cancel", admin_campaign_path(@get_together.campaign)
+  = render :partial => "admin/get_togethers/tooltips"
+:javascript
+  $(function() {
+
+    $.datepicker.setDefaults({dateFormat: 'dd-mm-yy'});
+
+    $('#get_together_recommended_date').datepicker();
+
+    $.dateRangePicker({
+      fromSelector:'#get_together_from_date',
+      onSelectFrom:function(dateText, inst){
+        $('#get_together_recommended_date').datepicker("option", "minDate", dateText);
+      },
+      toSelector:'#get_together_to_date',
+      onSelectTo:function(dateText, inst){
+        $('#get_together_recommended_date').datepicker("option", "maxDate", dateText);
+      },
+    });
+
+    $.timeRangePicker({
+      fromSelector:'#get_together_from_time',
+      toSelector:'#get_together_to_time',
+      filterOptionsOnSelector:'#get_together_recommended_time',
+    });
+  });

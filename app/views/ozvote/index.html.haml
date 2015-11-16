@@ -1,0 +1,82 @@
+:css
+  #scorecard-explanation{line-height:1.2}.scorecard{color:#4a4c4c;font-size:17px;padding-bottom:50px}.scorecard .navbar-brand{padding-top:5px;padding-bottom:0px;padding-left:0px;padding-right:0px}.scorecard #policy-brand{padding-top:15px;margin-left:10px}.scorecard .navbar-toggle{margin-right:0px}.scorecard h1{font-family:"Adelle", "Bookman Old Style", "Helvetica", serif}.scorecard strong{font-weight:normal}.scorecard table{margin:0px}.scorecard table td{padding:6px !important}.scorecard table td.score{color:black}@media (min-width: 768px){.scorecard .col-md-2{width:18.666667%}.scorecard .col-sm-2{width:18.666667%}.scorecard .col-sm-2.no-width{width:0}.scorecard .pull-right-768{float:right}}.scorecard .key{max-width:350px}.scorecard .key td.score{color:#4a4c4c}.scorecard .key p{margin:0}.scorecard .key .good-bad{width:47%;border-bottom:2px solid grey;letter-spacing:normal}.scorecard .key .unclear{width:53%;border-left:2px solid grey;letter-spacing:normal}.scorecard .key .description{text-transform:uppercase;line-height:1;font-weight:bold;letter-spacing:normal}.scorecard .key .elaboration{text-transform:none;line-height:1;letter-spacing:normal}.scorecard .key.bordered-table{-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;border:2px solid grey;border-collapse:separate;margin-bottom:0px;margin-top:10px}.scorecard .key.bordered-table td{border-top:none}.scorecard h5{font-family:Arial, Helvetica, sans-serif;margin-top:15px}.scorecard .topic-header{background-color:#4a4c4c;color:white;margin-bottom:10px;margin-top:10px;padding:10px}.scorecard .topic-header .quote{line-height:20px;font-size:16px}.scorecard .topic-header .table-height{display:table;height:40px}.scorecard .topic-header .middle-cell{vertical-align:middle;display:table-cell}.scorecard .topic-header h3{font-family:"Adelle", "Bookman Old Style", "Helvetica", "URW Bookman L", "itc bookman", times, serif;font-size:22px;position:relative}.scorecard .topic-header h3 div{position:absolute;top:-70px}.scorecard .topic-header p{margin:0px}.scorecard h5{font-size:15px}.scorecard .party,.scorecard .no-policy{color:grey;text-transform:uppercase;font-weight:bold}.scorecard .rating{color:#f06822;font-size:17px}.scorecard .no-padding{padding-left:0px;padding-right:0px}.scorecard .score{letter-spacing:2px;font-size:17px}.scorecard .score div{float:left}.scorecard .score .good{color:#f06822}.scorecard .score .bad,.scorecard .score .icon-circle-blank{color:#b1b6b9}.scorecard .score .score-icon{display:inline}.scorecard .score .icon-flip-horizontal{margin-right:2px}.scorecard .score .right{margin-right:-6px}.scorecard .score .score-half-left{overflow:hidden;width:8px}.scorecard .score .none{width:18px}.scorecard .score .score-half-right{overflow:hidden;margin-right:1px;width:10px}.scorecard .score .score-half-right .good{color:#f06822}.scorecard .score .score-half-right .icon-circle-blank,.scorecard .score .score-half-right .icon-star-empty,.scorecard .score .score-half-right .icon-star{position:relative;left:-6px}.scorecard .footer{margin-top:20px;margin-bottom:20px;text-align:center;color:grey}.scorecard .nav>li>a:hover,.scorecard .nav>li>a:focus{background-color:#ff6f52}.ie8 .icon-flip-horizontal{FILTER:progid:DXImageTransform.Microsoft.BasicImage(mirror=1);display:inline-block}@media (min-width: 768px) and (max-width: 979px){.scorecard .score{letter-spacing:0px}.scorecard .score .right{margin-right:-2px}.scorecard .score .none{width:16px}.scorecard .score .score-half-right{margin-right:0px;width:8px}.scorecard .score .icon-circle-blank{left:-7px}}@media (max-width: 480px){.score{font-size:16px}}
+
+
+.scorecard
+  %header.navbar.navbar-fixed-top.navbar-orange{:role => "navigation"}
+    .container#issue
+      .navbar-header
+        .navbar-brand
+          = image_tag(request.protocol + request.host_with_port + "/assets/election_app/getup-2013-logo-300g.png", height: 35)
+          
+        %button.navbar-toggle.collapsed{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        %div.navbar-brand.hidden-xs#policy-brand 2016 Polling Booths 
+        %div.navbar-brand.visible-xs#policy-brand{:href => "#scorecard"} Polling Booths 
+      %nav.navbar-collapse.navbar-orange.collapse{:role => "navigation", :style => "height: 1px;"}
+        %ul.nav.navbar-nav.navbar-right
+          %li
+            %a{href: "#", onclick: 'displayAbout()'} About
+
+%section#map
+  #event-locations
+    #events-map
+      #search
+        %form#search-in-events.form-inline
+          %input#origin-postcode(name="origin-postcode" type="number" placeholder="Postcode")
+          %button#search-postcode.btn.btn-lg.btn-orange.glyphicon.glyphicon-search(type="submit" value="search")
+          %button.btn.btn-lg.btn-orange.glyphicon.glyphicon-screenshot#go-to-current-position(value="refresh" type="button")
+
+    #event-location-map-container
+      .loading.loading-image
+      #event-location-map
+
+  %footer
+    .no-connection.alert.alert-warning(style="display:none")
+      %span.glyphicon.glyphicon-warning-sign
+      %strong &nbsp No Internet Connection
+
+%section#detail(style="display:none")
+  
+  #detail-container.full-height
+  %footer
+    .no-connection.alert.alert-warning(style="display:none")
+      %span.glyphicon.glyphicon-warning-sign
+      %strong &nbsp No Internet Connection
+
+:javascript
+
+  var preApprovedGeolocation = false;
+  // fixes older non-webkit browsers that don't have window.location.origin available.
+  if (!window.location.origin) {
+    window.location.origin = window.location.protocol + "//" + window.location.host;
+  }
+  var app = {
+    remote: {
+      url: window.location.origin,
+      scorecardUrl: window.location.origin + '/htv'
+    },
+    showDirections: function(from, to) {
+      window.open('http://maps.google.com/maps?saddr=' + from.latitude+','+from.longitude + '&daddr=' + to.latitude+','+to.longitude );
+      return false;
+    }
+  }
+  function displayAbout(){
+    $('<div>Enter your postcode to find your nearest polling booth. Select the marker to learn about opening hours, directions to the booth and GetUp\'s analysis on how to vote effectively in your electorate.</div>').prependTo($("body")).dialog({
+      autoOpen: true,
+      draggable: false,
+      resizable: false,
+      zIndex: 1000,
+      modal: true,
+      buttons: {
+        "Ok": function() { $(this).dialog("close"); }
+    }});
+
+  }
+  $(function () {
+    showMap(true);
+    makePostcodeSearchAndroidFriendly();
+  });

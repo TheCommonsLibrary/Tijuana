@@ -1,0 +1,9 @@
+<% event = Event.where(:get_together_id => 9, :host_id => user.id).joins(:slugs).first %>
+<% if !event.blank? && event.status == "open" %>
+<p>Why don't you forward an invite to your friends, family and colleagues? They can register for your event at <a href="<%= "http://www.getup.org.au/events/#{event.slug.name}" %>"><%= "http://www.getup.org.au/events/#{event.slug.name}" %></a></p>
+<p>Otherwise you can share your event on Facebook now by clicking the button below.</p>
+<div style="text-align:center;width:180px;min-height:30px;background-color:rgb(255,80,0);font-size:13px;color:white;line-height:30px;"><a href="http://www.facebook.com/sharer/sharer.php?u=<%= "http://www.getup.org.au/events/#{event.slug.name}" %>" style="color:white;text-decoration:none;text-transform:uppercase;font-weight:bold;" target="_blank">Share On Facebook</a></div>
+<% else %>
+<p>Your event is full. Great job! Why don't you invite your friends, family and colleagues to another GetTogether in their neighbourhood. Forward this URL so they can register today: <a href="http://www.getup.org.au/get_togethers/9">http://www.getup.org.au/get_togethers/9</a>.</p>
+<div style="text-align:center;width:180px;min-height:30px;background-color:rgb(255,80,0);font-size:13px;color:white;line-height:30px;"><a href="http://www.facebook.com/sharer/sharer.php?u=<%= "http://www.getup.org.au/get_togethers/9" %>" style="color:white;text-decoration:none;text-transform:uppercase;font-weight:bold;" target="_blank">Share On Facebook</a></div>
+<% end %>

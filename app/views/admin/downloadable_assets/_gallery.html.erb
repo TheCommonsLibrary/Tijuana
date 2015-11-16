@@ -1,0 +1,17 @@
+<% if @assets.size > 0 %>
+<p>Last <%= pluralize(@assets.size, 'file') %> uploaded:</p>
+<ul id="asset-gallery">
+  <% for asset in @assets %>
+    <li>
+      <% if asset && asset.attachment? %>
+       <%= link_to asset.link_text, admin_downloadable_asset_path(asset) %>
+       <i><%= "(#{asset.asset_file_name}, #{asset.kilobytes} kilobytes)" %></i>
+      <% elsif asset %>
+        [File missing]
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+<% else %>
+<p>No files have been uploaded yet.</p>
+<% end %>

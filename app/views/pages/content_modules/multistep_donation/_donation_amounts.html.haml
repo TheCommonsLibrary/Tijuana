@@ -1,0 +1,48 @@
+- amounts_list = donation_module.amounts_list(@identified_user_from_token_or_cookie)
+- amounts_list.reverse! if donation_module.multistep_form_shown?
+- selected_item = params[:donation] ? params[:donation][:amount_in_dollars] : donation_module.default_amount_in_dollars(@identified_user_from_token_or_cookie)
+- custom_amount_selected = params[:donation] && donation_module.custom_amount_selected?(params[:donation])
+
+.donation
+  - show_all_amounts = show_all_amounts?(amounts_list)
+  .button-amount-fields.clearfix
+    - amounts_list.each do |amount|
+      - amount_in_currency = number_to_currency(amount.to_f, :strip_insignificant_zeros => true)
+      = button_tag(amount_in_currency,
+                  :class => "btn#{amount.to_s.end_with?('*') ? nil : ' verbose-min-980' unless show_all_amounts}#{' active' if amount.to_f == selected_item.to_f} js-amount-#{amount.to_i}",
+                  :type => 'button',
+                  'data-amount' => amount.to_i,
+                  :value => amount)
+
+  .amount-fields.clearfix
+    - amounts_list.each do |amount|
+      - amount_in_currency = number_to_currency(amount.to_f, :strip_insignificant_zeros => true)
+      %label
+        = amount_in_currency
+        = f.radio_button :amount_in_dollars, amount.to_f, :checked => (selected_item.to_f == amount.to_f), :id => "donation_donation_amount_in_dollars_#{amount.to_i}_credit", :class => 'payment-input', 'data-amount' => amount.to_i
+    %label
+      = 'Other Amount'
+      = f.radio_button :amount_in_dollars, "other", :checked => custom_amount_selected, :id => "", :class => 'payment-input other-radio', 'data-amount' => 'other'
+      
+  .input-prepend.other-prepend
+    %label.add-on{:for => 'donation_custom_amount_in_dollars'} $
+    = f.telephone_field :custom_amount_in_dollars, 'data-amount' => 'other', :class => "otheramount js-amount-other payment-input", :placeholder => 'Other', type: 'tel'
+
+  = field_errors(f.object, :amount_in_dollars)
+
+.btn-and-frequency-container
+  - if !donation_module.only_allow_one_off_payment?
+    - frequency_attrs = {class: 'frequency-option', id: "donation-frequency-credit"}
+    - if show_recurring_label(donation_module)
+      %label.frequency-label{"data-donation-frequency" => donation_module.available_frequencies_for_select[0][1]}
+        This is a #{donation_module.available_frequencies_for_select[0][1]} donation
+      - frequency_attrs[:style] = 'display: none'
+
+    = f.select :frequency, donation_module.available_frequencies_for_select, {}, frequency_attrs
+  - elsif donation_module.make_recurring_checkbox_enabled?
+    %label.frequency-label.make-recurring-checkbox
+      = donation_module.make_recurring_checkbox_text
+      = f.hidden_field :frequency, id: 'donation-frequency-credit'
+      = check_box_tag :make_recurring_checkbox, '1', f.object.recurring?, onclick: '$("#donation-frequency-credit").val($(this).is(":checked") ? "monthly" : "one_off")'
+  
+  = button_tag('Next &rsaquo;'.html_safe, "class" => "btn btn-#{button_style} btn-next btn-amounts btn-large btn-full", "data-step" => '2' )

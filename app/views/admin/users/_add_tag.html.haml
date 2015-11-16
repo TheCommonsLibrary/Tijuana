@@ -1,0 +1,17 @@
+#add-tags.section{style: "display: none;"}
+  %h4 ADD TAGS TO ALL USERS IN THIS LIST
+  = form_tag(add_tags_admin_users_path, :method => :post) do
+    %p
+      = label_tag :tags, "Tags", :class => "req"
+      = text_field_tag :tags, "", :class => "required"
+    .buttonbar
+      = submit_tag "Add Tags", :disable_with => "Saving…"
+      = link_to "Cancel", admin_users_path
+
+:javascript
+  $(function() {
+    $("input[name=tags]").tagsInput({
+      width: '825px',
+      height: '35px'
+    });
+  });

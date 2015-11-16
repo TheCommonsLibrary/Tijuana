@@ -1,0 +1,18 @@
+<% title "Image Manager" %>
+
+<div id="upload-image-link">
+  <%= link_to "Upload a new image..." , '#' %>
+</div>
+
+<div id="upload-image-form">
+  <%= render :partial => 'form' %>
+</div>
+
+<div id="image-library">
+<h4>Recently Uploaded</h4>
+  <%= render :partial => 'gallery' %>
+</div>
+
+<%= javascript_tag do %>
+  $(imagesPage);
+<% end %>

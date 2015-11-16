@@ -1,0 +1,10 @@
+#action .well {display: none;}
+.well { margin-bottom: 0; }
+.modal-body { padding: 0; }
+.modal-backdrop { background-color: white; }
+.modal-backdrop, .modal-backdrop.fade.in {opacity: 0.95;}
+.modal {
+  position: absolute;
+  top: 10%;
+  margin-top: 0;
+}

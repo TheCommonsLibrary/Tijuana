@@ -1,0 +1,16 @@
+<ul id="add-from-bookmarks">
+  <% @bookmarks.each do |bookmark| %>
+    <li>
+      <%= link_to bookmark.name, 
+        add_from_bookmarks_admin_page_path(@page, :content_module_id => bookmark.content_module_id, :container => @layout_container), 
+        :remote => true, :class => "add-from-bookmark #{bookmark.content_module.class.name.underscore}" %>
+    </li>
+  <% end %>
+</ul>
+
+<%= javascript_tag do %>
+  $(function() {
+      pageEditing().setupAddFromBookmarks('ul#add-from-bookmarks', 'ul#<%= @layout_container %>-modules');
+    $('.big-link').each(bigLink);
+  });
+<% end %>

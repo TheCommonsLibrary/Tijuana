@@ -1,0 +1,12 @@
+<% events = GetTogether.find(13).events.joins('LEFT OUTER JOIN (SELECT a.event_id, COUNT(*) as attendees_count FROM events_attendees a GROUP BY a.attendee_id) a ON a.event_id = events.id').order('attendees_count ASC').within(10,:origin=>user.postcode).order('attendees_count ASC').limit(5) %>
+<% if events.length > 0 %>
+<p>The nearest teams to you that still need volunteers are:</p>
+<ul>
+  <% events.each do |event| %>
+    <li><a href="http://www.getup.org.au/events/<%= events.slug.name %>"><%= events.name %></a> hosted by <%= events.host.first_name %>'s team - <%= events.name %>, <%= events.street %> (<a href="http://www.getup.org.au/events/<%= events.slug.name %>">click here to see more</a>)</li>
+  <% end %>
+</ul>
+<% else %>
+<p>Search for your nearest team that still needs volunteers.</p>
+<p><a href="http://www.getup.org.au/volunteer">www.getup.org.au/volunteer</a></p>
+<% end %>

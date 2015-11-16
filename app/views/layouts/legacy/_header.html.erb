@@ -1,0 +1,27 @@
+<% if render_nav_bar?(@page) %>
+    <%= render :partial => 'layouts/admin/mygetup_nav' %>
+<% end %>
+
+ <div id="header">
+  <%= render :partial => "common/flash_notifications" %>
+
+  <!-- This is to seed Facebook share with the GetUp! logo -->
+  <link rel="image_src" href="<%= open_graph_share_image_path %>"/>
+  <div id="getup-logo">
+    <% if controller_name == "home" %>
+        <h1>GetUp! Action For Australia</h1>
+    <% else %>
+        <%= link_to("GetUp! Action For Australia", root_url) %>
+    <% end %>
+  </div>
+
+  <% if render_nav_bar?(@page) %>
+      <ul class="navigation">
+        <li class="nav-donate"><%= link_to("DONATE", "/donate", :title => "Donate") %></li>
+        <li class="nav-campaigns"><%= link_to("CAMPAIGNS", "/campaigns", :title => "The Campaigns") %></li>
+        <li class="nav-media"><%= link_to("MEDIA", "http://www.getup.org.au/about/media/", :title => "Media") %></li>
+        <li class="nav-suggestions"><%= link_to("SUGGESTIONS", "/community/campaign-suggestions", :title => "Your Voice") %></li>
+        <li class="nav-about"><%= link_to("ABOUT", "/about", :title => "About GetUp!") %></li>
+      </ul>
+  <% end %>
+</div>

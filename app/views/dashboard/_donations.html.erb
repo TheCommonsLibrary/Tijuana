@@ -1,0 +1,23 @@
+<div class="info-block">
+  <h2>View and edit your settings and credit card details for your recurring donations.</h2>
+  <% if !@recurring_donations.blank? %>
+    <h2 id="recurring-donations">If you require further assistance with your donation or have trouble updating your details, please call us on <%= AppConstants.financial_contact_number %>.</h2>
+  <% end %>
+</div>
+
+<div class="content-block" id="donations-details">
+  <%
+
+  %>
+  <% @recurring_donations.each_with_index do |donation, index| %>
+      <%= render :partial => "donation_form", :locals => {:recurring_donation => donation, :show_divider => !(index == @recurring_donations.size - 1) } %>
+  <% end %>
+
+  <% if @recurring_donations.blank? %>
+    <div class="content-box">
+        <p id="no-donations">You don't have any recurring donations.
+          <a class="anchor" href="/donate" title="Donate Now">Would you like to start donating now</a>?
+        </p>
+    </div>
+  <% end %>
+</div>

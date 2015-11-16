@@ -1,0 +1,7 @@
+<% title @get_together.name %>
+<% content_for :breadcrumb_links do %>
+  <% if can? :destroy, @get_together %>
+    <%= link_to "Delete Get Together", admin_get_together_path(@get_together), :method => :delete, :data => { :confirm => "Delete '#{@get_together.name}'?" } %>
+  <% end %>
+<% end %>
+<%= render :partial => "form" %>

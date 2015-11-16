@@ -1,0 +1,89 @@
+<% title @campaign.name %>
+<% content_for :breadcrumb_links do %>
+  <%= link_to "Edit", edit_admin_campaign_path(@campaign) %>
+  <% if can? :destroy, @campaign %>
+    | <%= link_to "Delete campaign", admin_campaign_path(@campaign), :method => :delete, :data => { :confirm => "Delete '#{@campaign.name}'?" } %>
+  <% end %>
+<% end %>
+
+<div class="pillar">
+  <b>Pillar:</b> <%= @campaign.accounts_key %>
+</div>
+
+<div class="description">
+  <b>Description:</b> <%= @campaign.description %>
+</div>
+
+<div class="list-group">
+
+<div id="page-sequences-list">
+  <h3 class="tooltip" data-tip="pages-sequence-tip">Page Sequences</h3>
+  <% @sequences.each do |page_sequence| %>
+    <div class="page-sequence big-link" id="page-sequence-<%=page_sequence.id%>">
+      <%= link_to "#{page_sequence.name} - ID #{page_sequence.id}", admin_page_sequence_path(page_sequence) %>
+      <div class="actions">
+        <%= link_to "Manage Pages", admin_page_sequence_path(page_sequence) %> |
+        <%= link_to "Duplicate", duplicate_admin_page_sequence_path(page_sequence) %>
+      </div>
+        <div class="pages">
+          <%= page_sequence.pages.map(&:name).join(" › ") %>
+        </div>
+    </div>
+  <% end %>
+  <div class="button-links">
+    <%= link_to "Add a page sequence", new_admin_page_sequence_path(:campaign_id => @campaign), :class=>'add-page-sequence' %>
+  </div>
+  <%= will_paginate @sequences %>
+  <%= page_entries_info @sequences %>
+</div>
+
+<div id="emails-list">
+  <h3 class="tooltip" data-tip="pushes-tip">Pushes</h3>
+  <% @pushes.each do |push| %>
+    <div class="push big-link" id="email-<%= push.id %>">
+      <%= link_to push.name, admin_push_path(push) %>
+      <div class="actions">
+        <%= link_to "Manage Push", admin_push_path(push) %>
+      </div>
+    </div>
+  <% end %>
+  <div class="button-links">
+    <%= link_to "Add a push", new_admin_push_path(:campaign_id => @campaign), :class=>'add-push' %>
+  </div>
+  <%= will_paginate @pushes %>
+  <%= page_entries_info @pushes %>
+</div>
+
+<div id="get-togethers-list">
+  <h3 class="tooltip" data-tip="get-togethers-tip">Get Togethers</h3>
+  <% @get_togethers.each do |get_together| %>
+    <div class="push big-link" id="get-together-<%= get_together.id %>">
+      <%= link_to get_together.name, admin_get_together_path(get_together) %>
+      <div class="actions">
+        <%= link_to "Manage Get Together", admin_get_together_path(get_together) %> |
+        <%= link_to "Edit Details", edit_admin_get_together_path(get_together) %>
+      </div>
+    </div>
+  <% end %>
+  <div class="button-links">
+    <%= link_to "Add a Get Together", new_admin_get_together_path(:campaign_id => @campaign), :class=>'add-push' %>
+  </div>
+  <%= will_paginate @get_togethers %>
+  <%= page_entries_info @get_togethers %>
+</div>
+
+<div id="ask-stats" class="stats-table">
+  <h3>ASK STATISTICS</H3>
+  <%= render :partial => "ask_stats", :locals => {:stats => @stats} %>
+  <% if can? :export, AskStatsTable %>
+    <div class="button-links">
+      <%= link_to "Download CSV (whole campaign)", ask_stats_report_admin_campaign_path(@campaign), :class=>'download-csv' %>
+    </div>
+  <% end %>
+  <%= will_paginate @stats %>
+</div>
+
+</div><!-- // .list-group -->
+
+<%= render :partial => '/admin/shared/history', :locals => {:entity => @campaign} %>
+<%= render :partial => "admin/campaigns/tooltips" %>

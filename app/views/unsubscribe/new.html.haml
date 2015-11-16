@@ -1,0 +1,125 @@
+- title "Unsubscribe"
+%article
+  .container
+    %section
+      %article
+        #unsubscribe
+          %h1
+            We'd Miss You
+            = @community_run ? 'from CommunityRun' : ''
+          %hr
+            - if @community_run
+              %p
+                Emails are the main way CommunityRun members are alerted to opportunities to take action on other CommunityRun member's campaigns. 
+              %p
+                In #{Time.now.year} CommunityRun members will be starting up more campaigns than ever before, on a whole range of issues important to you. We'd love for you to be a part of it, and join them in their fight, but if you do want to unsubscribe from our emails, just enter your email address below and click “Unsubscribe.” 
+              %p
+                We’ll miss you if you go, but you can come back anytime by signing up to any future CommunityRun campaign that matters to you.
+            - else
+              %p
+                Emails are the main way GetUp members are alerted to opportunities to take action on issues they care about. 
+              %p
+                Without it, GetUp members wouldn't have been able to:
+              %ul
+                %li
+                  Run a huge enrolment effort and High Court case, which allowed over 162,000 people to vote in the 2013 Federal election -- and in 2016, run a winning, hyper-local election campaigns across 46 electorates
+                %li
+                  Stand up to big tax-dodging businesses and corporate overreach in trade agreements 
+                %li
+                  Come together all across the country for National Days of Climate action and events to save the Great Barrier Reef 
+                %li
+                  Protect the instituions Australians know and love, from keeping Medicare accessible to making sure we have a fully-funded ABC  
+                %li
+                  Push for fairer treatment of refugees, and more transparency of the atrocities occuring in detention centres 
+                %li
+                  Organise huge training events for the progressive leaders of the future. 
+              %p
+                In the year to come, GetUp members will be doing even more, and we’d love you to be a part of it.
+
+
+              - if !@community_run && AppConstants.low_volume_enabled
+                %p
+                  Now that the election has been called, GetUp members will be doing even more - enrolling friends and family, putting ads on TV that cut through the spin, starting campaigns to save their local hospital and handing out how-to-vote cards on election day. Here's a video that explains key parts of our election strategy:
+
+                .video
+                  %iframe{width:"560", height:"315", src:"https://www.youtube.com/embed/edMq91_3n8w", frameborder:"0", allowfullscreen:''}
+
+                %p
+                  That's all very exciting, but it also means more email than usual in your inbox between now and election day. How much more? During the height of the election period, it could be as much as one per day. It's only once every 3 years, but if that doesn't make you say "yay", and you don't mind missing out on some great opportunities to have an impact, fill in your email address below and click "Fewer Emails" and you'll receive less during this high email volume period.
+            = form_for @user, :url => unsubscribe_create_path do |f|
+              .email
+                = f.label :email, :class => "req"
+                - if @community_run
+                  = hidden_field_tag :community_run, :true
+                = f.text_field :email, :placeholder => "yourname@email.com"
+                - if !@error.blank?
+                  .errors
+                    .alert-block.alert-error
+                      = @error
+              = email_tracking_field
+              - if !@community_run && AppConstants.low_volume_enabled
+                = f.submit "Send me less email", :class => "submit btn btn-primary btn-xlarge pull-right", :disable_with => 'Send me less email'
+                .clearfix{style: 'margin-bottom: 30px' }
+              %p
+                If you do want to unsubscribe from all our emails, just enter your email address below and click “Unsubscribe”. We’ll miss you if you go, but you can come back anytime by signing up at getup.org.au.
+              .reason-msg
+                Help us improve by letting us know why you're leaving (optional):
+
+              .reason-option.specific-campaign
+                = radio_button_tag :reason, 'specific campaigns'
+                = label_tag :reason_specific_campaigns, "I would stay if I received emails <b>only</b> on these campaigns…".html_safe
+              .specific-campaign-options
+                - campaigns.each do |campaign|
+                  .specific-campaign-group
+                    = check_box_tag specific_campaign_key(campaign), "", true
+                    = label_tag specific_campaign_key(campaign), campaign
+
+              .reason-option
+                = radio_button_tag :reason, 'overseas'
+                = label_tag :reason_overseas, "I'm going on holiday"
+              .reason-option
+                = radio_button_tag :reason, 'didnt know'
+                = label_tag :reason_didnt_know, "I don't know how I was subscribed"
+              .reason-option
+                = radio_button_tag :reason, 'another account'
+                = label_tag :reason_another_account, "I'm subscribed under another account"
+              .reason-option
+                = radio_button_tag :reason, 'too many unrelated'
+                = label_tag :reason_too_many_unrelated, "Too many issues that don't interest me"
+              .reason-option
+                = radio_button_tag :reason, 'campaign or tactic'
+                = label_tag :reason_campaign_or_tactic, "I don't agree with a recent campaign/tactic (please specify)"
+                = text_field_tag :reason_campaign_or_tactic_field
+              .reason-option
+                = radio_button_tag :reason, 'no interest'
+                = label_tag :reason_no_interest, 'No longer interested'
+              .reason-option
+                = radio_button_tag :reason, 'important but too many'
+                = label_tag :reason_important_but_too_many, 'Issues are important but I get too many emails on them'
+              .reason-option
+                = radio_button_tag :reason, 'facebook'
+                = label_tag :reason_facebook, "I'm already following you on facebook"
+              .reason-option
+                = radio_button_tag :reason, 'community run or AFA'
+                = label_tag :reason_community_run_or_AFA, "I signed a Community Run/Australians for Action petition and I don't want to subscribe to GetUp"
+              .reason-option
+                = radio_button_tag :reason, 'other'
+                = label_tag :reason_other, 'Other (please specify)'
+                = text_field_tag :reason_other_field
+
+              = f.submit "Unsubscribe", :class => "submit btn btn-danger pull-right", :disable_with => 'Unsubscribe'
+:javascript
+  $(function() {
+    $('#reason_other').click(function() {
+      $('#reason_other_field').focus();
+    });
+    $('#reason_campaign_or_tactic').click(function() {
+      $('#reason_campaign_or_tactic_field').focus();
+    });
+    $('.reason-option').not('.specific-campaign').click(function() {
+      $('.specific-campaign-options').slideUp();
+    })
+    $('.specific-campaign').click(function() {
+      $('.specific-campaign-options').slideDown();
+    });
+  });

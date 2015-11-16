@@ -1,0 +1,12 @@
+- title = "Donate By Cheque"
+%article
+  .container
+    %section
+      %article
+        %h2
+          = title.upcase
+        %hr
+        = render :partial => 'pages/pay_by_cheque'
+
+        %br
+        = link_to 'Back to Campaign', page_path(@page.page_sequence.campaign, @page.page_sequence, @page)

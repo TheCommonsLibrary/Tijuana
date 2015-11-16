@@ -1,0 +1,21 @@
+- if content_module.talking_points.present?
+  .content-module.accordion-module.talking-points
+    .accordion-heading
+      %a.accordion-toggle.collapsed{"data-toggle" => "collapse", :href => "#accordion-module-content-talking-points"}
+        %i.icon-arrow-right
+        %i.icon-arrow-down
+        %span.talking-points-heading Not sure what to say?
+    .accordion-body.collapse{:id => "accordion-module-content-talking-points"}
+      .accordion-inner
+        %p Hit "Add" to insert the talking point into your email
+        - content_module.talking_points.shuffle.each_with_index do |talking_point, index|
+          .content-module.accordion-module
+            .accordion-heading.talking-points-short-description
+              %input.btn.btn-add{type: "button", value: "Add", data: {text: talking_point.long_description}}
+              %a.accordion-toggle.collapsed{"data-toggle" => "collapse", :href => "#accordion-module-content-talking-point-#{index}"}
+                %i.icon-arrow-right
+                %i.icon-arrow-down
+                = talking_point.short_description
+            .accordion-body.collapse{:id => "accordion-module-content-talking-point-#{index}"}
+              .accordion-inner.talking-points-long-description
+                = talking_point.long_description

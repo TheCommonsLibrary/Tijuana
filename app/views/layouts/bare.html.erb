@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= page_title %></title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" /> 
+    <meta name="keywords" content="getup, action, australia, australian, politics, political, progressive, movement, participation, community, campaigns" /> 
+    <meta name="description" content="<%= open_graph_description %>"/>
+    <!--Facebook Open Graph meta tags-->
+    <meta property="og:title" content="<%= open_graph_title %>" />
+    <meta property="og:description" content="<%= open_graph_description %>" />
+    <meta property="og:image" content="<%= open_graph_share_image_path %>" />
+    <meta property="og:type" content="non_profit" />
+    <meta property="og:site_name" content="GetUp! Action for Australia" />
+    <meta property="fb:admins" content="<%= AppConstants.facebook_admin_id %>"/>
+    <!-- END OF Facebook Open Graph meta tags-->
+    <script type="text/javascript">
+    var myfont_webfont_test = false;
+    var woffEnabled = true;
+    var customPath = "/fonts";
+    </script>
+    <%= stylesheet_link_tag 'common/legacy-screen' %>
+    <%= include_jquery %>
+    <%= csrf_meta_tag %>
+<!--
+/*
+ * MyFonts Webfont Build ID 741383, 2011-04-04T00:56:43-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+
+ * Webfont: Swiss 721 Bold Condensed
+ * URL: http://new.myfonts.com/fonts/bitstream/swiss-721/bold-condensed/
+ * Foundry: Bitstream
+ * Copyright: Copyright 1990-2003 Bitstream Inc. All rights reserved.
+ * License: http://www.myfonts.com/viewlicense?1056
+ * Licensed pageviews: 1,000,000/month
+ * CSS font-family: Swiss721BT-BoldCondensed
+ * CSS font-weight: normal
+ */
+-->
+
+ </head>
+
+  <body>
+   <%= yield %>
+   <%= render :partial => 'common/analytics' %>
+  <%= include_addthis %>
+  <%= javascript_include_tag 'public' %>
+  </body>
+</html>

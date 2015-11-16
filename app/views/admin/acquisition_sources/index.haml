@@ -1,0 +1,62 @@
+- title "Share Links"
+
+#acquisition-sources-list
+  .button-links
+    = link_to("New share link", new_admin_page_acquisition_source_path(@page), :class => 'new-source')
+  %table
+    %tr
+      %th Slug
+      %th Source
+      %th Medium
+      %th Version
+      %th Name
+      %th Created At
+      %th URL
+    - @page.acquisition_sources.order(created_at: :desc).each do |source|
+      %tr
+        %td
+          %span{id: "source-slug-#{source.id}"}=source.slug
+          %button{:'data-copy-id' => "source-slug-#{source.id}", href: '#'} Copy
+        %td=source.source_label
+        %td=source.medium_label
+        %td=source.content_label
+        %td=source.name
+        %td=source.user.created_at.to_s(:short)
+        %td
+          - redirects = redirects_for_share_link(source)
+          - if redirects.count > 0
+            - redirects.each do |redirect|
+              .redirect-link
+                = alias_link(redirect, EmailTrackingToken.encode_with_source(source.id), target: '_BLANK')
+                %span.hidden{id: "source-public-link-#{source.id}-#{redirect.id}"}=alias_link(redirect, EmailTrackingToken.encode_with_source(source.id))
+                %button{:'data-copy-id' => "source-public-link-#{source.id}-#{redirect.id}", href: '#'} Copy
+          - else
+            =link_to 'Open link', public_link_with_source_tracking(source), target: '_BLANK'
+            %span.hidden{id: "source-public-link-#{source.id}"}=public_link_with_source_tracking(source)
+            %button{:'data-copy-id' => "source-public-link-#{source.id}", href: '#'} Copy
+
+
+:javascript
+  $('#acquisition-sources-list button[data-copy-id]').click(function(e) {
+    e.preventDefault();
+    var nodeId = '#' + $(this).data('copy-id');
+    var $node = $(nodeId);
+    var hidden = $(nodeId).hasClass('hidden');
+    var range = document.createRange();
+    if (hidden){
+      $node.css('position:absolute; right: 0; top: 0;');
+      $node.removeClass('hidden');
+    }
+    range.selectNode(document.querySelector(nodeId));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    try {
+      document.execCommand('copy');
+    } catch(err) {};
+    $( nodeId ).parent().effect( 'highlight', {}, 300);
+    if (hidden){
+      $node.addClass('hidden');
+    }
+    window.getSelection().removeAllRanges();
+  });
+

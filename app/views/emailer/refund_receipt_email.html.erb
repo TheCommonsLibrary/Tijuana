@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <br/>Dear <%= @greeting %>, 
+    <br/>
+    <br/>Thanks for your past support of GetUp. As requested, your recent donation to GetUp has been refunded. Please find the confirmation of your refund below.
+    <br/>
+    <br/>If you have any queries about this, please give us a call on <%= AppConstants.financial_contact_number %> or reply to this email.
+    <br/>
+    <br/>REFUND CONFIRMATION
+    <br/>----------------------------------------------------------------
+    <br/>Merchant: GetUp Ltd
+    <br/>Ref: <%= @transaction.txn_ref %>
+    <br/>Contact: donations@getup.org.au
+    <br/>----------------------------------------------------------------
+    <br/>To: <%= @user.first_name %> <%= @user.last_name %>
+    <br/>E-mail: <%= @user.email %>
+    <br/>----------------------------------------------------------------
+    <br/>
+    <br/>Payment Status: <%= @transaction.response_code %> - Refunded
+    <br/>Date: <%= @transaction.created_at %>
+    <br/>Campaign: <%= @donation.made_to %>
+    <br/>RRN: <%= @transaction.bank_ref %>
+    <br/>CardNumber: **** **** **** <%= @donation.card_last_four_digits %>
+    <% if @donation.card_type.present? %>
+      <br/>Card Type: <%= @donation.card_type.upcase %>
+    <% end %>
+    <br/>Refund: <%= number_to_currency(-@transaction.amount_in_dollars) %> AUD
+    <br/>
+    <br/>
+    <br/>************ IMPORTANT NOTE **************
+    <br/>
+    <br/>Your credit card statement will show this refund as coming from GetUp Ltd. 
+    <br/>
+    <br/>
+    <br/>Thanks,
+    <br/><%= AppConstants.financial_contact_name %> for the GetUp Strategy Team 
+    <br/>National Director
+  </body>
+</html>

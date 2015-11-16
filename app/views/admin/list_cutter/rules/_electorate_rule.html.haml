@@ -1,0 +1,10 @@
+.tooltip{"data-tip" => "electorate-tip"}
+  = f.select(:electorate_ids, federal_electorates, { }, { :multiple => true, :class => "required-if-present" })
+.no-postcode
+  = f.label 'Send to members with no postcodes'
+  = f.check_box(:send_to_no_postcode, {checked: rule.send_to_no_postcode?})
+
+= javascript_tag do
+  $("#rules_electorate_rule_electorate_ids").val(#{(rule.electorate_ids || []).map(&:to_i)}).select2({
+  placeholder: "Enter electorates"
+  });

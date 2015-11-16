@@ -1,0 +1,45 @@
+@media (min-width: 768px) {
+  .show {
+    #action {
+      .well, .petition-content, h2 {
+        background-color: transparent;
+      }
+
+      form {
+        width: 90%;
+        float: right;
+        clear: both;
+        border-radius: 10px 0 0 10px;
+      }
+    }
+
+    .header {
+      position: absolute;
+      z-index: -1;
+    }
+
+    h1, .well h2 {
+      border-bottom: 1px $white solid;
+      margin: 0 0 20px 0;
+      padding: 0 0 20px 0;
+    }
+
+    .content-wrap {
+      margin: 30px 0 0 410px;
+    }
+    .page-content {
+      float: left;
+      clear: both;
+      background-color: transparent;
+    }
+  }
+
+  #email {
+    .well {
+      color: $white;
+      form {
+        color: $maroon;
+      }
+    }
+  }
+}

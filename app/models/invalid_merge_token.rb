@@ -1,0 +1,1 @@
+class InvalidMergeToken < RuntimeError; end

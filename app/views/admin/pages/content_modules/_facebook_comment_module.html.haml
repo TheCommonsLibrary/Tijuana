@@ -1,0 +1,12 @@
+= f.label :title, 'Title', class: "req"
+= f.text_field :title
+= f.label :content, 'Blurb'
+= f.text_area :content, rows: 4
+
+= f.label :target_facebook_id, 'Facebook ID of target', class: 'req'
+= f.text_field :target_facebook_id
+%p.info
+  e.g.
+  %strong malcolmturnbull.
+  To find the target's ID, go to their Facebook page and extract the text after <strong>https://www.facebook.com/</strong> e.g.
+  %a{href: 'https://www.facebook.com/malcolmturnbull', target: '_BLANK'} https://www.facebook.com/malcolmturnbull

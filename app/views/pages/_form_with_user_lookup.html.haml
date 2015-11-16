@@ -1,0 +1,13 @@
+= form_tag(take_action_path(@campaign, @page_sequence, @page), :id => "action-form", :class => ("auto-submittable" if defined?(auto_submittable) && auto_submittable), :validate => true) do
+  = form_errors(@user)
+  = hidden_field_tag :http_referrer, @http_referrer
+  = hidden_field_tag :module_id, content_module.id
+  = email_tracking_field
+  = render :partial => 'pages/user_details', locals: {user_details_requirements: @page, content_module: content_module}
+  = yield
+
+:javascript
+
+  $(function () {
+    tijuana.lookupUser = lookupUser('#{lookup_users_path}', 'page_id', #{@page.id}, '#user_email', '#ask-specific-user-details', 'label[for="become-member-checkbox"]', #{@clear_user_details_form || false});
+  });

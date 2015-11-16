@@ -1,0 +1,31 @@
+<div class="table-box" id="donation-history-results" >
+  <div class="inner-tablebox">
+    <table class="stripe-me">
+      <tr>
+        <th class="col1 clr-1">Date</th>
+        <th class="col2 clr-2">Payment method</th>
+        <th class="col3 clr-1">Campaign</th>
+        <th class="col4 clr-2">Transaction#</th>
+        <th class="col5 clr-1">Amount</th>
+      </tr>
+      <% @transactions.each do |transaction| %>
+          <tr>
+            <td class="date"><%= transaction.created_at.strftime "%d/%m/%Y" %></td>
+            <td class="payment-method"><%= transaction.donation.payment_method.humanize %></td>
+            <td class="donated-to"><%= truncate(transaction.donation.made_to, :length => 25) %></td>
+            <td class="transaction-#"><%= transaction.id %></td>
+            <td class="amount"><%= number_to_currency(transaction.amount_in_dollars) %></td>
+          </tr>
+      <% end %>
+    </table>
+    <% unless @skip_pagination %>
+        <%= will_paginate @transactions, :params => {:controller => "dashboard", :action => "donation_history", :from => @from_date.strftime("%d-%m-%Y"), :to => @to_date.strftime("%d-%m-%Y")} %>
+        <script type="text/javascript">
+            $('.pagination a').attr('data-remote', 'true');
+            $('.pagination a').click(function(){
+                $('#donation-history-results').html("<div class='loading'><img class='loading' src='<%= image_path('common/lib/jquery-ui-newlook/loading.gif') %>' alt='loading'/><h3 class='processing'>Processing results...</h3></div>");
+            });
+        </script>
+    <% end %>
+  </div>
+</div>

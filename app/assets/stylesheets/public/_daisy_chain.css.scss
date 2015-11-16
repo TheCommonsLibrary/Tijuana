@@ -1,0 +1,17 @@
+.modal.daisy-chain {
+  .modal-header { display: none; }
+
+  @media (max-height: 700px) {
+    .modal-footer { display: none; }
+    .modal-body { clear: both; }
+    .modal-header {
+      display: block;
+      border-bottom: none;
+      & button {
+        margin-bottom: 0;
+        padding: 5px;
+        font-size: medium;
+      }
+    }
+  }
+}

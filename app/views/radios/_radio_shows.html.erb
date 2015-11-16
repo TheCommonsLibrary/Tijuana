@@ -1,0 +1,17 @@
+<div class="radio-shows">
+  <%= radio_button_tag "radio_show", show.id, false, :class => "radio_show" %>
+  <%= label_tag "radio_show#{show.id}", "#{show.radio_station.name} - #{show.presenter} (#{show.from_time_localised})" %>
+  <% if show.on_air? %>
+      <span style="color: red;margin: 0.4em;font-size: 0.9em;font-weight: bold;">ON AIR</span>
+  <% end %>
+</div>
+<div id="<%= "radio_details#{show.id}" %>" class="radio_details_item" align="" style="margin-left:15px;margin-right: 15px">
+  <div class="radio_details_image">
+    <div class="radio_details_text">
+      <%= show_if_not_nil(show.radio_station.phone, 'ph') %>
+      <%= show_if_not_nil(show.radio_station.sms, 'sms') %>
+      <div><%= "#{show.from_time_localised} to #{show.to_time_localised} (#{show.radio_station.state})" %></div>
+      <div><%= link_to_unless show.website.nil?, "go to website", show.website, :target => "_blank" %></div>
+    </div>
+  </div>
+</div>

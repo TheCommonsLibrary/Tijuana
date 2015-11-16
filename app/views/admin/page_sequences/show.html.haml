@@ -1,0 +1,40 @@
+- title @page_sequence.name
+- unless @page_sequence.static?
+  - content_for :breadcrumb_links do
+    = link_to "Edit sequence", edit_admin_page_sequence_path(@page_sequence)
+    - if can? :destroy, @page_sequence
+      | #{link_to "Delete sequence", admin_page_sequence_path(@page_sequence), :method => :delete, :data => { :confirm => "Delete '#{@page_sequence.name}'?" }}
+#pages
+  %h3 PAGES
+  %span.subtle (drag to reorder)
+  %ul#pages-list
+    - for page in @page_sequence.pages
+      %li.page.big-link{id: "page_#{page.id}"}
+        %span.handle
+        = link_to page.name, edit_admin_page_path(page)
+        .actions
+          .acts-as-taggable-on
+            %input.tags{name: "tags-#{page.id}", value: "#{page.tag_list.to_s}"}
+          = share_link(page)
+          %span
+            |
+          = link_to "Manage Page", edit_admin_page_path(page)
+          %span
+            |
+          \#{link_to "Show Public View", friendly_path(page), :target => "_blank"}
+  .button-links
+    .left
+      %a.unlock-sorting{href: "#unlock-sorting", unlock: "pages-list"} Unlock Sorting
+    = link_to "Add a page", new_admin_page_path(:page_sequence_id => @page_sequence), :class => 'add-page'
+= render :partial => 'admin/shared/history', :locals => {:entity => @page_sequence}
+
+:javascript
+  $(function() {
+    reorderSequence('#{sort_pages_admin_page_sequence_path(@page_sequence)}', '#pages ul', '#pages');
+    var uiOptions = {
+      'removeWithBackspace' : false,
+      'height': 'auto',
+      'width' : '400px'
+    };
+    actsAsTaggableOnPages(uiOptions);
+  });

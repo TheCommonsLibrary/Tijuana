@@ -1,0 +1,153 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://getupstaging.nationbuilder.com/api/v1/lists?access_token=3babb108a4ec97d0d71f7f3a3bc209d7dc70fa42c3674e6e56b222ab50f3da82&fire_webhooks=false
+    body:
+      encoding: UTF-8
+      string: '{"list":{"name":"Tijuana temporary list for ''my first list''","slug":"autotag_94898924ba3d","author_id":1},"fire_webhooks":false,"access_token":"3babb108a4ec97d0d71f7f3a3bc209d7dc70fa42c3674e6e56b222ab50f3da82"}'
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.4.0, ruby 2.1.5 (2014-11-13))
+      Accept:
+      - application/json
+      Date:
+      - Wed, 01 Apr 2015 05:16:09 GMT
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - cloudflare-nginx
+      Date:
+      - Wed, 01 Apr 2015 05:16:10 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=df92968e3fafa00aa61bc82a998c41e191427865369; expires=Thu, 31-Mar-16
+        05:16:09 GMT; path=/; domain=.nationbuilder.com; HttpOnly
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - W/"0a7381bc492f192f3a9adeb9381d2ce0"
+      Nation-Ratelimit-Limit:
+      - '75000'
+      Nation-Ratelimit-Remaining:
+      - '73538'
+      Nation-Ratelimit-Reset:
+      - '1427932800'
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - Phusion Passenger 4.0.53
+      X-Pulse-Approved:
+      - 'true'
+      X-Rack-Cache:
+      - invalidate, pass
+      X-Ratelimit-Limit:
+      - 10s
+      X-Ratelimit-Remaining:
+      - '95'
+      X-Ratelimit-Reset:
+      - '1427865374'
+      X-Request-Id:
+      - 3a6ef0c024ffe7fa83fe97e5513a3e66
+      X-Runtime:
+      - '0.079382'
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Via:
+      - 1.1 nationbuilder.com
+      Cf-Ray:
+      - 1d01d1fd5c6f19b6-SYD
+    body:
+      encoding: UTF-8
+      string: '{"list_resource":{"id":234,"name":"Tijuana temporary list for ''my
+        first list''","slug":"autotag_94898924ba3d","author_id":1,"count":0}}'
+    http_version: 
+  recorded_at: Wed, 01 Apr 2015 05:16:10 GMT
+- request:
+    method: post
+    uri: https://getupstaging.nationbuilder.com/api/v1/lists?access_token=3babb108a4ec97d0d71f7f3a3bc209d7dc70fa42c3674e6e56b222ab50f3da82&fire_webhooks=false
+    body:
+      encoding: UTF-8
+      string: '{"list":{"name":"Tijuana temporary list for ''my second list''","slug":"autotag_c72505bcce88","author_id":1},"fire_webhooks":false,"access_token":"3babb108a4ec97d0d71f7f3a3bc209d7dc70fa42c3674e6e56b222ab50f3da82"}'
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.4.0, ruby 2.1.5 (2014-11-13))
+      Accept:
+      - application/json
+      Date:
+      - Wed, 01 Apr 2015 05:16:10 GMT
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - cloudflare-nginx
+      Date:
+      - Wed, 01 Apr 2015 05:16:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d2d0c2d438ae882db6e6902dd65146dde1427865370; expires=Thu, 31-Mar-16
+        05:16:10 GMT; path=/; domain=.nationbuilder.com; HttpOnly
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - W/"b14862b0ea9d7921ad46b90c1595f446"
+      Nation-Ratelimit-Limit:
+      - '75000'
+      Nation-Ratelimit-Remaining:
+      - '73537'
+      Nation-Ratelimit-Reset:
+      - '1427932800'
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - Phusion Passenger 4.0.53
+      X-Pulse-Approved:
+      - 'true'
+      X-Rack-Cache:
+      - invalidate, pass
+      X-Ratelimit-Limit:
+      - 10s
+      X-Ratelimit-Remaining:
+      - '94'
+      X-Ratelimit-Reset:
+      - '1427865374'
+      X-Request-Id:
+      - 9ac04339f3bb734d2f43a33f28a9cd54
+      X-Runtime:
+      - '0.074916'
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Via:
+      - 1.1 nationbuilder.com
+      Cf-Ray:
+      - 1d01d2048c6904c8-SYD
+    body:
+      encoding: UTF-8
+      string: '{"list_resource":{"id":235,"name":"Tijuana temporary list for ''my
+        second list''","slug":"autotag_c72505bcce88","author_id":1,"count":0}}'
+    http_version: 
+  recorded_at: Wed, 01 Apr 2015 05:16:11 GMT
+recorded_with: VCR 2.9.3

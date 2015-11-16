@@ -1,0 +1,79 @@
+<% title "Transactions" %>
+
+<div class="searchbar">
+  <div class="actions button-links">
+    <%= link_to "Add an Offline Donation", new_admin_donation_path, :class => 'offline-donation' %>
+  </div>
+  <%= form_tag(admin_transactions_path, :method => :get, :id => 'search_form') do %>
+    <div>
+      <%= label_tag :query %>
+      <%= text_field_tag :query, params[:query], :class => "query", :placeholder => "ID, txn ref, bank ref or amount in dollars" %>
+    </div>
+
+    <div>
+      <%= label_tag "filter[payment_methods]", "Payment methods" %>
+      <% options = options_for_select([["Eftpos", :eftpos], ["Cash", :cash], ["Money Order", :money_order], ["Bank Cheque", :bank_cheque], ["Paypal", :paypal], ["Credit Card", :credit_card ], ["Cheque", :cheque]],
+                                      params[:filter].try(:[], :payment_methods)) %>
+      <%= select_tag("filter[payment_methods]", options, :multiple =>true, :include_blank => true, :class => "filter-payment-options", :size => 3) %>
+    </div>
+
+    <div>
+      <%= label_tag "filter[status]", "Status" %>
+      <%= radio_button_tag 'filter[status]', '', params[:filter].try(:[], :status).blank? %> All
+      <%= radio_button_tag 'filter[status]', 'successful', params[:filter].try(:[], :status) == 'successful' %> Successful
+      <%= radio_button_tag 'filter[status]', 'failed', params[:filter].try(:[], :status) == 'failed' %> Failed
+    </div>
+
+    <div>
+      <%= label_tag "filter[from_date]", "From date" %>
+      <%= text_field_tag "filter[from_date]", !params[:filter].blank? ? params[:filter][:from_date] : '', :class => "date-picker" %>
+
+      <%= label_tag "filter[to_date]", "To date" %>
+      <%= text_field_tag "filter[to_date]", !params[:filter].blank? ? params[:filter][:to_date] : '', :class => "date-picker" %>
+    </div>
+
+    <div>
+      <%= label_tag "filter[minimum_dollars]", "Minimum $" %>
+      <%= text_field_tag "filter[minimum_dollars]", !params[:filter].blank? ? params[:filter][:minimum_dollars] : '', :class => "amount"  %>
+
+      <%= label_tag "filter[maximum_dollars]", "Maximum $" %>
+      <%= text_field_tag "filter[maximum_dollars]", !params[:filter].blank? ? params[:filter][:maximum_dollars] : '', :class => "amount"  %>
+    </div>
+
+    <div>
+      <%= label_tag 'filter[user_email]', "Donor Email" %>
+      <%= text_field_tag 'filter[user_email]', params[:filter].try(:[], :user_email) %>
+    </div>
+
+    <div>
+      <%= label_tag "filter[group_by]", "Group results by" %>
+      <% options = options_for_select([["Year/Month", :year_month], ["Campaign", :campaign], ["Frequency", :frequency]],
+                                      params[:filter].try(:[], :group_by)) %>
+      <%= select_tag("filter[group_by]", options, :multiple =>true, :include_blank => true, :class => "filter-payment-options", :size => 3) %>
+    </div>
+
+    <%= submit_tag "Search" %>
+    <% if can? :export, ExcelTransactionsReport %>
+      <input type="button" id="download_csv" value="Download csv"/>
+    <% end %>
+  <% end %>
+</div>
+<% should_group = !params[:filter].try(:[], :group_by).blank? %>
+<%= render :partial => should_group ? 'admin/shared/grouped_transactions_table' : 'admin/shared/transactions_table', :locals => {:transactions => @transactions, :action_link => Proc.new { |transaction| link_to "Manage", admin_transaction_path(transaction)}} %>
+<%= will_paginate @transactions %>
+<%= page_entries_info @transactions %>
+
+<%= javascript_tag do %>
+  $(function() {
+    $.datepicker.setDefaults({dateFormat: 'dd-mm-yy'});
+
+    $.dateRangePicker({
+      fromSelector:'#filter_from_date',
+      toSelector:'#filter_to_date'
+    });
+
+    $('#download_csv').click(function() {
+      window.location.href = '<%= admin_transactions_path(:format => :csv) %>?' + $('#search_form').serialize();
+    });
+  });
+<% end %>

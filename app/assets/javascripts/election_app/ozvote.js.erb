@@ -1,0 +1,288 @@
+var DETAIL_TEMPLATE =
+  '{{#lower_house}}<h3 class="htv-frame">Voting in the Lower House</h3><iframe id="htv-iframe" src="/vote/{{converted_name}}?embed=1" scrolling="no"></iframe>{{/lower_house}}\
+  <h3 class="htv-frame">Voting in the Senate</h3>\
+  <iframe id="htv-iframe-senate" src="/vote/{{converted_name}}?embed=1&senate=1" scrolling="no"></iframe>\
+  <script>iFrameResize();</script>\
+  <div class="container full-height ozvote-details" >\
+    <div class="row">\
+      <div class="col-lg-12">\
+        <div class="senate-htv-text">What to do:\
+        <ul><li>Number these parties in any order you prefer</li>\
+        <li>Then make sure you number <strong>at least six boxes above the line</strong></li>\
+        <li>Don\'t number below the line if voting above the line</li>\
+        <li><strong>Preferencing is important.</strong> The more parties you vote for, the more likely it is your vote will elect someone.</li></ul>\
+        <p>To determine who appears on this how-to-vote card, parties and candidates in contention were researched and surveyed for their position across 33 policy areas.</p>\
+        <p><strong>For more information visit: <a target="_BLANK" href="http://www.getup.org.au/vote">www.getup.org.au/vote</a></strong></p>\
+        <p>Don\'t forget to number every box in the House of Representatives. In the Senate, number at least 6 boxes above the line, or at least 12 boxes below the line.</p>\
+        <p><em>Authorised by Paul Oosting for GetUp. Level 14 338 Pitt Street Sydney NSW 2000</em></p>\
+        <p>WEB USE ONLY NOT FOR PRINTING</p>\
+        </div>\
+        <div class="callout">\
+          <input id="details-back-button" action="action" type="button" class="btn btn-orange navbar-btn" onclick="backToMapFromDetailView();" value="Back" />\
+          <h2>{{name}}</h2>\
+          <dl class="dl-horizontal indent">\
+            <dt>Address</dt>\
+            <dd>{{address}} {{suburb}}</dd>\
+            <dd>{{postcode}} {{state}}</dd>\
+            <dt>Electorates serviced:</dt>\
+            <dd>{{electorate_names}}</dd>\
+           {{#booth_location}}\
+            <dt>Location</dt>\
+            <dd>{{booth_location}}</dd>\
+           {{/booth_location}}\
+           {{#booth_gate}}\
+            <dt>Gate</dt>\
+            <dd>{{booth_gate}}</dd>\
+           {{/booth_gate}}\
+           {{#booth_entrance}}\
+            <dt>Entrance</dt>\
+            <dd>{{booth_entrance}}</dd>\
+           {{/booth_entrance}}\
+           {{#wheelchair}}\
+            <dt>Wheelchair Access:</dt>\
+            <dd>{{wheelchair}}</dd>\
+           {{/wheelchair}}\
+           {{#hours}}\
+            <dt>{{dates}}:</dt>\
+            <dd>open from {{from_time}} to {{to_time}}</dd>\
+           {{/hours}}\
+          </dl>\
+          {{#htv_links}}\
+          <div id="scorecard-button">\
+          <button class="btn btn-large btn-orange scorecard-button" onclick="ga(\'send\', \'event\', \'ozvote2\', \'download\', \'{{name}}\');window.location = \'{{{link}}}\';"><span>Download</span></button>\
+          </div>\
+          {{/htv_links}}\
+          <div id="get-directions">\
+            <button href="#" class="btn btn-blue" style="display:none"><span>Directions </span><i class="icon-random"></i></button>\
+          </div>\
+        </div>\
+        <div class="clear"></div>\
+      </div>\
+    </div>\
+    <div class="row full-height">\
+      <div id="detail-map" class="full-height"></div>\
+    </div>\
+  </div>';
+
+var currentPollingBoothEvent;
+
+var electoratesWithCustomHTVs = [
+  'barker',
+  'barton',
+  'bass',
+  'braddon',
+  'brisbane',
+  'burt',
+  'capricornia',
+  'cownan',
+  'cowper',
+  'dawson',
+  'deakin',
+  'denison',
+  'dickson',
+  'dobell',
+  'eden-monaro',
+  'gilmore',
+  'grey',
+  'griffith',
+  'higgins',
+  'hindmarsh',
+  'kingsford_smith',
+  'macarthur',
+  'macquarie',
+  'mayo',
+  'menzies',
+  'page',
+  'paterson',
+  'petrie',
+  'robertson',
+  'swan'
+];
+
+var showBoothDetails = function(event) {
+  // hack hack
+  currentPollingBoothEvent = event;
+  window.scrollTo(0, 0);
+
+  // update global bestGuessVotingLocation when showing details of booth
+  var boothLocation = event.geo;
+  bestGuessVotingLocation.set(boothLocation.lat, boothLocation.lng);
+
+  // format event info for mustache template
+  var formatDate = function(dateString){
+    var d = new Date(dateString);
+    return ("0" + d.getDate()).slice(-2) + "/" + ("0"+(d.getMonth()+1)).slice(-2) + "/" + d.getFullYear();
+  }
+  var hour;
+  for(var i=0; i<event.hours.length; i++){
+    hour =  event.hours[i];
+    hour.dates = formatDate(hour.from_date)
+    if (hour.from_date !== hour.to_date){
+      hour.dates += ' - ' + formatDate(hour.to_date)
+    }
+  };
+  event.electorate_names = event.electorates.join(' and ');
+  if (event.state !== 'NT' && event.state !== 'ACT') {
+    var convertedName = event.electorate.toLowerCase().replace(/ /, '_');
+    event.converted_name = convertedName;
+    if (electoratesWithCustomHTVs.indexOf(convertedName) !== -1){
+      event.htvName = convertedName;
+      event.lower_house = true;
+    }else{
+      event.htvName = event.state.toLowerCase();
+    }
+    event.htv_links = [{name: name, link: 'https://d2yjjdrwrn6zm4.cloudfront.net/' + event.htvName + '.pdf'}]
+  }
+
+  console.error(event)
+  var html = Mustache.to_html(DETAIL_TEMPLATE, event);
+  $("#detail-container").html(html);
+  showPage('detail');
+  bootstrapMap(event, "event_viewer", "<%=AppConstants.google_maps_api_key%>", null, $("#detail-map"), $("#detail-map"), false, null );
+
+  if (currentLocation) {
+    $('#get-directions button').show().click(function(){
+      app.showDirections(currentLocation, {latitude: boothLocation.lat, longitude: boothLocation.lng });
+      return false;
+    });
+  }
+
+  ga('send', 'event', 'ozvote', 'open', event.selected_electorate);
+
+  return false;
+};
+
+var votingLocation = function() {
+  var lat = null;
+  var lng = null;
+
+  var blank = function() {
+    return !lat || !lng;
+  };
+
+  return {
+    toString: function() {
+      return blank() ? null : (lat + "," + lng);
+    },
+
+    isBlank: function() {
+      return blank();
+    },
+
+    set: function(latitude, longitude) {
+      lat = latitude;
+      lng = longitude;
+    }
+  };
+};
+// Start with geolocation, update based on user actions 
+var bestGuessVotingLocation = votingLocation();
+var currentLocation;
+
+var isOnline = true;
+
+var showScorecard = function() {
+  var params = "";
+  if (!bestGuessVotingLocation.isBlank()) {
+    params = "?latlng=" + bestGuessVotingLocation.toString();
+  }
+  if (currentPollingBoothEvent) {
+    params += params === '' ? '?' : '&;'
+    params += 'electorates=' + encodeURIComponent(currentPollingBoothEvent.electorates.join(','));
+  }
+  if (app.remote.scorecardUrl) {
+    $('#scorecard-container').html('<div class="loading loading-image"/>');
+    $('#scorecard-container .loading.loading-image').spin();
+    if (!isOnline) {
+      $('#scorecard-container').find('.loading.loading-image').addClass('hide');
+    }
+    $('#scorecard-container').load(app.remote.scorecardUrl + params);
+  }
+  showPage('scorecard');
+  return false;
+}
+
+$('.show-scorecard').click(function(e) {
+  showScorecard();
+});
+
+$('a.show-map').click(function(e) {
+  e.preventDefault();
+  $(this).parent().addClass('active');
+  $('li.show-pre-map').removeClass('active');
+  showMap(true);
+});
+
+$('a.show-pre-map').click(function(e) {
+  e.preventDefault();
+  $(this).parent().addClass('active');
+  $('li.show-map').removeClass('active');
+  showMap();
+});
+
+$('#search-postcode').click(function(e) {
+  if (!$('#origin-postcode').val()) {
+    e.preventDefault();
+    $('#origin-postcode').focus();
+  }
+});
+
+function backToMapFromDetailView() {
+  showPage();
+}
+
+function showMap(loadElectionDayBooths) {
+  var url = app.remote.url + '/polling_booths.json';
+  if (!loadElectionDayBooths) {
+    url += '?pre=1';
+  }
+  bootstrapMap(false, 'event_viewer', '<%=AppConstants.google_maps_api_key%>', url, $("#event-location-map"), $("#event-locations"), true, showBoothDetails );
+
+  $('#go-to-current-position').hide();
+
+  $("#event-location-map").on('current-position', function(e, position){
+    bestGuessVotingLocation.set(position.coords.latitude, position.coords.longitude);
+    currentLocation = position.coords;
+    $('#go-to-current-position').show();
+  });
+
+  $("#event-location-map").on('no-current-position', function(){
+    $('#go-to-current-position').hide();
+  });
+}
+
+function anySpinnerVisible() {
+  var spinnerIsVisible = false;
+  $('.loading-image').each(function(){
+    if ($(this).css('display') != 'none') {
+      spinnerIsVisible = true;
+    }
+  });
+  return spinnerIsVisible;
+}
+
+function refreshAfterNetworkOutage() {
+  if (anySpinnerVisible()) {
+    console.error('hassssh')
+    if (window.location.hash == '#scorecard') {
+      showScorecard()
+    } else if (window.location.hash == '#detail') {
+      alert("boo");
+    } else {
+      showMap(true);
+    }
+  }
+}
+
+var currentWindowLocationHash = "";
+
+var showPage = function (page) {
+  if (page) {
+    $('#polling-booths section').hide();
+    $('section#'+page).show();
+  } else {
+    $('#polling-booths section').hide();
+    $('section#map').show();
+    $("#event-location-map").trigger('refresh-map');
+  }
+}

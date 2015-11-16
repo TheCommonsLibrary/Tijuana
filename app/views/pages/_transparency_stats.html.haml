@@ -1,0 +1,21 @@
+#transparency-stats
+  .scroll
+    %table.transparency-metrics
+      %tr.header
+        %th
+        %th Last Day
+        %th Last 7 days
+        %th Last 30 days
+        %th Last 365 days
+      - transparency_stats.each_with_index do |s, i|
+        -  i == 1 || i == 2 ? currency = '$' : currency = ''
+        %tr
+          %th= s.name
+          %td #{currency}#{s.day.to_i}
+          %td #{currency}#{s.week.to_i}
+          %td #{currency}#{s.month.to_i}
+          %td #{currency}#{s.year.to_i}
+  %span.help-block
+    + Updated once a day. Last updated: #{transparency_stats.first.created_at.strftime("%d/%m/%Y at %I:%M%p")}
+    %br
+    ^ For technical reasons not all donations processed through this website are included in these statistics. These amounts are subject to change at any time.

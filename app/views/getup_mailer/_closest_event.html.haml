@@ -1,0 +1,20 @@
+- if event
+  %b="What:"
+  = event.name
+  %br
+  %b="When: "
+  = format_event_date_time(event)
+  %br
+  %b="Where: "
+  = event.address
+  %br
+  %b="Wear: "
+  Bright heatwave coloured clothing - reds, oranges, yellows
+  %br
+  %b="Bring: "
+  A hat, water bottle and lots of friends! 
+  %br
+  %b="RSVP and map: "
+  != add_tracking_hash_to_links(link_to(event_url(event), event_url(event)), user, email, recipients_for_test)
+- else
+  != add_tracking_hash_to_links(default_value, user, email, recipients_for_test)

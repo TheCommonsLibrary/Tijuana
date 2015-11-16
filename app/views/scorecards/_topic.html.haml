@@ -1,0 +1,17 @@
+.row.topic-header
+
+  .col-sm-4.table-height
+    .col-sm-6{style: "padding-left: 0px;"}
+      %h3{id: "scorecard-#{topic.parameterize}", class: 'middle-cell'}
+        #{topic} 
+        %p
+          #{link_to "More&nbsp;info".html_safe, "https://www.getup.org.au/campaigns/scorecard-more-info/topics/#{topic.downcase.gsub(/\s+/, '_')}", :target=>'_blank', :style=>'font-weight: bold; color: #ccc; font-size: 70%'}
+    .col-sm-6.visible-lg
+      = image_tag(request.protocol + request.host_with_port + "/assets/election_app/#{person_name.split(" ").first.downcase}.png", height: 120, style: "position: absolute; margin-top: -30px;")
+          
+
+  .col-sm-8.hidden-xs
+    %p
+      #{person_name}:
+    %p.quote
+      %em "#{quote}"

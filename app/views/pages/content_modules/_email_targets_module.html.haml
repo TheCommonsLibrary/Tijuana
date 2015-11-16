@@ -1,0 +1,32 @@
+- email_targets_module = content_module
+.well
+  %h2= email_targets_module.title
+  != render_html(email_targets_module.content)
+  = render :layout => "pages/form_with_user_lookup", :locals => {:content_module => content_module} do
+    = fields_for email_targets_module.user_email do |m|
+      = form_errors(email_targets_module.user_email)
+      %label.email-subject= 'Subject'
+      = m.text_field :subject, :placeholder => EmailModuleHelper.subject_placeholder(content_module), maxlength: '255'
+      = render :partial => "pages/email_talking_points", :locals => {:content_module => content_module}
+      %label.email-body= 'Email Body'
+      = m.text_area :body, :placeholder => EmailModuleHelper.body_placeholder(content_module)
+      %span.help-block
+        NB: Your details will be added to the bottom of the email sent.
+      = m.label :cc_me, {class: 'checkbox send-copy', for: "user_email_cc_me"} do
+        = m.check_box :cc_me, {class: 'full'}
+        Send me a copy
+
+      - if email_targets_module.has_custom? :form_fields
+        .custom-fields.custom-fields-above
+          = fields_for email_targets_module.user_email do |f|
+            = render_custom_form_fields f, email_targets_module.custom(:form_fields), email_targets_module
+        .clearfix
+      %hr
+    = button_tag email_targets_module.button_text, :class => "btn btn-primary btn-large btn-full fb-like-above", :disable_with => 'Please Wait...'
+    %hr
+
+:javascript
+  $(function() {
+    $('#action-form').attachAlertValidation(emailFormValidation({ placeholders: #{content_module.prompt_as_placeholder?}}));
+    TalkingPoints().enable('textarea[name="user_email[body]"]');
+  });

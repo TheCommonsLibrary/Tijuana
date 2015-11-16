@@ -1,0 +1,2 @@
+- if email.nil? || content_module.class.name != "DirectLandingHtmlModule"
+  = render :partial => content_module_partial(content_module), :locals => {:content_module => content_module, :section => :main_content}

@@ -1,0 +1,12 @@
+<% title "Edit offline donation" %>
+<%= render :partial => 'offline_donation_form' %>
+
+<%= javascript_tag do %>
+  $(offlineDonationForm);
+  $(function(){
+  $('#umbrella_user').umbrellaUserCheckbox({
+  userIdInputSelector: '#donation_user_id',
+  umbrellaUserId: <%= User.umbrella_user.id %>
+  });
+  });
+<% end %>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<br/>Dear <%= @greeting %>,
+<br/>
+<br/>GetUp is completely independent and cannot exist without you - so thank you for your generous contribution! Your donation will affirm and sustain our independent movement in working towards a progressive Australia.
+<br/>
+<br/>Please find the confirmation of your monthly donation below.
+<br/>
+<br/>Should you want to see the details of your donation history, you can log on to MyGetUp at any time. MyGetUp can be accessed through the main GetUp website here:
+<br/><a href="https://www.getup.org.au/mygetup-donationhistory">https://www.getup.org.au/mygetup-donationhistory</a>.
+<br/>If this is your first time using MyGetUp, you will need to create a password.
+<br/>
+<br/>If you have any questions, spot an error, or if you wish to make any changes to your account, please reply to this email or you can reach our office on <%= AppConstants.financial_contact_number %>. Alternatively if you reply with a contact number and the best time for us to call, we'll contact you to make the changes.
+<br/>
+<br/>Warm Regards,
+<br/><%= AppConstants.financial_contact_name %> for the GetUp! Team
+<br/>Ph: <%= AppConstants.financial_contact_number %>
+<br/>Email: donations@getup.org.au
+<br/>
+<br/>
+<br/>YOUR DONATION CONFIRMATION
+<br/>----------------------------------------------------------------
+<br/>Merchant: GetUp Ltd
+<br/>Ref: <%= @donation.id %>
+<br/>Contact: donations@getup.org.au
+<br/>----------------------------------------------------------------
+<br/>To: <%= @user.first_name %> <%= @user.last_name %>
+<br/>Email: <%= @user.email %>
+<br/>----------------------------------------------------------------
+<br/>
+<br/>Payment Status: Approved
+<br/><strong>Next Payment Date: <%= @start_date %></strong>
+<br/>CardNumber: **** **** **** <%= @donation.card_last_four_digits %>
+<% if @donation.card_type.present? %>
+  <br/>Card Type: <%= @donation.card_type.upcase %>
+<% end %>
+<br/>Purchase: <%= number_to_currency(@donation.amount_in_dollars) %> AUD
+<br/>Frequency: monthly
+<br/>Campaign: <%= @donation.made_to %>
+<br/>
+<br/>
+<br/>************ IMPORTANT NOTE **************
+<br/>
+<br/>Your credit card statement will show this charge as coming from GetUp Ltd. Please be aware of this name and remember that it relates to this purchase.
+<br/>
+<br/>Under current legislation donations to GetUp, like other political campaigning organisations, are not tax deductible. Donations of <%= AppConstants.legal_disclosure_amount %> or more (indexed annually) may be subject to disclosure to the Australian Electoral Commission under the Commonwealth Electoral Act 1918. We disclose donations that exceed $10,000 cumulatively in a financial year on our website.
+<br/>
+<br/>If we raise more than the cost of this campaign, your donation will be used to help cover the cost of ongoing GetUp campaigns that have the same purpose.
+<br/>
+</body>
+</html>

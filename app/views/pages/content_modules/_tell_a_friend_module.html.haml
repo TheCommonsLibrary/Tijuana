@@ -1,0 +1,27 @@
+- title ||= content_module.title
+- content ||= content_module.content
+- share_link ||= generate_short_link(@page_sequence.pages.first, @token)
+- tweet_text ||= @page_sequence.tweet_text
+- email_subject ||= @page_sequence.email_subject
+- email_body ||= @page_sequence.email_body
+
+.content-module.tell-a-friend-module.main-content
+  %hr
+  %h2
+    = title.upcase
+  %p.caption
+    =raw render_html(content)
+  .sharebuttons.clearfix
+    = render :partial => "common/add_this", :locals => { :tweet_text => tweet_text, :share_link => share_link }
+
+  .copy-this
+    Copy the link to IM, Skype or post it!
+    %input{:value => "#{share_link}"}
+  .clearfix
+  %hr
+
+  - unless Rails.env == "test"
+    :javascript
+      $(function() {
+        configureEmailShare("#{email_subject}", "#{raw escape_javascript(email_body)}");
+      });

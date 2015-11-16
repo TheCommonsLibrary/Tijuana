@@ -1,0 +1,25 @@
+
+<table class="transactions">
+  <tr>
+    <% TransactionsTable.columns.each do |column| %>
+      <th><%= column %></th>
+    <% end %>
+    <% if defined? action_link %>
+        <th></th>
+    <% end %>
+  </tr>
+  <% TransactionsTable.new(transactions).rows_with_ids.each do |row, id, donation_id| %>
+    <tr class="<%= row.include?('Failed') ? 'failed' : 'successful' %>">
+      <% row.each do |column| %>
+        <td><%= column %></td>
+      <% end %>
+      <% if defined? action_link %>
+        <% if (defined? offline_payment) or (defined? oneoff_payment) %>
+          <td><%= action_link.call(donation_id) %></td>
+        <% else %>
+          <td><%= action_link.call(id)%></td>
+        <% end %>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,26 @@
+<div id="admin-header">
+  <ul id="admin_navigation_tabs">
+    <li class="big-link"><%= link_to("Dashboard", admin_dashboard_path, :class => 'dashboard') %></li>
+    <li class="big-link"><%= link_to("Campaigns", admin_campaigns_path, :class => 'campaigns') %></li>
+    <li class="big-link"><%= link_to("Static Pages", admin_static_pages_path, :class => 'static_pages') %></li>
+    <li class="big-link"><%= link_to("Homepage", edit_admin_homepage_path, :class => 'homepage') %></li>
+    <li class="big-link"><%= link_to("Redirects", admin_redirects_path, :class => 'redirects') %></li>
+    <li class="big-link"><%= link_to("Images", admin_images_path, :class => 'images') %></li>
+    <li class="big-link"><%= link_to("Files", admin_downloadable_assets_path, :class => 'files') %></li>
+    <li class="big-link"><%= link_to("Users", admin_users_path, :class => 'users') %></li>
+    <li class="big-link"><%= link_to("Transactions", admin_transactions_path, :class => 'transactions') %></li>
+    <li class="big-link"><%= link_to("Flagged", flagged_admin_donations_path, :class => 'transactions') %></li>
+    <li class="big-link" id="admin-header-last"><%= link_to("Config", admin_payments_path, :class => 'config') %></li>
+  </ul>
+</div>
+<div id="admin-breadcrumbs">
+  <%=raw admin_breadcrumb_links.join(" › ") %>
+  <%= " › " unless admin_breadcrumb_links.empty? %>
+  <%= content_tag :h1, yield(:title) if show_title? %>
+  <div class="sub-nav">
+    <%= yield :sub_nav %>
+  </div>
+  <div id="extra-links">
+    <%= yield :breadcrumb_links %>
+  </div>
+</div>

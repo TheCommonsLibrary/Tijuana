@@ -1,0 +1,18 @@
+- title "Daisy Chains"
+- content_for :sub_nav do
+  = render "admin/shared/nav_header"
+
+.section
+  %h3 Enable Daisy Chains
+  = form_tag(switch_admin_daisy_chains_path, method: :put) do
+    = label_tag('auto_daisy_chains', 'Status')
+    = check_box_tag 'auto_daisy_chains', '1', Setting.enabled?(:auto_daisy_chains)
+    .clear= submit_tag 'submit'
+
+.section
+  %h3 List of daisy chain pages for each pillar
+  %ul.quarantined_page_sequences
+    - PageSequence.daisy_chains.each do |sequence|
+      %li
+        =link_to(sequence.name, friendly_path(sequence.pages.first))
+        ="(#{sequence.campaign.pillar.titleize} pillar)"

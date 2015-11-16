@@ -1,0 +1,80 @@
+- content_for :extra_js do
+  :javascript
+    window.ParsleyConfig = {
+      errorsWrapper: '<div></div>',
+      errorTemplate: '<div class="alert-block alert-error"></div>'
+    };
+
+- campaign = @page.static? ? nil : @page.page_sequence.campaign
+- last_quick_donation = content_module.last_quick_donation
+- button_style = 'primary-alternate'
+- use_emergency_paypal = Setting[:emergency_paypal].present? && content_module.only_allow_one_off_payment?
+.donate-well.well.clearfix{:class => [(last_quick_donation ? 'quick-donate-enabled' : 'quick-donate-disabled'),(use_emergency_paypal ? "emergency-paypal-enabled" : "")].join(" ")}
+  .top-section
+    %h2
+      = content_module.title.upcase
+      %hr
+    
+    - if content_module.content.present?
+      .intro= raw render_html(content_module.content)
+      
+    %ul.screen-nav
+      %li.js-tab
+        %a.active{"href" => '#step-1-amount', 'data-step' => '1'} Amount
+      %li.js-tab.middle-tab
+        %a{"href" => '#step-2-name', 'data-step' => '2'} Name
+      %li.js-tab
+        %a{"href" => '#step-3-payment', 'data-step' => '3'} Payment
+        
+    %label.credit-secure-icon
+      %i.icon-lock
+      SECURE
+  
+  = form_tag(take_action_path(@campaign, @page_sequence, @page), :id => 'action-form', :class => 'auto-submittable', :validate => true) do
+    = form_errors(@user)
+    = hidden_field_tag :http_referrer, @http_referrer
+    = hidden_field_tag :module_id, content_module.id
+    = email_tracking_field
+
+    = fields_for content_module.donation do |f|
+      - remove_action_id_from_session
+      = form_errors(f.object)
+      = f.hidden_field :id if f.object.persisted?
+      = f.hidden_field :payment_method, :class => 'payment-method'
+
+      .screens
+        .screen-wrap
+          .screen-content
+            #step-1-amount.screen.amount-screen.active{'data-step' => '1'}
+              = render('/pages/content_modules/multistep_donation/quick_donate_intro') if last_quick_donation
+              = render :partial => '/pages/content_modules/multistep_donation/donation_amounts', :locals => {:f => f, :donation_module => content_module, button_style: button_style}
+              = render(partial: '/pages/content_modules/multistep_donation/quick_donate', locals:{last_quick_donation:last_quick_donation}) if last_quick_donation
+            #step-2-name.screen.name-screen.step2.hide-in-multistep{'data-step' => '2'}
+              = render :partial => '/pages/content_modules/multistep_donation/user_details', :locals => {:f => f, :content_module => content_module, button_style: button_style}
+            #step-3-payment.screen.payment-screen.step3.hide-in-multistep{'data-step' => '3'}
+              = render :partial => '/pages/content_modules/multistep_donation/payment', :locals => {:f => f, :donation_module => content_module, button_style: button_style}
+    
+  .bottom-section
+    %p.donate-cheque-link Want to donate by cheque? #{link_to 'Download this form', 'https://getup-production.s3.amazonaws.com/139-offlinedonations.pdf'} and mail it to us.
+    %p.donations-footer Donations of #{AppConstants.legal_disclosure_amount} or more may be subject to disclosure to the Australian Electoral Commission under the Commonwealth Electoral Act 1918.
+    %p.donations-footer If we raise more than the cost of this campaign, your donation will be used to help cover the cost of ongoing GetUp campaigns that have the same purpose. 
+
+  = paypal_form(@page, @token, 'multistep-paypal-form', false)
+
+  = button_to('Not you or different card?', '/users/logout_quickdonate', :form_class => 'not-you-button')
+
+:javascript
+  var clientIp = '#{request.remote_ip}';
+  $(function() {
+    spinningOdometer('#odometer', '#{"%07d" % content_module.amount_raised_in_dollars.to_i}');
+    $('.tooltipped').tooltip();
+    var lookupUserController = lookupUser('#{lookup_users_path}', 'page_id', #{@page.id}, '#user_email', '#ask-specific-user-details', 'label[for="become-member-checkbox"]', #{@clear_user_details_form || false});
+
+    var actionForm = $('#action-form');
+    var screenNav = $('.donate-well .screen-nav');
+    var userDetailsError = #{@user.errors.size > 0};
+    tijuana.enableMultistepDonationValidation(actionForm);
+    tijuana.donationFormController = tijuana.multiStepDonationForm(actionForm, screenNav, userDetailsError, lookupUserController, #{!!use_emergency_paypal});
+    tijuana.enableMultiStepPaypal($('a.paypal-donation'), $('#multistep-paypal-form'), tijuana.donationFormController);
+    tijuana.enableQuickDonate(actionForm, tijuana.donationFormController);
+  });

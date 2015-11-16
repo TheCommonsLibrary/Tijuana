@@ -1,0 +1,33 @@
+<div class="modal fade" id="democracy-modal">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-body">
+      <center><p>Seen the attacks on GetUp this week? Keen to contribute?<br><br><a href="http://bit.ly/2gGRSH9"><img src="https://d68ej2dhhub09.cloudfront.net/image_11993_full.jpg"><br><br><b>Click here to join the campaign to protect our movement's strong, independent campaigns.</b></a></center></p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">Skip</span>
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 1.25s linear;
+  -moz-transition: opacity 1.25s linear;
+  -ms-transition: opacity 1.25s linear;
+  -o-transition: opacity 1.25s linear;
+  transition: opacity 1.25s linear;
+
+}
+</style>
+<script>
+$(function(){
+  if (localStorage && !localStorage.getItem('democracy-modal') && !localStorage.getItem('democracy-donor')){
+    localStorage.setItem('democracy-modal', 'shown')
+    $('#democracy-modal').modal({backdrop: false})
+  }
+});
+</script>

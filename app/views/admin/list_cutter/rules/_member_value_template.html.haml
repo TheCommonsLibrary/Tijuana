@@ -1,0 +1,20 @@
+%span.member-value-is
+  is
+.member-value-conditions
+  %fieldset.within-value
+    %legend="Value"
+    .select-member-value-range
+      = f.select :value_range, options_for_select(options_for_member_value_range(rule.value_range_options, rule.is_currency?), rule.value_range), {}, {:multiple => false, :class => "required-if-present member-value-range-select"}
+    %span.member-value-or
+      OR
+    .value-limits
+      Lower Limit #{rule.is_currency? ? '($)' : ''}:
+      = f.text_field :lower_limit, {value: rule.lower_limit, class: 'inline-number'}
+      Upper Limit #{rule.is_currency? ? '($)' : ''}:
+      = f.text_field :upper_limit, {value: rule.upper_limit, class: 'inline-number'}
+  .within-time-frame
+    Within time frame (optional)
+    = f.text_field :time_limit_months, {:value => rule.time_limit_months, :class => 'time-limit inline-number'}
+    months
+  .tooltip.list-cutter-tip{ 'data-tip' => member_value_tooltip}
+

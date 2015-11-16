@@ -1,0 +1,131 @@
+- title @push.name
+- content_for :breadcrumb_links do
+  = link_to "Edit name", edit_admin_push_path(@push)
+  - if can?(:destroy, @push) && !@push.has_been_sent?
+    | #{link_to "Delete push", admin_push_path(@push), :method => :delete, :data => { :confirm => "Delete '#{@push.name}'?" }}
+= render(partial: 'common/admin_form_errors', locals: {subject: @push})
+.notes
+  %h3.tooltip{"data-tip" => "notes-tip"} Notes
+  .notes-body= raw Note.first ? Note.first.value.html_linebreaks : "Click here to edit"
+#blasts
+  .list-group{id: "emails-for-push-#{@push.id}"}
+    %h3 Blasts
+    - if @push.blasts.empty?
+      %p.notice There are no blasts in this push.
+    - else
+      %ul#blasts-list
+        - for blast in @push.blasts
+          %li.blast{:id => "blast_#{blast.id}"}
+            %strong= blast.name
+            #{member_count(blast)} - #{link_to_create_or_update(blast)}
+            .actions
+              = link_to "Edit name", edit_admin_blast_path(blast)
+            %table.emails
+              %thead
+                %tr
+                  %th Email
+                  %th Proofed
+                  %th Sent
+                  %th Opened
+                  %th Statistics
+              - for email in blast.emails
+                %tbody
+                  %tr
+                    %td.email-name= link_to(email.name, edit_admin_email_path(email))
+                    %td.proof-sent
+                      %span.proof-sent
+                        - if flash[:proofed] && flash[:proofed][:email] == email.id
+                          = flash[:proofed][:status]
+                        - else
+                          = time_since_sent("proofed", email.test_sent_at)
+                    %td.other
+                      - if !email.subject_line_test?
+                        = link_to 'Create subject line test', '#', :'data-create-subject-line-test' => @push.id, :'data-email-id' => email.id, class: 'email-action', :'data-email-proofed' => email.proofed?
+                      - elsif can?(:destroy, email) && !email.has_been_sent?
+                        = link_to "Delete test", admin_email_path(email), :method => :delete, :confirm => "Delete '#{email.name}'?", class: 'email-action'
+              %tfoot
+                %tr
+                  %th{:colspan => "5"} Actions
+                  %th
+                %tr
+                  %td{:colspan => "5"}
+                    = link_to "Add an email", new_admin_email_path(:blast_id => blast.id), :class => 'email-action add-email'
+            = render(:partial => 'email_send', :locals => {:blast => blast}) if can?(:send, blast)
+    .button-links
+      = link_to "Duplicate push", duplicate_admin_push_path(@push), :class => 'add-blast', method: :post
+      = link_to "Add a blast", new_admin_blast_path(:push_id => @push), :class => 'add-blast'
+    - if @push.blasts.length > 1
+      .multiblast
+        - if @push.sending_multiblast?
+          .multiblast-message Sending Multi blast for emails #{@push.multiblast_emails.map{|e| "'#{e.name}'"}.join(', ')}
+        - else
+          = form_tag(deliver_multiblast_admin_push_path(@push)) do
+            .multiblast-btn
+              = button_tag 'Multi Blast', disabled: @push.has_pending_jobs?, class: "btn #{@push.has_pending_jobs? ? "disabled" : "" }"
+            = text_field_tag(:email_ids, params[:email_ids], placeholder: 'Comma separated list of email ids')
+            .tooltip.multiblast-tooltip{'data-tip' => "multiblast-tip"}
+  #email-stats.stats-table
+    %h3.tooltip{:tip => "stats-tip"} EMAIL STATISTICS
+    %button Refresh Statistics
+    .js-stats-messages
+    .js-stats-table
+    - if can? :export, EmailStatsTable
+      .button-links
+        = link_to "Download CSV", email_stats_report_admin_push_path(@push), :class=>'download-csv'
+= render "tooltips"
+
+.modal{id: "subject-line-form-#{@push.id}", role: 'dialog', style: 'display:none'}
+  .modal-dialog
+    .modal-header
+      %h3
+        Enter one subject per line
+
+    .modal-body
+      = form_tag(create_subject_line_test_admin_emails_path) do
+        = hidden_field_tag(:id)
+        = text_area_tag(:subject_lines, '', class: 'req form-control', style: 'width: 95%', rows: 6)
+
+        .modal-buttons
+          = button_tag 'Cancel', class: 'btn btn-large dismiss', :'data-dismiss' => "subject-line-form-#{@push.id}"
+          = button_tag 'Create', class: 'btn btn-primary btn-large'
+
+:javascript
+  $('#emails-for-push-#{@push.id} a[data-create-subject-line-test]').click(function(e){
+    e.preventDefault();
+    if (!$(this).data('email-proofed')){
+      return alert('Emails must be proofed before subject line testing');
+    }
+    var $form = $('#subject-line-form-' + $(this).data('create-subject-line-test'));
+    $form.find('[name=id]').val($(this).data('email-id'));
+    $form.modal('show');
+  });
+
+  $('#subject-line-form-#{@push.id} button[data-dismiss]').click(function(e){
+    $modal = $('#' + $(this).data('dismiss'));
+    $modal.modal('hide');
+    e.preventDefault();
+  });
+
+  $('#subject-line-form-#{@push.id}').on('hidden.bs.modal', function(){
+    $(this).find('form')[0].reset();
+  });
+
+
+  $("#blasts").blasts();
+  $('.notes-body').editable('#{notes_admin_push_path(@push)}', {
+    type      : 'textarea',
+    cancel    : 'Cancel',
+    submit    : 'Save',
+    indicator : 'Saving...',
+    tooltip   : 'Click to edit...',
+    id        : 'notes-text-area',
+    name      : 'note',
+    rows      : 5,
+    onblur    : 'ignore',
+    width     : '84.2em',
+    data: function(value, settings) {
+      /* Convert <br/> to newline. */
+      var retval = value.replace(/<br[\s\/]?>/gi, '\n');
+      return retval;
+    }
+  });

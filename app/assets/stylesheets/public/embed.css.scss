@@ -1,0 +1,27 @@
+body.embed {
+  background:none transparent;
+  article{
+
+    h1,.readmore{ display: none; }
+
+    padding-top: 0;
+    .container {
+      visibility: hidden;
+      width: auto;
+      section {
+        margin-left: 0 !important;
+        
+        article{ display: none; }
+
+        #action {
+          margin-left: auto !important;
+          margin-right: auto !important;
+          float: none !important;
+          .well {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+- title "Redirects"
+
+#redirects-list
+  .button-links
+    = link_to("Create new redirect", new_admin_redirect_path, :class => 'new-redirect')
+  %table
+    %tr
+      %th ID
+      %th Short URL
+      %th Target
+      %th
+    - @redirects.each do |redirect|
+      %tr
+        %td= redirect.id
+        %td= alias_link(redirect)
+        %td= redirect.target
+        %td= link_to "Edit", edit_admin_redirect_path(redirect)
+  .button-links
+    = link_to("Create new redirect", new_admin_redirect_path, :class => 'new-redirect')

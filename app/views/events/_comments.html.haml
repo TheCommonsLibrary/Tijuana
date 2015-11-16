@@ -1,0 +1,28 @@
+#event-comments.event-comments
+  %h3
+    Comments
+    %span.arrow
+  - if comments.empty?
+    .no-comments
+      There are no comments.
+      %p
+        - if !current_user
+          %strong
+            = link_to "Login" , new_user_session_path
+          and be the first to post one!
+        - else
+          Be the first to post one!      
+  - else
+    = render :partial => 'comment', :locals => {:comments => comments}
+  - if current_user
+    .post-a-comment
+      .avatar
+        .image
+          = image_tag("https://gravatar.com/avatar/#{Digest::MD5.hexdigest(current_user ? current_user.email.downcase : "does-not-exist@thisdoesntexisteither.com")}?s=45&d=mm")
+        .author
+          = current_user.try(:first_name) || "Someone"
+      .comment-reply
+        = form_tag(event_comments_path(@event.friendly_id), :method => :post) do
+          = text_area_tag :body, params[:body], :rows => 3, :class => "required"
+          .submit-button
+            %input#comment.btn.btn-primary.btn-med{:type => "submit", :value => "Comment"}

@@ -1,0 +1,53 @@
+//
+// Responsive: Large desktop and up
+// --------------------------------------------------
+
+
+@media (min-width: 1200px) {
+
+	.dollar {
+	  right: 89px;
+	}
+	.nav-tabs > li > a,
+	.nav-pills > li > a {
+	  padding-right: 20px;
+	  padding-left: 20px;
+	}
+
+// Carousel image
+  #myCarousel {
+    .item {
+      min-width: 770px;
+    }
+    a img{
+      height: 443px;
+    }
+  }
+
+  #home #actions .activity-stream {
+    max-height:395px;
+    overflow:hidden;
+  }
+
+  #home {
+    #stories {
+      .pillar.first {
+        margin-left:185px;
+      }
+      .storyblurb {
+        margin-top: 105px;
+      }
+    }
+    .storybox {
+      height:215px;
+    }
+  }
+
+  article #standfirst-section {
+    display: none;
+  }
+
+  article #content-modules-section {
+    display: block;
+  }
+}

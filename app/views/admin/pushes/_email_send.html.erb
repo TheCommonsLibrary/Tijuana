@@ -1,0 +1,29 @@
+<% notice = can_send(blast) %>
+<% if notice %>
+  <%= raw(notice) %>
+<% else %>
+  <%= form_tag deliver_admin_blast_path(blast), :class => 'email-send' do |f| %>
+    <div class="send-details">
+      <p><% if !blast.sent_at.nil? %><span class="blast-completed">Blast completed: <%= blast.sent_at.strftime('%a %d %b %Y %H:%M') %>.</span><% end %></p>
+    </div>
+    <div class="send-actions tooltip" data-tip="push-deliver-tip">
+      <span class="connector">Deliver</span> <select class="send-options" name="email_id">
+        <option value="all">each proofed email</option>
+        <%= options_from_collection_for_select(blast.proofed_emails, :id, :name) %>
+      </select>
+      <span class="connector">to</span> <input class="send-number" type="text" value="" name="limit"><label class="all-members">all unsent members<input type="checkbox" name="all_members"></label><span class="connector">members</span>
+      <input class="send-submit" type="submit" value="Send">
+    </div>
+  <% end %>
+<% end %>
+
+<%= javascript_tag do %>
+  $(document).ready(function() {
+    $('.js-undo-link').on("click", function(event){
+      $('.js-undo-link').on('click', function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+      });
+    });
+  });
+<% end %>

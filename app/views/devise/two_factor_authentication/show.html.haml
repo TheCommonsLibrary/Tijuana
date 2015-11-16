@@ -1,0 +1,15 @@
+%article
+  .container
+    %section
+      %article
+        .login#two-factor.span7
+          %h2 Check your email
+          %p You have received a secure code by email, please enter it below to continue.
+          %hr
+          = form_for(resource, :as => resource_name, :url => user_two_factor_authentication_path(resource_name), :html => { :method => :put }) do |f|
+            = form_errors(resource)
+
+            = label_tag :code, 'Secure code'
+            = text_field_tag :code
+
+            = f.submit "Sign in", :class => "btn btn-primary"

@@ -1,0 +1,9 @@
+= render :partial => "layouts/themes/communityrun_head"
+%body{:id => body_id, :class => body_class}
+  #skip-to-main-content
+    %a{href:"#content"}Skip to main content
+  #header_container= render :partial => "layouts/themes/communityrun_header"
+  #content
+  = yield
+  = render :partial => "layouts/themes/communityrun_footer"
+  = render :partial => "layouts/footer_js"

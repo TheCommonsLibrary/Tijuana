@@ -1,0 +1,106 @@
+<div class="<%= electorate.issue.issue %> parties <% if parties.length.eql?(2) %>twoup<% end %> ">
+
+    <% parties.each_with_index do |party, index| %>
+    <div class="party-col" id="col-<%= index %>">
+
+        <% if false#index.eql?(0) %>
+        <div class="<%= electorate.issue.issue %> strap">
+            <%= electorate.issue["strap"].gsub("Here are ", "Here are #{parties.length} ") %>
+        </div>
+        <%end%>
+
+        <div class="<%= party %> logo-box">
+            <% if %w(ALP GRN NXT ROI SMI).include? party %>
+                <img style="width: 100px;height:auto;" class="<%= party %> logo" src="/images/htv/<%= party %>.jpg"/>
+            <% else %>
+                <span class="party-heading"><%= electorate.issue.party_name(party) %></span>
+            <% end %>
+        </div>
+
+        <div class="ballot-paper">
+            <div class="ballot-heading">
+                <small>Ballot Paper</small>
+                <br/>
+                Division of
+                <%= electorate.name %></div>
+            <% electorate.candidates.each do |c| %>
+            <div class='row'>
+                <label class='c'>
+                    <div class='check preference-box'><%= c[party.downcase] %></div>
+                </label>
+                <div class="details">
+                    <div class="name">
+                        <span class="surname">
+                            <%= c['last_name'] %>,
+                        </span>
+                        <span class="given-name">
+                            <%= c['first_name'] %>
+                        </span>
+                    </div>
+                    <div class="party-name">
+                        <%= c['party_name'] %>
+                    </div>
+                </div>
+            </div>
+
+            <% end %>
+        </div>
+        <% unless electorate["#{party} topper"].nil? %>
+        <div class="<%= electorate.issue.issue %> party-blurb">
+            <%= electorate["#{party.downcase}_topper"] %>
+            <div class="info-inset">
+                <i class="icon-info-sign icon-2x"></i>
+            </div>
+        </div>
+        <% end %>
+    </div>
+    <% if index < parties.length-1 %><img class="circle" src="/images/htv/or.svg"/><% end %>
+    <% end %>
+
+</div>
+<ul class="tabbed">
+    <% parties.each_with_index do |party, index| %>
+    <li class="<%= party %> party-col">
+        <input type="radio" name="tabs" id="tab-<%= index %>">
+        <label for="tab-<%= index %>">
+            <% if %w(ALP GRN NXT ROI SMI).include? party %>
+                <img style="width: 100px;height:auto;" class="<%= party %> logo" src="/images/htv/<%= party %>.jpg"/>
+            <% else %>
+                <span class="party-heading"><%= electorate.issue.party_name(party) %></span>
+            <% end %>
+        </label>
+        <article class="content">
+            <div class="inner">
+                <div class="ballot-paper">
+                    <div class="ballot-heading">
+                        <small>Ballot Paper</small>
+                        <br/>
+                        Division of
+                        <%= electorate.name %></div>
+                    <% electorate.candidates.each do |c| %>
+                    <div class='row'>
+                        <label class='c'>
+                            <div class='check preference-box'><%= c[party.downcase] %></div>
+                        </label>
+                        <div class="details">
+                            <div class="name">
+                                <span class="surname">
+                                    <%= c['last_name'] %>,
+                                </span>
+                                <span class="given-name">
+                                    <%= c['first_name'] %>
+                                </span>
+                            </div>
+                            <div class="party-name">
+                                <%= c['party_name'] %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% end %>
+                </div>
+            </div>
+        </article>
+    </li>
+    <% end %>
+</ul>

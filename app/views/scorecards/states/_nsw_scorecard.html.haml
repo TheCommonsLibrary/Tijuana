@@ -1,0 +1,180 @@
+= render partial: "key", locals: { state: "New South Wales" }
+= render partial: 'topic', locals: {topic: 'Environment', person_name: 'David Pocock, Australian Wallaby', quote: 'This election we need real action on climate change. We don’t have another three years up our sleeve. The time for action is now.'}
+= render partial: 'header_parties', locals: { parties: ['Labor', 'Coalition', 'Greens', 'Katter', 'Palmer'] }
+
+.row
+  .col-sm-4
+    %p
+      %strong Tackling climate change
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 3.5, bad: 0, none: 1.5}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 1, bad: 2, none: 2}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 0, bad: 2.5, none: 2.5}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 0, bad: 2.5, none: 2.5}}
+
+.row
+  .col-sm-4
+    %p
+      %strong Investing more in renewable energy
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 3.5, bad: 1.5, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 1.5, bad: 1.5, none: 2}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 0, bad: 0, none: 5}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 0, bad: 1, none: 4}}
+.row
+  .col-sm-4
+    %p
+      %strong Preventing the expansion of the coal seam gas mining industry
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 0.5, bad: 4.5, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 0.5, bad: 2.5, none: 2}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 1.5, bad: 0, none: 3.5}}
+.row
+  .col-sm-4
+    %p
+      %strong Protecting the Great Barrier Reef from industrial development
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 2.5, bad: 2.5, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 0, bad: 5, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 1.5, bad: 1, none: 2.5}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 0, bad: 0, none: 5}}
+
+
+= render partial: 'topic', locals: {topic: 'Social Justice', person_name: 'Shelley Argent OAM, Senior Australian of the Year, QLD', quote: 'I have two sons. One son is gay and loved equally by family. I want him to have the right to marry.'}
+
+= render partial: 'header_parties', locals: { parties: ['Labor', 'Coalition', 'Greens', 'Katter', 'Palmer'] }
+
+.row
+  .col-sm-4
+    %p
+      %strong Marriage equality
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 0, bad: 0, none: 5}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 0, bad: 5, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 2.5, bad: 0, none: 2.5}}
+.row
+  .col-sm-4
+    %p
+      %strong Free, fair and independent media
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 4, bad: 1, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 4, bad: 1, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 4, bad: 1, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 0, bad: 0, none: 5}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 3, bad: 0, none: 2}}
+.row
+  .col-sm-4
+    %p
+      %strong More gambling safeguards
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 1.5, bad: 3.5, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 1.5, bad: 3.5, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 0, bad: 0, none: 5}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 0, bad: 0, none: 5}}
+.row
+  .col-sm-4
+    %p
+      %strong Animal welfare
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 3.5, bad: 1.5, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 0, bad: 2, none: 3}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 3, bad: 1, none: 1}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 0, bad: 0, none: 5}}
+
+
+= render partial: 'topic', locals: {topic: 'Fair Economy', person_name: 'Jane Caro, Social Commentator & Author', quote: 'Every child deserves access to a first rate education, regardless of the circumstances into which they happen to be born. This election, support the full Gonski.'}
+
+= render partial: 'header_parties', locals: { parties: ['Labor', 'Coalition', 'Greens', 'Katter', 'Palmer'] }
+
+.row
+  .col-sm-4
+    %p
+      %strong A more equitable tax system, where everyone pays their fair share
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 3, bad: 2, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 0, bad: 5, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 0, bad: 0, none: 5}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 0, bad: 2, none: 3}}
+.row
+  .col-sm-4
+    %p
+      %strong Ensuring there are measures in place that look out for society’s most vulnerable
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 4.5, bad: 0.5, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 4, bad: 0, none: 1}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 1.5, bad: 0, none: 3.5}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 1.5, bad: 0, none: 3.5}}
+.row
+  .col-sm-4
+    %p
+      %strong Better and equal education opportunities for every Australian child
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 2.5, bad: 1.5, none: 1}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 4, bad: 1, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 0, bad: 2.5, none: 2.5}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 1, bad: 3, none: 1}}
+
+= render partial: 'topic', locals: {topic: 'Human Rights', person_name: 'Julian Burnside, AO QC', quote: 'Seeking asylum is not illegal. If you were in their shoes, what would you do?'}
+
+= render partial: 'header_parties', locals: { parties: ['Labor', 'Coalition', 'Greens', 'Katter', 'Palmer'] }
+
+.row
+  .col-sm-4
+    %p
+      %strong Fairer treatment of asylum seekers
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 2, bad: 3, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 1.5, bad: 1.5, none: 2}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 0, bad: 0, none: 5}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 2, bad: 0, none: 3}}
+.row
+  .col-sm-4
+    %p
+      %strong Indigenous recognition &amp; reconciliation
+  .col-sm-8.col-xs-12
+    .row
+      .col-sm-2.no-width
+      = render partial: 'party_row', locals: {party: 'Labor', score: {good: 4.5, bad: 0.5, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Coalition', score: {good: 2.5, bad: 0, none: 2.5}}
+      = render partial: 'party_row', locals: {party: 'Greens', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Katter', score: {good: 5, bad: 0, none: 0}}
+      = render partial: 'party_row', locals: {party: 'Palmer', score: {good: 0, bad: 0, none: 5}}
+
+= render partial: "explanation", locals: { katter_present: true }

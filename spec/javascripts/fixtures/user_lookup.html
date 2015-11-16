@@ -1,0 +1,50 @@
+<form id="action-form">
+  <div>
+      <label for="user_email">
+          Email Address
+      </label>
+      <input id="user_email" name="user[email]" placeholder="you@email.com" size="30" type="email" autocomplete="off" class="">
+      <div id="ask-specific-user-details" style="" class="">
+
+          <div class="user-lookup-message" style=""></div>
+          <div class="user-field-container" style="display: none;">
+              <label>
+                  First Name*
+              </label>
+              <input class="required user-field" data-user-field="first_name" id="user_first_name" name="user[first_name]" placeholder="First Name" size="30" type="text" disabled="">
+
+          </div>
+          <div class="user-field-container" style="display: none;">
+              <label>
+                  Last Name*
+              </label>
+              <input class="required user-field" data-user-field="last_name" id="user_last_name" name="user[last_name]" placeholder="Last Name" size="30" type="text" disabled="">
+
+          </div>
+          <div class="user-field-container" style="display: none;">
+              <label>
+                  Mobile Number
+              </label>
+              <input class="user-field" data-user-field="mobile_number" id="user_mobile_number" name="user[mobile_number]" placeholder="Mobile Number" size="30" type="text" disabled="">
+
+          </div>
+          <div class="user-field-container" style="display: none;">
+              <label>
+                  Postcode Number*
+              </label>
+              <input class="required user-field" data-user-field="postcode_number" id="user_postcode_number" name="user[postcode_number]" placeholder="Postcode Number" size="30" type="text" disabled="">
+
+          </div>
+          <script>
+              //<![CDATA[
+              $('.user-field-container').hide();
+              //]]>
+          </script>
+          <label class="checkbox" for="become-member-checkbox" style="display: none;">
+              <input name="user[is_member]" type="hidden" value="0"><input checked="checked" class="full" id="become-member-checkbox" name="user[is_member]" type="checkbox" value="1">
+              Receive updates
+          </label>
+      </div>
+
+  </div>
+</form>

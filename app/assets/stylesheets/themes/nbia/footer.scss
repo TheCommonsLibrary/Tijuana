@@ -1,0 +1,27 @@
+footer {
+  background-color: $background;
+  img {
+    display: block;
+    margin: 0 auto 20px;
+    width: 240px;
+  }
+  .copyright {
+    color: $white;
+  }
+  .buttons {
+    text-align: center;
+
+    a {
+      background: $bg-white;
+      border-radius: 5px;
+      border-width: 0px;
+      display: inline-block;
+      font-size: 1.1em;
+      line-height: 44px;
+      margin: 0 5px;
+      text-align: right;
+      width: 70px;
+      &:hover { text-decoration: none; }
+    }
+  }
+}

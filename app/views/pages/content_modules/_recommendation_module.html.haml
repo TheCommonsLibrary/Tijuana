@@ -1,0 +1,19 @@
+- content_for :extra_css do
+  - stylesheet_link_tag 'public/recommendation_module'
+
+- recommendations = content_module.recommendations(@user)
+
+.recommendations
+  - recommendations.each do |recommendation|
+    .recommendation
+      %a{ href: recommendation[:url] }
+        %img{src: recommendation[:image_url]}
+      .internal
+        %h2=link_to(recommendation[:title], recommendation[:url])
+        .description=recommendation[:description]
+
+= javascript_include_tag 'recommendation_module'
+:javascript
+  $(function() {
+    configureRecommendationModule();
+  });

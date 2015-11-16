@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)]><html class="ie ie9" lang="en"> <![endif]-->
+<!--[if !(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+<meta charset='utf-8'>
+<title>GetUp! Action for Australia</title>
+<!--Facebook Open Graph meta tags-->
+<meta content='OzVote - GetUp! Booth Locator' property='og:title'>
+<meta content="Where are your nearest pre-polling and election day polling booths? How do the parties' policies stack up? Check out this easy website to help you find out." property='og:description'>
+<meta content='http://cdn.getup.org.au/image_2383_full.jpg' property='og:image'>
+<meta content='OzVote by GetUp!' property='og:site_name'>
+<meta content='520340587' property='fb:admins'>
+<meta content='https://www.getup.org.au/ozvote' property='og:url'>
+<meta content='website' property='og:type'>
+<meta content='https://www.facebook.com/GetUpAustralia' property='article:publisher'>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<meta content='text/html; charset=utf-8' http-equiv='content-type'>
+<meta content='getup, action, australia, australian, politics, political, progressive, movement, participation, community, campaigns' name='keywords'>
+<meta content='noodp' name='robots'>
+<link href='/favicon.ico' rel='shortcut icon' type='image/x-icon'>
+<!-- Le styles -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"></link>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css"></link>
+<link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700" rel="stylesheet" type="text/css"></link>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css"></link>
+<style>
+  /*<![CDATA[*/
+        #search {
+      position: absolute;
+      right: 15px;
+      top: 67px;
+      z-index: 1;
+      background: #FFFFFF;
+      padding: 5px;
+      box-shadow: 1px 1px 4px #888888;
+
+      form {
+        margin: 0;
+        input {
+          font-size: 15px;
+          padding: 2px;
+          width: 80px;
+          height: 36px;
+          border-radius: 0px;
+          border: 0px solid #FFF;
+          box-shadow:none;
+          vertical-align: top;
+          line-height: 1.0;
+        }
+
+        .btn {
+          vertical-align: top;
+        }
+        .glyphicon-search, .glyphicon-screenshot {
+          font-size: 14px;
+          background-color: white;
+          color: gray;
+          border: none;
+          padding: 10px
+        }
+        button {
+          border-radius: 0px;
+        }
+      }
+      }
+
+    .navbar, .navbar-orange, .navbar-fixed-top, .nav *, .navbar-nav *, .navbar-right * {
+      display: none;
+    }
+    .abs-logo {
+      display: none;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: auto;
+      height: 46px;
+    }
+    #map {
+      position: absolute;
+      right: 0;
+      left:0;
+      top: 0;
+      bottom: 0;
+      /*z-index: 10;*/
+      opacity: 1;
+    }
+    #search {
+      top: 10px !important;
+      left: 15px
+    }
+    #search-in-events {
+      display: flex;
+      align-items: stretch;
+      flex-direction: row;
+      button {
+        flex-grow: 0;
+      }
+    }
+    #origin-postcode {
+      display: block;
+      flex-grow: 1;
+      float: left;
+      width: 100%;
+    }
+
+  /*]]>*/
+</style>
+<%= stylesheet_link_tag 'htv/screen' %>
+<script src="https://www.getup.org.au/assets/common/lib/jquery.min.js" type="text/javascript"></script>
+<script src="https://d68ej2dhhub09.cloudfront.net/scripts/iframeResizer.contentWindow.min.js" type="text/javascript"></script>
+<!--[if lt IE 9]>
+<script src="/assets/common/lib/html5-ee3c331c667d6163f3ad65cf1fd0311f.js" type="text/javascript"></script>
+<![endif]-->
+</head>
+<body class="<%= @embed %>">
+  <section id="rendered-electorate"><%=yield%></section>
+</body>
+</html>

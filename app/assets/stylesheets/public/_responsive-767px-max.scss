@@ -1,0 +1,359 @@
+//
+// Responsive: Landscape phone to desktop/tablet
+// --------------------------------------------------
+
+@media (max-width: 767px) {
+  .verbose {
+    display:none !important;
+  }
+  .curt {
+    display:block !important;
+  }
+  // Padding to set content in a bit
+  body {
+    padding-left: 0px;
+    padding-right: 0px;
+    header,
+    article,
+    footer {
+      padding-left: 20px;
+      padding-right: 20px;
+      article {
+        padding-left:0 !important;
+        padding-right:0 !important;
+      }
+      #action {
+        padding-left:0 !important;
+        padding-right:0 !important;    
+      }
+    }
+  }
+  div.in.collapse {
+    margin-bottom: -10px !important;
+  }
+  
+  nav {
+    padding:0 0 0 0;
+    min-height:0;
+  }
+  .radio input {
+    border: none;
+  }
+  #home {
+
+    #getinvolved {
+      padding-bottom: 10px;
+      h1 {
+       text-align:center;
+      }
+      form {
+        float:none;
+        .email {
+          display:block;
+          width:100%;
+          float:none;
+          clear:both;
+          padding:10px 0;
+          text-align:center;
+          input {
+            width: 100%;
+            clear:both;
+          }
+          .errors {
+            display:block;
+            clear:both;
+          }        
+        }
+        .submit {
+          display:block;
+          width:100%;
+          float:none;
+          clear:both;
+          padding:10px 0;
+          text-align:center;
+          @include border-radius(3px 3px 3px 3px);
+        }
+      }
+    }
+
+    .socialicons {
+      .span2 {
+        width:50%;
+        float:left;
+      }
+    }
+
+    i.icon-large {
+      font-size:50px;
+      line-height:50px;
+    }
+
+    #stories {
+      &.dark {
+        padding-top:0;
+        h2.quote {
+          font-size:27px;
+          padding-top: 1.5em;
+          padding-bottom: 0;
+        }
+      }
+      .storyvideo {
+        margin:0 0 1em;
+      }
+      .storyblurb {
+        padding-top:0;
+        padding-bottom:1em;
+      }
+    }
+    #connect {
+      .socialicons {
+        .span2 {
+          width:33%;
+        }
+      }
+    }
+    #whatshappening {
+      .findoutmore {
+        span {
+          font-size:0.8em;
+        }
+      }
+    }
+  }
+
+  .alert-block {
+    margin-right: 0; 
+  }
+
+  nav .container {
+    .navbar-inner {
+      .mainnavbg {
+        display: none;
+      }      
+    }
+    .nav-collapse {
+      ul.nav  {
+        float:none;
+        width:100%;
+        li {
+          a {
+            background:transparent;
+            color:$gray;
+            margin:0 auto;
+            width:100%;
+            text-align:center;
+            padding:10px 0;
+            display:block;
+            float:none;
+            font-weight:600;
+            &:hover,
+            &:focus {
+              background:$grayLighter;
+            }
+          }
+          &.active {
+            a {
+             background:$grayLighter;
+             @include box-shadow(0);
+             color:$grayDark;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #user {
+    margin-bottom:0px;
+    .navbar-inner.navbar-inverse .usernavbg {
+      width:100%;
+    }
+    #brand {
+      position:relative;
+      margin:0 auto
+    }
+  }
+  .navbar .btn-navbar {
+    top:6px;
+  }
+  #action .btn.verbose {
+    display: none;
+  }
+  .dollar {
+    margin-left: 20px;
+    left: 40px;
+  }
+  .jsshow .dropdown-toggle {
+    float: left;
+    margin-top: -3px;
+  }
+  .nav-tabs > li > a,
+  .nav-pills > li > a {
+    padding-right: 12px;
+    padding-left: 12px;
+    font-size: 14px !important;
+  }
+
+  //Standfirst module
+  article {
+    article {
+      margin-bottom: 20px;
+      .content-module {
+        margin-top: 0px;
+      }
+      .main-content-responsive {
+        display: none;
+      } 
+      .standfirst-module.generated {
+        display: block;
+        font-weight: normal;
+      }
+      a.readmore {
+        display:block;
+        margin-bottom:$baseLineHeight;
+      }
+    }
+  }
+
+
+  .description.more {
+    display:none;
+  }
+
+  #email {
+    article {
+      #action {
+        form {
+          .narrow-details {
+            padding-left: 0px;
+            padding-right: 0px;
+            select, input[type=text] {
+              width: 100%;
+            }
+          }
+        }
+        .well {
+          width:auto;
+        }
+      }
+    }
+  }
+
+  .carousel-caption{
+    padding:5px;
+    h1,h2,h3,h4 {
+      font-size:20px;
+    }
+  }
+
+  #donation {
+    .controls-row {
+      input.span1 {
+        margin-left:0;
+      }
+    }
+    .input-mini {
+      width:60px;
+    }
+    .nav-tabs li a, .nav.pills li a {
+      padding:3px 8px;
+      font-size:12px !important;
+    }
+  }
+
+  select {
+    width:auto;
+  }
+
+  #footer {
+    .nav-header {
+      margin:5px 0;
+    }
+  }
+
+  #myCarousel a img{
+    min-width: 100%;
+    height: 380px;
+  }
+
+// Login - Unsubscribe styles
+  .login,
+  #unsubscribe {
+    form {
+      width: 100%;
+      float: none;
+    }
+  }
+
+  .login-block {
+    hr {
+      margin: 10px 0;
+    }
+  }
+
+// Transparency Stats Style
+  #transparency-stats {
+    width: 100%;
+  }
+
+// Past Campaign Style
+  .past-campaign {
+    table, tbody, td, tr {
+      display: block;
+    }
+    tr td:first-child {
+      float: left;
+    }
+  }
+
+//Call MP Styles
+  #call #action {
+    .mp-phone-number .text {
+      padding: 5px 0px 0px 5px;
+    }
+  }
+
+//quick donate styles
+  .modal {
+    position: absolute;
+    top: 10%;
+  }
+
+  .well {
+    &.contact-mp-module {
+      label.error {
+        width: initial;
+      }
+      input[type="text"], input[type="email"] {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// UP TO LANDSCAPE PHONE
+// ---------------------
+
+@media (max-width: 480px) {
+
+  #myCarousel a img{
+    min-width: 100%;
+    height: 160px;
+  }
+
+  // quick donate styles
+  .modal {
+    position: absolute;
+    top: 10%;
+  }
+
+  .quickdonate {
+    .save-confirmation-btn {
+      margin-top: 0px;
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+
+}

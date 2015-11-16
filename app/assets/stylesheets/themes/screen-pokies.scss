@@ -1,0 +1,230 @@
+#pokies {
+  background-image:image-url("themes/pokies/background.jpg");
+  background-position: 50% 40px;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  #logged-in-user, #dashboard-header {
+    display:none;
+  }
+  #header_container {
+    background-color:#60bc47;
+    height: 40px;
+    margin: 0;
+    border:none;
+    #getup-logo {
+        a, h1 {
+        display: none;
+      }
+    }
+    .navigation {
+      display: none;
+    }
+  }
+  #main {
+    padding:0;
+    margin: 0 auto;
+    width: 800px;
+    #header-content-modules {
+      margin-bottom: 50px;
+      .content-end {
+        display: none;
+      }
+      .nav {
+        float:left;
+        width: 300px;
+        li {
+          background-color:#e1e1e1;
+          margin:0 0 3px 0;
+          width: 130px;
+          padding: 5px 0 5px 15px;
+          a {
+            font-family: 'Open Sans', sans-serif;
+            color: #000;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            display: block;
+          }
+        }
+        li.active {
+          background-color:#ed1d24;
+          width: 150px;
+          a {
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+          }
+        }
+      }
+      .title {
+        float: left;
+        text-align: right;
+        width: 500px;
+        h1 {
+          font-family: 'Passion One', serif;
+          font-weight: normal;
+          line-height: 75px;
+          font-size:90px;
+          margin: 0 0 20px 0;
+          .red {
+            color: #ed1d24;
+          }
+        }
+        h2 {
+          font-family: 'Open Sans Condensed', sans-serif;
+          font-size: 25px;
+          line-height: 28px;
+          color: #515151;
+        }
+      }
+    }
+    #main-content-modules {
+      width: 386px;
+      height: 48px;
+      margin: 40px 0 0 394px;
+      padding: 15px 20px 15px 0;
+      border: 0;
+      color: #fff;
+      text-align: right;
+      background: transparent image-url('themes/pokies/main-content-tab.jpg');
+      background-position: right center;
+      background-repeat: no-repeat;
+      .inner {
+        font-family: 'Lora', serif;
+        font-style: italic;
+        font-size: 16px;
+        padding:0;
+        margin:0;
+      }
+    }
+    #sidebar-content-modules {
+      width:760px;
+      padding:20px;
+      margin: 0 auto 20px auto;
+      background-image: image-url('themes/pokies/grey-background-transparent.png');
+      background-repeat: repeat;
+      border: none;
+      color: #000;
+      h2 {
+        font-family: 'Passion', sans-serif;
+        font-weight:700;
+        padding: 0 0 20px 0;
+        font-size:30px;
+        text-transform:uppercase;
+      }
+      p {
+        font-family: 'Open Sans', sans-serif;
+        padding: 0 0 10px 10px;
+        color: #000 !important;
+        font-size:13px;
+      }
+      .module {
+        width:760px;
+        padding:0;
+        margin:0;
+      }
+      .jcarousel-item div {
+        width: 760px;
+        margin: 0 20px;
+        height: 242px;
+        iframe, div.blurb {
+          float: left;
+        }
+        iframe {
+          width: 425px;
+        }
+        div.blurb {
+          width: 250px;
+          height: 219px;
+          margin: 0 20px 0 0;
+          padding:10px;
+          background-color:#faf9f9;
+          font-family: 'Open Sans', sans-serif;
+          h3 {
+            font-size: 22px;
+            letter-spacing: 1px;
+            margin: 0 0 15px 0;
+            color: #000;
+            font-family: inherit;
+          }
+          p {
+            text-align: justify;
+            line-height:1.5em;
+             margin: 0 10px 10px 0;
+            font-size: 12px;
+            color: #555555;
+            font-family: inherit;
+          }
+        }
+      }
+      .jcarousel-clip-horizontal {
+        width: 800px;
+        height: 242px;
+      }
+      .jcarousel-prev, .jcarousel-next {
+        position: absolute;
+        top:90px;
+        width: 17px;
+        height: 60px;
+        background-repeat: no-repeat;
+      }
+      .jcarousel-prev {
+        background-image:image-url('themes/pokies/prev.png');
+        left:0;
+      }
+      .jcarousel-next {
+        background-image:image-url('themes/pokies/next.png');
+        right:0;
+      }
+      .tell-a-friend {
+        h3 {
+          color:#61BC46;
+        }
+      }
+      .addthis_toolbox {
+
+        h6 {
+          color:#61BC46;
+          font-weight:bold;
+        }
+      }
+    }
+    .module-split {
+      //background-image:image-url('themes/ido/ido-ask-sidebar-module-bg.png');
+      //border:0;
+    }
+  }
+  #footer-lifeline {
+     background-color:#000;
+     
+      p.lifeline {
+        width: 862px;
+        font-size: 12px;
+        line-height: 20px;
+        color: #fff;
+        text-align: right;
+        margin: auto;
+        background-image:image-url('themes/pokies/lifeline.png');
+        background-position: right center;
+        background-repeat: no-repeat;
+        padding: 10px 98px 10px 0;
+        height: 20px;
+        a {
+          color :#fff;
+        }
+       }
+  }
+  #footer-container-top {
+    border: 0;
+    p, div {
+      color: #fff;
+    }
+    h5 {
+      background-image:image-url('themes/pokies/getup-logo-small-grey.jpg')
+    }
+    background-color: #282828;
+    color:#fff;
+  }
+}

@@ -1,0 +1,29 @@
+- title @page.name
+%article
+  .container
+    %section
+      %article
+        - if @valid_main_content_modules.present?
+          = render partial: 'content_module', collection: @valid_main_content_modules, locals: {email: @email}
+          - if @page.paginate_main_content?
+            = will_paginate @valid_main_content_modules
+            .clearfix
+
+      #action
+        - @page.sidebar_content_modules.select(&:valid?).each do |content_module|
+          - if @email.nil? || content_module.class.name != "DirectLandingHtmlModule"
+            = render :partial => content_module_partial(content_module), :locals => {:content_module => content_module, :section => :sidebar}
+
+%a#menu-toggle{href:"#"}
+  %div.sidebar-btn="<<"
+    
+#wrapper.toggled
+  #sidebar-wrapper
+    %ul.sidebar-nav
+
+= include_facebook_like_from_theme(@page.page_sequence.theme, 'dark', 'standard')
+
+:javascript
+  $(function() {
+    sickTaxMap('#map', "#action", 'body article .container section');
+  });

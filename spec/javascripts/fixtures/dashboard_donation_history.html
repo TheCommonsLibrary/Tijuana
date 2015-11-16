@@ -1,0 +1,36 @@
+<div id="donation-history">
+    <form accept-charset="UTF-8" action="/dashboard/donation-history" id="donation-history-form" method="get">
+        <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;"/></div>
+        <label for="from">From</label>
+        <input type="text" id="from" name="from" value="06-12-2011"/>
+        <label for="to">to</label>
+        <input type="text" id="to" name="to" value="06-01-2012"/>
+        <input id="donation-history-submit-button" name="commit" type="submit" value="Search"/>
+    </form>
+    <div id="donation-history-results">
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Payment method</th>
+                <th>Amount</th>
+                <th>Transaction #</th>
+                <th>Donated to</th>
+            </tr>
+            <tr>
+                <td class="date">2011-12-13</td>
+                <td class="payment-method">Credit card</td>
+                <td class="amount">$50.00</td>
+                <td class="transaction-#">1</td>
+                <td class="donated-to">blah</td>
+            </tr>
+            <tr>
+                <td class="date">2011-12-19</td>
+                <td class="payment-method">Credit card</td>
+                <td class="amount">$50.00</td>
+                <td class="transaction-#">2</td>
+                <td class="donated-to">blah</td>
+            </tr>
+        </table>
+    </div>
+    <p> <a href="#" id="email-donation-history">Email Donation History</a></p>
+</div>

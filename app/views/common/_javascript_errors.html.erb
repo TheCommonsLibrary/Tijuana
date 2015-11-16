@@ -1,0 +1,15 @@
+<% if AppConstants.trackjs_id.present? %>
+  
+  <%= javascript_include_tag 'common/lib/tijuana.trackjs' %>
+  
+  <script type="text/javascript">
+    window._trackJs = { 
+      token: '<%= AppConstants.trackjs_id %>',
+      sessionId: '<%= rails_session_id %>',
+      onError: function(payload) {
+        return tijuana.allowTrackJsError(payload);
+      }
+    };
+  </script>
+  <script type="text/javascript" src="//d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js"></script>
+<% end %>

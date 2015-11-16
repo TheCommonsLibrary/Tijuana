@@ -1,0 +1,13 @@
+Dear <%= @event.host.first_name ? @event.host.first_name : "Friend" %>,
+
+
+Congratulations in creating your GetTogether!
+
+You have done 99% of the work.
+Now you simply have to *** confirm your event by following this link: <%= confirm_events_url(:cd => @event.confirmation_code) %> *** which will make your newly created event public to other GetUp members!
+
+
+
+Thank you for all you do,
+
+The GetUp team

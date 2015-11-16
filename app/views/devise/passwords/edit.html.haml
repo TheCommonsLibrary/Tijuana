@@ -1,0 +1,24 @@
+%article
+  .container
+    %section
+      %article
+        .login#create-password.span7
+          %h2 Create a new password
+          %hr
+          = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
+            = form_errors(resource)
+            = f.hidden_field :reset_password_token
+
+            %label Enter your new password
+            = f.password_field :password
+
+            %label Re-enter your new password
+            = f.password_field :password_confirmation
+
+            = f.submit "Save my password", :class => "btn btn-primary"
+
+          %p
+            If your
+            %em reset password token
+            has expired,
+            = link_to "request a new one.", new_password_path(resource_name)

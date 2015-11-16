@@ -1,0 +1,27 @@
+.navbar
+  .navbar-inner
+    .container
+      %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      .nav-collapse
+        .mainnavbg
+        %ul.nav
+          %li.curt{:class => active_class("/dashboard")}
+            =link_to("MY GETUP!", "/dashboard", :title => "dashboard")
+          %li{:class => active_class("/donate")}
+            =link_to("DONATE", "/donate", :title => "Donate")
+          %li{:class => active_class("/campaigns")}
+            =link_to("CAMPAIGNS", "/campaigns", :title => "The Campaigns")
+          %li
+            =link_to("VOLUNTEER", "http://action.getup.org.au/", :title => "Volunteer")
+          %li.hidden_on_mobile.verbose{:class => active_class("/community/campaign-suggestions")}
+            =link_to("Suggestions", "/community/campaign-suggestions", :title => "Your Voice")
+          %li{:class => active_class("/about")}
+            =link_to("ABOUT", "/about", :title => "About GetUp!")
+          - if current_user && (current_user.is_admin? || current_user.is_volunteer?)
+            %li.curt
+              =link_to("ADMIN", admin_root_path)
+            %li.curt
+              =link_to("LOG OUT", destroy_user_session_path)

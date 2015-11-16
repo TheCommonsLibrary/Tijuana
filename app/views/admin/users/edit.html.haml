@@ -1,0 +1,42 @@
+- title "#{@user.full_name} (##{@user.id})"
+= link_to_nation_builder_user_view(@user)
+= render :partial => "form"
+
+- member_value = MemberValue.current_values_for_user(@user)
+- if !member_value.empty?
+  %h2 Member Value
+  Money: #{number_to_currency(member_value[:money] / 100)} | Voice: #{member_value[:voice]} | Time: #{member_value[:time]}
+
+- if !@user.recurring_donations.empty?
+  %p
+  %h2 Recurring donations
+  %ul
+    - @user.recurring_donations.each do |recurring_donation|
+      %li
+        = link_to "#{number_to_currency(recurring_donation.amount_in_dollars)} #{recurring_donation.frequency}", edit_admin_donation_path(recurring_donation), {:class => recurring_donation.active? ? "" : "inactive-donation-link"}
+        for #{get_campaign_name_by_donation(recurring_donation)}
+%p
+  - if !@user.flagged_donations.empty?
+    %h2 Flagged Donations
+    - @user.flagged_donations.each do |flagged_donation|
+      %ul
+        = link_to "flagged id  #{flagged_donation.id}", dashboard_update_card_path(flagged_donation)
+        = "- #{number_to_currency(flagged_donation.amount_in_dollars)} #{flagged_donation.frequency}"
+        for #{get_campaign_name_by_donation(flagged_donation)}
+
+%h2 Financial History
+#user-financial-history
+  = @transaction_count
+  transactions totalling #{number_to_currency(@transaction_sum)}.
+  \#{link_to "View transactions", transactions_admin_user_path(@user)} |
+  \#{link_to "Add an offline donation", new_admin_donation_path(:donation => {:user_id => @user.id})}
+- if !@user.emails_received_from_trigger_service.empty?
+  %p
+  %h2 Automatic emails received
+  %ul
+    = render :partial => 'automatic_email_stream', :locals => {:user => @user}
+%p
+%h2 User Activity
+%ul#user-activity-list
+  = render :partial => 'user_activity_stream', :locals => {:user => @user}
+= render :partial => 'admin/shared/history', :locals => {:entity => @user}

@@ -1,0 +1,10 @@
+<%= f.label :title, :class => "req" %>
+<%= f.text_field :title %>
+
+<%= f.label :content %>
+<%= f.text_area :content, :rows => 8 %>
+
+<%= render :partial => "admin/pages/content_modules/activity_stream_templates", :locals => {:f => f} %>
+
+<%= f.label :button_text, 'Button text', :class => "req" %>
+<%= f.text_field :button_text %>

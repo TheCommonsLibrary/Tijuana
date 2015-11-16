@@ -1,0 +1,27 @@
+%header#user.verbose
+  .container
+    %section
+      - if render_nav_bar?(@page)
+        =render :partial => "layouts/top_navbar"
+
+      #brand.verbose
+        %a{:href => "/"}
+          =image_tag('public/getup_logo.png', :alt => "GetUp!")
+        %a{:href=>"https://www.facebook.com/DestroyTheJoint"}
+          =image_tag 'themes/dtj/dtj_logo.jpg', :class=>'dtj-logo'
+#brandbar.curt
+  .container
+    %section
+      #tinybrand
+        %a{:href => "/"}
+          =image_tag('public/getup_logo_white.png', :alt => "GetUp!")
+        %a{:href=>"https://www.facebook.com/DestroyTheJoint"}
+          =image_tag 'themes/dtj/dtj_logo.jpg', :class=>'dtj-logo'
+%nav
+  .container
+    %section
+      - if render_nav_bar?(@page)
+        =render :partial => 'layouts/secondary_navbar'
+
+= render :partial => "common/flash_notifications"
+= render :partial => "common/no_script"

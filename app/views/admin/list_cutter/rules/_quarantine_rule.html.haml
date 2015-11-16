@@ -1,0 +1,3 @@
+.tooltip{"data-tip" => "quarantine-tip"}
+  = f.label 'Exclude members who have been quarantined'
+  = f.check_box(:exclude_quarantine, {checked: rule.active?})

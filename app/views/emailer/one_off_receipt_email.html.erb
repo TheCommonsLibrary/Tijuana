@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <%= image_tag 'http://cdn.getup.org.au/email-assets/donations_email_header_small.jpg', :style => "width:100%;max-width:700px" %>
+    <br/>Hi <%= @greeting %>,
+    <br/>
+    <br/>Thanks for chipping in. Your contribution is powering a million-strong, strategically savvy organisation making extraordinary impact.
+    <br/>
+    <br/>Every dollar you've donated will be used to build a more fair, flourishing and just Australia.
+    <br/>
+    <br/>A receipt for your donation is below. If you have any questions you can reply to this email or give us a call on <%= AppConstants.financial_contact_number %>.
+    <br/>
+    <br/>Thanks again for your support,
+    <br/><%= AppConstants.financial_contact_name %> for the GetUp Strategy Team
+    <br/>National Director
+    <br/>
+    <br/>
+    <br/>YOUR PAYMENT CONFIRMATION
+    <br/>----------------------------------------------------------------
+    <br/>Merchant: GetUp Ltd
+    <br/>Ref: <%= @transaction_ids.join(", ") %>
+    <br/>Contact: donations@getup.org.au
+    <br/>----------------------------------------------------------------
+    <br/>To: <%= @user.first_name %> <%= @user.last_name %>
+    <br/>Email: <%= @user.email %>
+    <br/>----------------------------------------------------------------
+    <br/>
+    <% @transactions.each do |transaction| %>
+      <br/>Payment Status: <%= transaction.response_code %> - Approved
+      <br/>Date: <%= transaction.created_at %>
+      <br/>RRN: <%= transaction.bank_ref %>
+      <br/>CardNumber: **** **** **** <%= @donation.card_last_four_digits %>
+      <% if @donation.card_type.present? %>
+        <br/>Card Type: <%= @donation.card_type.upcase %>
+      <% end %>
+      <br/>Purchase: <%= number_to_currency(transaction.amount_in_dollars) %> AUD
+      <br/>Frequency: <%= @frequency %>
+      <br/>Campaign: <%= @donation.made_to %>
+    <% end %>
+    <br/>
+    <br/>
+    <br/>************ IMPORTANT NOTE **************
+    <br/>
+    <br/>Your credit card statement will show this charge as coming from GetUp Ltd.
+    <br/>
+    <br/>Under current legislation donations to GetUp, like other political campaigning organisations, are not tax deductible. Donations of <%= AppConstants.legal_disclosure_amount %> or more (indexed annually) may be subject to disclosure to the Australian Electoral Commission under the Commonwealth Electoral Act 1918. We disclose donations that exceed $10,000 cumulatively in a financial year on our website.
+    <br/>
+    <br/>If we raise more than is needed for the campaign you contributed to, your donation will be used to help cover the cost of other GetUp campaigns that have the same overarching purpose.
+    <br/>
+  </body>
+</html>

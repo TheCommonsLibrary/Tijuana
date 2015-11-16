@@ -1,0 +1,49 @@
+#target-details-grid{
+  input{
+    clear: left;
+    &.target_name{
+      margin-bottom: 5px;
+    }
+    &.target_email{
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 1200px) {
+      clear: none;
+      width: 254px;
+      &.target_email{
+        margin-bottom: 15px;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.target-details .target-label {
+  display: none;
+}
+
+.ie9 .target-details .target-label {
+  display: block;
+}
+
+$gray:                  #363636;
+
+.pro-forma {
+  background-color: #eee;
+  color: $gray;
+  padding: 10px 6px;
+  width: 98%;
+}
+
+.subject::before {
+  content: '"';
+}
+
+.subject::after {
+  content: '"';
+}
+
+.alert.alert-error {
+  margin-top: 10px;
+}

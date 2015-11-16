@@ -1,0 +1,16 @@
+- title = "Donate By Paypal"
+%article
+  .container
+    %section
+      %article
+        %h2
+          = title.upcase
+        %hr
+        %p Click on the button below to donate by PayPal:
+
+        %p
+          = paypal_form(@page, @token, 'manual-paypal-form', true)
+
+        %p You will be taken to the PayPal website.
+
+        = link_to 'Back to Campaign', page_path(@page.page_sequence.campaign, @page.page_sequence, @page)

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    </head>
+    <body>
+        <p>Dear Tech,</p>
+        <br/>
+        <p>
+          The donation monitoring job has detected that there are <%= @overdue_donations.count %>
+          donations that are overdue by more than <%= @overdue_by_description %>. You should check
+          that the cron job that triggers transaction processing is running.
+        </p>
+        <p>
+          If the cron job is running normally, you could have a look at the donations in question.
+          Here are some of them:
+        </p>
+
+        <ul>
+<% @overdue_donations.order(:id).limit(10).each do |d| %>
+            <li>id: <%= d.id %>, last donated at <%= d.last_donated_at %>, last_tried_at: <%= d.last_tried_at %>, frequency: <%= d.frequency %></li>
+<% end %>
+        </ul>
+    </body>
+</html>

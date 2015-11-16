@@ -1,0 +1,33 @@
+.payment-details-form
+  .card-number
+    .card-types
+      - Donation::CREDIT_CARD_TYPES.each do |card_type|
+        %img{ :class => card_type, :src => image_path("public/card-types.#{card_type}.png") }
+      - if donation_module.disable_paypal != '1'
+        = link_to 'Donate with PayPal ›', paypal_page_path(@campaign, @page_sequence, @page), :class => 'paypal-donation'
+    = f.label :card_number, "Card Number"
+    = f.telephone_field :card_number, :placeholder => "Card Number"
+    = field_errors(f.object, :card_number)
+
+  .clearfix
+  = f.label :name_on_card, "Name on Card"
+  = f.text_field :name_on_card, :placeholder => "Name on Card"
+  = field_errors(f.object, :name_on_card)
+
+  .controls.controls-row.expiry
+    = f.label :card_expiry_month, 'Expiry'
+    = f.select(:card_expiry_month, (01..12).to_a.collect { |i| [i.to_s.rjust(2, '0'), i.to_s.rjust(2, '0')] }.insert(0, ['Month', '']), {:selected => f.object.card_expiry_month.to_s.rjust(2, '0')})
+    = f.select(:card_expiry_year, (Date.today.year..Date.today.year + 7).to_a.collect{|year| [year.to_s[2..3], year.to_s]}.insert(0, ['Year', '']), {:selected => f.object.card_expiry_year})
+    = field_errors(f.object, :card_expiry_month)
+    = field_errors(f.object, :card_expiry_year)
+
+  .cvc
+    = f.label :card_cvv, :class => 'cvv' do
+      Security Code
+      %i.icon-info-sign
+    = f.telephone_field(:card_cvv, :maxlength => 4, :placeholder => '###', :class => 'input-mini')
+    = field_errors(f.object, :card_cvv)
+
+.processing
+= button_tag('DONATE', :class => "btn btn-#{button_style} btn-large btn-full btn-payment", :disable_with => "Please wait...")
+

@@ -1,0 +1,30 @@
+.info-block
+  %h2="View the events you're hosting and attending here."
+.content-block
+  .content-box
+    .title-row
+      .title
+        %h3="Events you are hosting"
+
+    - if @events[:as_host]
+      - @events[:as_host].each do |event|
+        .content-row.events-row
+          .event-box
+            = render partial: 'event_details', locals: {event: event}
+            - if event.number_of_attendees > 0
+              = render partial: 'attendee_details', locals: {attendees: event.load_attendees, event: event}
+    - else
+      .content-row
+        %p You are not hosting any events
+
+    .title-row
+      .title
+        %h3="Events you are attending"
+    - if @events[:as_attendee].size > 0
+      - @events[:as_attendee].each do |event|
+        .content-row.events-row
+          .event-box
+            = render partial: 'event_details', locals: {event: event}
+    - else
+      .content-row
+        %p You are not attending any events

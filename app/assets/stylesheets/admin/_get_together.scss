@@ -1,0 +1,51 @@
+
+ul.group {
+  margin-left: 3.9em;
+  padding-top: 0.5em;
+  li {
+    float:left;
+    display:block;
+  }
+
+}
+
+form.edit_get_together, form.new_get_together {
+  label.date, label.time {
+    float:left;
+    clear:left;
+  }
+
+  select {
+    margin-top: 1em;
+
+    .time {
+      width: 8.3em;
+    }
+
+    &#get_together_search_radius {
+      width: 10em;
+    }
+  }
+
+  input.date, input.time, select.time {
+    width: 7em;
+    margin: 0.8em 5em 0 0;
+  }
+}
+
+.edit_get_together fieldset {
+  @include rounded-corners(5px);
+  padding: 10px;
+  margin-top: 50px;
+  border: solid 1px $subtle;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.events-capacity-enabled {
+  height: 28px;
+  padding-top: 12px;
+}

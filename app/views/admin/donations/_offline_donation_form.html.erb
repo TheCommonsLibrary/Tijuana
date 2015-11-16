@@ -1,0 +1,80 @@
+<%= form_for([:admin, @donation]) do |f| %>
+    <%= form_errors(@donation) %>
+    <%= form_errors(@transaction) %>
+  <div class="section offline-donation">
+    <h3>Offline Donation Details</h3>
+    <p>
+      <%= f.label :user_id, "User ID", :class => "req" %>
+      <%= f.text_field :user_id %>
+    </p>
+    <p class="checkbox-option">
+      <input type="checkbox" id="umbrella_user" name="umbrella_user" value="0" />
+      <label for="umbrella_user">Associate this transaction with the Umbrella User</label>
+    </p>
+    <p>
+      <%= label_tag 'campaign' %>
+      <%= select_tag "campaign", options_from_collection_for_select(Campaign.where(hidden_in_admin: false).order(:name).map{|c| [c.id, c.name]}, :first, :second, selected_campaign_id), { :prompt => "--Select campaign for offline donation--" }%>
+      <div class="info">If no campaign is selected then the donation will be assigned to the <%= link_to "global donation page", "/donate" %></div>
+    </p>
+    <p>
+      <%= f.label :amount_in_dollars, :class => "req" %>
+      <%= f.text_field :amount_in_dollars %>
+    </p>
+    <p>
+      <%= fields_for @transaction do |t| %>
+        <%= t.label :created_at, "Date", :class => "req" %>
+        <%= t.text_field :created_at, :value => t.object.created_at ? t.object.created_at.strftime('%d-%m-%Y') : '', :class => 'date-picker' %>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label :payment_method, :class => "req" %>
+      <%= f.select :payment_method, Donation::OFFLINE_PAYMENT_METHODS.map{ |pm| [pm.to_s.titlecase, pm] }, :selected => @donation[:payment_method] %>
+    </p>
+
+    <p class="offline-field cheque money_order bank_cheque">
+      <%= f.label :cheque_number %>
+      <%= f.text_field :cheque_number %>
+    </p>
+    <p class="offline-field cheque money_order bank_cheque">
+      <%= f.label :cheque_bank %>
+      <%= f.text_field :cheque_bank %>
+    </p>
+    <p class="offline-field cheque">
+      <%= f.label :cheque_name %>
+      <%= f.text_field :cheque_name %>
+    </p>
+    <p class="offline-field cheque">
+      <%= f.label :cheque_branch %>
+      <%= f.text_field :cheque_branch %>
+    </p>
+    <p class="offline-field cheque bank_cheque">
+      <%= f.label :cheque_bsb %>
+      <%= f.text_field :cheque_bsb %>
+    </p>
+    <p class="offline-field cheque bank_cheque">
+      <%= f.label :cheque_account_number %>
+      <%= f.text_field :cheque_account_number %>
+    </p>
+    <p>
+      <%= f.label :identifier, "Identifier" %>
+      <%= f.text_field :identifier %>
+    <div class="info">Use this field to provide some form of unique identifier to this offline donation, such as an address.</div>
+    </p>
+
+    <div class="buttonbar">
+      <%= f.submit @donation.new_record? ? "Create donation" : "save donation", :disable_with => "Saving…" %>
+      <%= link_to "Cancel", admin_transactions_path %>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(function() {
+    $('.date-picker').each(function() {
+      $(this).datepicker({
+        dateFormat:'dd-mm-yy'
+      });
+    });
+  });
+</script>

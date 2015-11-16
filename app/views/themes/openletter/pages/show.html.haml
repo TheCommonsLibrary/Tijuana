@@ -1,0 +1,16 @@
+- ask_modules = @page.sidebar_content_modules.select(&:is_ask?)
+%article#main{:class => "#{ask_modules.empty? ? '' : ask_modules.first.class.name.downcase}"}
+  .container
+    %section
+      %article
+        - unless @page.main_content_modules.empty? && @page.no_wrapper
+          - if @page.valid_header_content_modules.present?
+            - @page.valid_header_content_modules.each do |content_module|
+              = render :partial => content_module_partial(content_module), :locals => {:content_module => content_module, :section => :header}
+          - if @valid_main_content_modules.present?
+            = render partial: 'content_module', collection: @valid_main_content_modules, locals: {email: @email}
+
+      #action
+        - @page.sidebar_content_modules.select(&:valid?).each do |content_module|
+          - if @email.nil? || content_module.class.name != "DirectLandingHtmlModule"
+            = render :partial => content_module_partial(content_module), :locals => {:content_module => content_module, :section => :sidebar}

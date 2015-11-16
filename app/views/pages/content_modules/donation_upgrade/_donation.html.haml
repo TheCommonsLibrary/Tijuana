@@ -1,0 +1,14 @@
+= hidden_field_tag :donation_id, donation.id
+%h3
+  Hello #{donation.user.full_name}
+%p
+  You are currently donating #{amount_display(donation)} a #{recurring_period(donation)}. Select an amount below to upgrade your recurring donation.
+.donation
+  = render "pages/content_modules/donation_buttons", amounts: upgrade_amounts(donation), amount_attribute: :upgrade_amount_in_dollars
+.processing
+= button_tag('Update', class: "btn btn-primary-alternate btn-large btn-full btn-payment", disable_with: "Please wait...")
+
+:javascript
+  jQuery(function(){
+    donationUpgrade('.btn-payment', '#custom_amount_in_dollars');
+  });

@@ -1,0 +1,3 @@
+- unless object.errors[field].empty?
+  .alert-block.alert-error
+    = all_error_messages_for_field(field, object.errors[field])

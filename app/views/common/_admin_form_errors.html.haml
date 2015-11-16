@@ -1,0 +1,6 @@
+- html_safe = true
+- if subject.errors.full_messages.any?
+  - subject.errors.each do |field, value|
+    - next if field.to_s.include?(".") # Active record copies errors on nested_attributes to their parent - e.g. "content_modules.name" %>
+    %p.error
+      = humanized_error_message_for_field(field, value, html_safe)

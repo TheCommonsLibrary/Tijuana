@@ -1,0 +1,376 @@
+@import "../public/variables";
+
+#event-location-map {
+  width: 100%;
+  height: 300px;
+  margin-bottom: 20px;
+
+  img {
+    max-width: none;
+  }
+}
+
+.create-event-button {
+  margin-top: 20px;
+}
+
+.expired {
+  font-style: italic;
+}
+
+#action .well {
+  .btn-full {
+    width: 100%;
+    font-size: 1.25em;
+    color: #fff;
+  }
+
+  .btn-large {
+    font-size: 1.75em;
+    height: 1.75em;
+  }
+}
+
+#event-comments {
+  h3 {
+    .arrow {
+      height:10px;
+      width:20px;
+      background: image-url('events/comment_arrow.png');
+      position: absolute;
+      top:-10px;
+      left:20px;
+    }
+    background: #eff3f7;
+    border: 1px #d6dfe6 solid;
+    position:relative;
+    font-size:1em;
+    padding: 10px 5px;
+    font-family: "Lucida Grande", Geneva, Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    text-transform: none;
+    margin-bottom: 0;
+  }
+  .no-comments {
+    padding:2em;
+    border: 1px solid #e7ecf1;
+  }
+
+  .comment-even {
+    background: white;
+  }
+  .comment-odd {
+    background: #f5f7fa;
+  }
+
+  .smaller {
+    color: $getup-dark-grey;
+    font-size: 0.8em;
+    margin: 5px 0px 5px 0px;
+  }
+
+
+  div.reply-to {
+    display:none;
+    margin-bottom:1em;
+    textarea#body {
+      font-size: 1em;
+    }
+  }
+
+  input[type=submit] {
+    float:right;
+  }
+
+  .post-a-comment,
+  .comment-even,
+  .comment-odd
+   {
+    border-style: solid;
+    border-color: #e7ecf1;
+    border-width: 0px 1px 1px 1px;
+    padding: 1em 2em;
+    min-height: 70px;
+
+    .avatar {
+      float: left;
+      width: 100px;
+    }
+
+    .comment-reply {
+      margin-left: 100px;
+    }
+
+    textarea {
+      font-size: 1em;
+      border: 1px solid #ccc;
+    }
+
+    .submit-button {
+      margin-top: 10px;
+      margin-bottom: 30px;
+      button {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+#event-info-box {
+  font-size: 11px;
+  margin-top: 10px;
+  padding-left: 15px;
+
+  h1 {
+    color: $linkColor;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-bottom: 0px !important;
+  }
+
+  a {
+    color: inherit;
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+  }
+
+  form {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-right: 15px;
+
+    input[type=submit] {
+      margin: 0px;
+    }
+  }
+
+  p {
+    margin: 0 0 5px 0;
+  }
+}
+
+.event-decorate-text {
+  font-size: medium;
+}
+
+.address-note {
+  font-size: 14px;
+}
+
+.highlight {
+  color: #0066cc;
+  font-size: medium;
+}
+
+#address-container {
+  margin-top: 0.5em;
+}
+
+#action .well .sidebar {
+
+  .gt-details-on-event-page {
+    .attending {
+      clear: both;
+    }
+    margin-top:2em;
+    padding-bottom:1em;
+    .description {
+      margin-top: 15px;
+      padding: 5px 10px;
+      font-style: italic;
+    }
+  }
+
+  #message-attendees-form, #attend-this-event {
+
+    .tagline {
+      color: $getup-orange;
+      font-weight:bold;
+      margin: 3px 0 0px 0;
+      display: block;
+    }
+
+    .btn-primary {
+      margin-top: 30px;
+    }
+
+    form#attend-logged-in {
+      background-color: #fff;
+      padding: 0px;
+      input[type=submit] {
+        float: left;
+      }
+    }
+
+    form {
+      width: auto;
+      font-size: .8em;
+
+      h4 {
+        font-size: 2em !important;
+        background: image-url('common/email_add.png') no-repeat left center;
+        padding: 0 0 0 25px;
+        margin: 0 0 0 5px !important;
+        line-height:2em !important;
+      }
+
+      @include rounded-corners(4px);
+      padding: 10px 5px;
+
+      dl.static-fields {
+
+        dt {
+          font-weight: bold;
+        }
+
+        dd {
+          margin: 0 0 10px 0;
+          background: image-url('common/lock.png') no-repeat 3px 3px;
+          padding: 5px 5px 5px 23px;
+          border: 1px #ccc dashed;
+          text-align: center;
+          .email-address {
+            font-style: italic;
+            color: #fff;
+          }
+        }
+
+      }
+
+      input[type=text] {
+        @include slim-input();
+        width:99%;
+        height:2em;
+        //margin: 1em 0 1em 0;
+      }
+      textarea {
+        @include rounded-corners(4px);
+        width:95%;
+        margin: 1em 0 1em 0;
+        border: 1px solid #CCC;
+      }
+    }
+
+    .attending, #attend-this-event, .message-attendees {
+      border-style: solid;
+      border-color: #ebebeb;
+      border-width: 1px 0px 0px 0px;
+      margin-top:2em;
+      padding-top:1em;
+
+      h3 {
+        margin:0;
+      }
+      div.avatars {
+        margin: 1em 0 1em 0;
+      }
+    }
+  }
+  .attending {
+    clear: both;
+    margin-top: 20px;
+  }
+  #attend-logged-in .hidden {
+    display: none;
+  }
+}
+
+#local-search-results {
+  display: none;
+
+  .event-results-full {
+    margin: 5px 0px;
+    font-size: 14px;
+    line-height: 14px;
+  }
+
+  ul {
+    margin-left: 0;
+    li {
+      display: block;
+      margin-bottom: 13px;
+      img {
+        margin: 0 3px 3px 0;
+      }
+      list-style: none;
+      form {
+        margin: 4px 0 0 0;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+ #get-together-events-map {
+   width: 100%;
+   height: 300px;
+ }
+
+
+.events-button {
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.create-edit-event {
+  margin: 20px 0px;
+}
+
+#origin-postcode {
+  width: 100px;
+  border: 1px solid #ccc;
+}
+
+#event-form label.error {
+  color: white;
+  font-size: 1em;
+}
+
+.map-key {
+  float: right;
+  div {
+    margin-right: 10px;
+    display: inline-block;
+  }
+  span {
+    display: inline-block;
+    color: $grayMid;
+    margin-right: 5px;
+  }
+  img {
+    margin: 0px;
+  }
+}
+#event-location-map-container {
+  position: relative;
+}
+
+.loading-image {
+  position: absolute;
+  z-index:1;
+  margin-left: 50%;
+  top: 50%;
+  opacity: 0.8;
+}
+
+#event-breadcrumb {
+  font-size: 12px;
+}
+
+#event-get-directions {
+  display: none;
+  margin-bottom: 10px;
+}
+
+.left {
+  .pull-right {
+    #action {
+      width: 100%;
+    }
+  }
+}

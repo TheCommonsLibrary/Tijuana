@@ -1,0 +1,22 @@
+<% title @get_together.name %>
+<% content_for :breadcrumb_links do %>
+  <%= link_to "Edit details", edit_admin_get_together_path(@get_together) %>
+  <% if can? :destroy, @push %>
+    | <%= link_to "Delete Get Together", admin_get_together_path(@get_together), :method => :delete, :data => { :confirm => "Delete '#{@get_together.name}'?" } %>
+  <% end %>
+<% end %>
+
+<div class="searchbar">
+  <%= form_tag(admin_get_together_path(@get_together), :method => :get) do %>
+    <%= text_field_tag :query, params[:query], :class => "query" %>
+    <%= submit_tag "Search" %>
+    <div class="search-info">
+        Events can be searched on by name, host user id, status (unconfirmed, confirmed, open, full, canceled, ended) or postcode.
+    </div>
+  <% end %>
+</div>
+
+
+<%= render :partial => "event_list" %>
+
+

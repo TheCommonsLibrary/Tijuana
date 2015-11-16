@@ -1,0 +1,12 @@
+Dear <%= @event.host.first_name ? @event.host.first_name : "Friend" %>,
+
+Your event "<%= @event.name %>" is now canceled.
+
+<% if @event.attendees.count >0 %>
+Your attendees have been notified by email.
+<% end %>
+
+Whatever your reasons for cancelling your event were, you can still create a new one here: <%= get_together_url(@event.get_together.friendly_id) %>
+
+Thanks for all you do,
+The GetUp! team

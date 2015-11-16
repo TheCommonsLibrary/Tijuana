@@ -1,0 +1,16 @@
+Dear <%= @greeting %>, 
+
+Your <%= @frequency %> <%= number_to_currency(@donation.amount_in_dollars) %> donation to GetUp! has been successfully cancelled at your request and no further payments will occur.
+
+Thank you for your generous support of this cause. We hope that you will continue to participate in our campaigns in the future.
+
+
+************ IMPORTANT NOTE **************
+
+If there is an error in the above email, or if you know of any changes to your account, please send me an email with a contact number and the best time for me to call, and I'll contact you to make the changes. 
+
+
+Warm Regards
+<%= AppConstants.financial_contact_name %> for the GetUp! Team
+Ph: <%= AppConstants.financial_contact_number %>
+email: donations@getup.org.au

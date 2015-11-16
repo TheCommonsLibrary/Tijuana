@@ -1,0 +1,45 @@
+- doorknock = content_module
+.well
+  %h2
+    = doorknock.title
+  %p
+    =raw render_html(doorknock.content)
+  %hr
+  = render :layout => "pages/form_with_user_lookup", :locals => {:content_module => content_module} do
+    = render :partial => "common/multiple_form_errors", :locals => {:subjects => doorknock.invalid_street_user_modules}
+    .clearfix
+      .doorknock
+        = label_tag 'Suburb'
+        = select_tag 'suburb', options_for_select(doorknock.suburb_names), { :prompt => "--Choose your suburb--", :class => 'suburb_name' }
+        = label_tag 'street_id', 'Street'
+        = select_tag 'street_id[]', '',{ :prompt => '--Choose your street--', :disabled => 'disabled', :class => 'street_container'}
+      #add_a_street.btn.btn-secondary Add another street
+    %hr
+    = button_tag doorknock.button_text, :class => "btn btn-primary btn-large btn-full ask-submit-button fb-like-above", :disable_with => 'Please Wait...'
+  %hr
+
+:javascript
+  $(function() {
+
+    Doorknock.fetchStreetsOnSuburbChange($('.doorknock'), '#{module_streets_path(module_id: doorknock.id)}');
+
+    $('.doorknock').parents('form').submit(function() {
+      var street_selected = Doorknock.isStreetSelected($('.doorknock').first().find('.street_container').val());
+      if (!street_selected) {
+        $.gritter.add({image: '#{image_path('common/lib/gritter/error.png')}', sticky: false, title: 'Error', text: 'Please select a street'});
+      }
+      return street_selected;
+    });
+
+    var doorknock_prototype = $('.doorknock').clone();
+
+    $('#add_a_street').click(function(){
+      var clone = doorknock_prototype.clone();
+      Doorknock.fetchStreetsOnSuburbChange(clone, '#{module_streets_path(module_id: doorknock.id)}');
+      $('.doorknock').last().after(clone);
+      if ($('.doorknock').length >= 3) {
+        $('#add_a_street').hide();
+      }
+    });
+  });
+
